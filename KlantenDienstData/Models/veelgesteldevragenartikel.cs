@@ -7,11 +7,11 @@ public partial class VeelgesteldevragenArtikel
 {
     public int VeelgesteldeVragenArtikelId { get; set; }
 
-    public int artikelId { get; set; }
+    public int ArtikelId { get; set; }
 
-    public string vraag { get; set; } = null!;
+    public string Vraag { get; set; } = null!;
 
-    public string antwoord { get; set; } = null!;
+    public string Antwoord { get; set; } = null!;
 
-    public virtual Artikel artikel { get; set; } = null!;
+    public virtual Artikel Artikel { get; set; } = null!;
 }

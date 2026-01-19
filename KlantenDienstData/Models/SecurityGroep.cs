@@ -5,9 +5,9 @@ namespace KlantenDienstData.Models;
 
 public partial class SecurityGroep
 {
-    public int securityGroepId { get; set; }
+    public int SecurityGroepId { get; set; }
 
-    public string naam { get; set; } = null!;
+    public string Naam { get; set; } = null!;
 
-    public virtual ICollection<PersoneelsLid> personeelslids { get; set; } = new List<PersoneelsLid>();
+    public virtual ICollection<PersoneelsLid> Personeelslids { get; set; } = new List<PersoneelsLid>();
 }

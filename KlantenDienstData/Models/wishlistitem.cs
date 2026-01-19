@@ -5,19 +5,19 @@ namespace KlantenDienstData.Models;
 
 public partial class Wishlistitem
 {
-    public int wishListItemId { get; set; }
+    public int WishListItemId { get; set; }
 
-    public int artikelId { get; set; }
+    public int ArtikelId { get; set; }
 
-    public int gebruikersAccountId { get; set; }
+    public int GebruikersAccountId { get; set; }
 
-    public DateOnly aanvraagDatum { get; set; }
+    public DateOnly AanvraagDatum { get; set; }
 
-    public int aantal { get; set; }
+    public int Aantal { get; set; }
 
-    public DateOnly? emailGestuurdDatum { get; set; }
+    public DateOnly? EmailGestuurdDatum { get; set; }
 
-    public virtual Artikel artikel { get; set; } = null!;
+    public virtual Artikel Artikel { get; set; } = null!;
 
-    public virtual GebruikersAccount gebruikersAccount { get; set; } = null!;
+    public virtual GebruikersAccount GebruikersAccount { get; set; } = null!;
 }
