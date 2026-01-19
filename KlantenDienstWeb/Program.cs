@@ -1,5 +1,6 @@
 using KlantenDienstData.Models;
 using KlantenDienstData.Repositories;
+using KlantenDienstServices;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<PrulariaDbContext>(options =>
 
 //Repositories
 builder.Services.AddScoped<IArtikelRepository, SqlArtikelRepository>();
+builder.Services.AddScoped<ArtikelService>();
 
 
 var app = builder.Build();

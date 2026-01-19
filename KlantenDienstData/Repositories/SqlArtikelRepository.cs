@@ -17,7 +17,7 @@ namespace KlantenDienstData.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Artikel>> GetAllArtikelenAsync() =>
+        public async Task<List<Artikel>> GetAllArtikelenAsync() =>
             await _context.Artikelen
             .Include(a => a.Categorieën)
             .Include(a => a.Bestellijnen)

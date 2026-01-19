@@ -10,7 +10,7 @@ namespace KlantenDienstData.Repositories
 {
     public interface IArtikelRepository
     {
-       Task<IEnumerable<Artikel>> GetAllArtikelenAsync();
+       Task<List<Artikel>> GetAllArtikelenAsync();
 
     }
 }

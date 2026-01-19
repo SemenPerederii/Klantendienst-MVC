@@ -16,7 +16,7 @@ namespace KlantenDienstServices
             _artikelRepository = artikelRepository;
         }
 
-        public async Task<IEnumerable<Artikel>> GetAllArtikelenAsync()
+        public async Task<List<Artikel>> GetAllArtikelenAsync()
         {
             return await _artikelRepository.GetAllArtikelenAsync();
         }
