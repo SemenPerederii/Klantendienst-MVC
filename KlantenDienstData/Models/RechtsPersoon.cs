@@ -5,13 +5,13 @@ namespace KlantenDienstData.Models;
 
 public partial class RechtsPersoon
 {
-    public int klantId { get; set; }
+    public int KlantId { get; set; }
 
-    public string naam { get; set; } = null!;
+    public string Naam { get; set; } = null!;
 
-    public string btwNummer { get; set; } = null!;
+    public string BTWNummer { get; set; } = null!;
 
-    public virtual ICollection<Contactpersoon> contactpersonens { get; set; } = new List<Contactpersoon>();
+    public virtual ICollection<Contactpersoon> Contactpersonen { get; set; } = new List<Contactpersoon>();
 
-    public virtual Klant klant { get; set; } = null!;
+    public virtual Klant Klant { get; set; } = null!;
 }

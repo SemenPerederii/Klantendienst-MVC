@@ -16,19 +16,19 @@ public partial class PrulariaDbContext : DbContext
     {
     }
 
-    public virtual DbSet<actiecode> actiecodes { get; set; }
+    public virtual DbSet<Actiecode> Actiecodes { get; set; }
 
-    public virtual DbSet<Adres> adressens { get; set; }
+    public virtual DbSet<Adres> Adressens { get; set; }
 
-    public virtual DbSet<Artikel> artikelens { get; set; }
+    public virtual DbSet<Artikel> Artikelen { get; set; }
 
-    public virtual DbSet<ArtikelLeveranciersInfolijn> artikelleveranciersinfolijnens { get; set; }
+    public virtual DbSet<ArtikelLeveranciersInfolijn> Artikelleveranciersinfolijnen { get; set; }
 
-    public virtual DbSet<Bestellijn> bestellijnens { get; set; }
+    public virtual DbSet<Bestellijn> Bestellijnen { get; set; }
 
-    public virtual DbSet<Bestelling> bestellingens { get; set; }
+    public virtual DbSet<Bestelling> Bestellingen { get; set; }
 
-    public virtual DbSet<Bestellingsstatus> bestellingsstatussens { get; set; }
+    public virtual DbSet<Bestellingsstatus> Bestellingsstatussen { get; set; }
 
     public virtual DbSet<betaalwijze> betaalwijzes { get; set; }
 

@@ -5,23 +5,23 @@ namespace KlantenDienstData.Models;
 
 public partial class UitgaandeLevering
 {
-    public int uitgaandeLeveringsId { get; set; }
+    public int UitgaandeLeveringsId { get; set; }
 
-    public int bestelId { get; set; }
+    public int BestelId { get; set; }
 
-    public DateOnly vertrekDatum { get; set; }
+    public DateOnly VertrekDatum { get; set; }
 
-    public DateOnly? aankomstDatum { get; set; }
+    public DateOnly? AankomstDatum { get; set; }
 
-    public string trackingcode { get; set; } = null!;
+    public string Trackingcode { get; set; } = null!;
 
-    public int klantId { get; set; }
+    public int KlantId { get; set; }
 
-    public int uitgaandeLeveringsStatusId { get; set; }
+    public int UitgaandeLeveringsStatusId { get; set; }
 
-    public virtual Bestelling bestel { get; set; } = null!;
+    public virtual Bestelling Bestel { get; set; } = null!;
 
-    public virtual Klant klant { get; set; } = null!;
+    public virtual Klant Klant { get; set; } = null!;
 
-    public virtual UitgaandeLeveringsStatus uitgaandeLeveringsStatus { get; set; } = null!;
+    public virtual UitgaandeLeveringsStatus UitgaandeLeveringsStatus { get; set; } = null!;
 }

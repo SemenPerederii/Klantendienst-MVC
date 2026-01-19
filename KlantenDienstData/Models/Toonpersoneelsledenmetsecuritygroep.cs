@@ -5,11 +5,11 @@ namespace KlantenDienstData.Models;
 
 public partial class Toonpersoneelsledenmetsecuritygroep
 {
-    public string voornaam { get; set; } = null!;
+    public string Voornaam { get; set; } = null!;
 
-    public string familienaam { get; set; } = null!;
+    public string Familienaam { get; set; } = null!;
 
-    public string emailadres { get; set; } = null!;
+    public string Emailadres { get; set; } = null!;
 
-    public string naam { get; set; } = null!;
+    public string Naam { get; set; } = null!;
 }
