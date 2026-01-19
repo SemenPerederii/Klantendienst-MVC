@@ -29,3 +29,16 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+.cs-groen {
+    background-color: #ABD7A8;
+}
+.cs-logo{
+    height:4em;
+}
+.cs-navlink{
+    font-size:2em;
+    color:#808080;
+    margin:0.5em;
+    text-decoration:none;
+    display:inline;
+}
