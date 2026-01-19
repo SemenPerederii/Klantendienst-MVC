@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlantenDienstWeb", "Klanten
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlantenDienstData", "KlantenDienstData\KlantenDienstData.csproj", "{49ABCE74-ED83-42F1-A6A1-664F62A7CAB4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlantDienstServices", "KlantDienstServices\KlantDienstServices.csproj", "{F5394736-9668-4274-A314-FF4FB9820042}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{49ABCE74-ED83-42F1-A6A1-664F62A7CAB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49ABCE74-ED83-42F1-A6A1-664F62A7CAB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49ABCE74-ED83-42F1-A6A1-664F62A7CAB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5394736-9668-4274-A314-FF4FB9820042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5394736-9668-4274-A314-FF4FB9820042}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5394736-9668-4274-A314-FF4FB9820042}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5394736-9668-4274-A314-FF4FB9820042}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
