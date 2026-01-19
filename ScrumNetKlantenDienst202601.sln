@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36811.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlantenDienstWeb", "KlantenDienstWeb\KlantenDienstWeb.csproj", "{A5B26F98-B4A9-4B76-8897-B0ABD7F139EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlantenDienstData", "KlantenDienstData\KlantenDienstData.csproj", "{49ABCE74-ED83-42F1-A6A1-664F62A7CAB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A5B26F98-B4A9-4B76-8897-B0ABD7F139EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5B26F98-B4A9-4B76-8897-B0ABD7F139EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5B26F98-B4A9-4B76-8897-B0ABD7F139EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49ABCE74-ED83-42F1-A6A1-664F62A7CAB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49ABCE74-ED83-42F1-A6A1-664F62A7CAB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49ABCE74-ED83-42F1-A6A1-664F62A7CAB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49ABCE74-ED83-42F1-A6A1-664F62A7CAB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
