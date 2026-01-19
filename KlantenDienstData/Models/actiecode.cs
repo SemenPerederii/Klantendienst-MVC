@@ -5,13 +5,13 @@ namespace KlantenDienstData.Models;
 
 public partial class Actiecode
 {
-    public int actiecodeId { get; set; }
+    public int ActiecodeId { get; set; }
 
-    public string naam { get; set; } = null!;
+    public string Naam { get; set; } = null!;
 
-    public DateOnly geldigVanDatum { get; set; }
+    public DateOnly GeldigVanDatum { get; set; }
 
-    public DateOnly geldigTotDatum { get; set; }
+    public DateOnly GeldigTotDatum { get; set; }
 
-    public bool isEenmalig { get; set; }
+    public bool IsEenmalig { get; set; }
 }

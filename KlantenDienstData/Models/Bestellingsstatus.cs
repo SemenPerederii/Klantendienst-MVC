@@ -5,9 +5,9 @@ namespace KlantenDienstData.Models;
 
 public partial class Bestellingsstatus
 {
-    public int bestellingsStatusId { get; set; }
+    public int BestellingsStatusId { get; set; }
 
-    public string naam { get; set; } = null!;
+    public string Naam { get; set; } = null!;
 
-    public virtual ICollection<Bestelling> bestellingens { get; set; } = new List<Bestelling>();
+    public virtual ICollection<Bestelling> Bestellingen { get; set; } = new List<Bestelling>();
 }

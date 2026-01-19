@@ -5,19 +5,19 @@ namespace KlantenDienstData.Models;
 
 public partial class Bestellijn
 {
-    public int bestellijnId { get; set; }
+    public int BestellijnId { get; set; }
 
-    public int bestelId { get; set; }
+    public int BestelId { get; set; }
 
-    public int artikelId { get; set; }
+    public int ArtikelId { get; set; }
 
-    public int aantalBesteld { get; set; }
+    public int AantalBesteld { get; set; }
 
-    public int aantalGeannuleerd { get; set; }
+    public int AantalGeannuleerd { get; set; }
 
-    public virtual Artikel artikel { get; set; } = null!;
+    public virtual Artikel Artikel { get; set; } = null!;
 
-    public virtual Bestelling bestel { get; set; } = null!;
+    public virtual Bestelling Bestel { get; set; } = null!;
 
-    public virtual ICollection<KlantReview> klantenreviews { get; set; } = new List<KlantReview>();
+    public virtual ICollection<KlantReview> Klantenreviews { get; set; } = new List<KlantReview>();
 }

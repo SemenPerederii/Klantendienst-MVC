@@ -5,11 +5,11 @@ namespace KlantenDienstData.Models;
 
 public partial class Chatgesprek
 {
-    public int chatgesprekId { get; set; }
+    public int ChatgesprekId { get; set; }
 
-    public int gebruikersAccountId { get; set; }
+    public int GebruikersAccountId { get; set; }
 
-    public virtual ICollection<Chatgespreklijn> chatgespreklijnens { get; set; } = new List<Chatgespreklijn>();
+    public virtual ICollection<Chatgespreklijn> Chatgespreklijnen { get; set; } = new List<Chatgespreklijn>();
 
-    public virtual GebruikersAccount gebruikersAccount { get; set; } = null!;
+    public virtual GebruikersAccount GebruikersAccount { get; set; } = null!;
 }

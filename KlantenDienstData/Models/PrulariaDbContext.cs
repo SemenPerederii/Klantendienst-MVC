@@ -16,71 +16,67 @@ public partial class PrulariaDbContext : DbContext
     {
     }
 
-    public virtual DbSet<actiecode> actiecodes { get; set; }
+    public virtual DbSet<Actiecode> Actiecodes { get; set; }
 
-    public virtual DbSet<Adres> adressens { get; set; }
+    public virtual DbSet<Adres> Adressen { get; set; }
 
-    public virtual DbSet<Artikel> artikelens { get; set; }
+    public virtual DbSet<Artikel> Artikelen { get; set; }
 
-    public virtual DbSet<ArtikelLeveranciersInfolijn> artikelleveranciersinfolijnens { get; set; }
+    public virtual DbSet<ArtikelLeveranciersInfolijn> Artikelleveranciersinfolijnen { get; set; }
 
-    public virtual DbSet<Bestellijn> bestellijnens { get; set; }
+    public virtual DbSet<Bestellijn> Bestellijnen { get; set; }
 
-    public virtual DbSet<Bestelling> bestellingens { get; set; }
+    public virtual DbSet<Bestelling> Bestellingen { get; set; }
 
-    public virtual DbSet<Bestellingsstatus> bestellingsstatussens { get; set; }
+    public virtual DbSet<Bestellingsstatus> Bestellingsstatussen { get; set; }
 
-    public virtual DbSet<betaalwijze> betaalwijzes { get; set; }
+    public virtual DbSet<Betaalwijze> Betaalwijzen { get; set; }
 
-    public virtual DbSet<Categorie> categorieens { get; set; }
+    public virtual DbSet<Categorie> Categorieen { get; set; }
 
-    public virtual DbSet<Chatgesprek> chatgesprekkens { get; set; }
+    public virtual DbSet<Chatgesprek> Chatgesprekken { get; set; }
 
-    public virtual DbSet<Chatgespreklijn> chatgespreklijnens { get; set; }
+    public virtual DbSet<Chatgespreklijn> Chatgespreklijnen { get; set; }
 
-    public virtual DbSet<Contactpersoon> contactpersonens { get; set; }
+    public virtual DbSet<Contactpersoon> Contactpersonen { get; set; }
 
-    public virtual DbSet<Eventwachtrijartikel> eventwachtrijartikelens { get; set; }
+    public virtual DbSet<EventwachtrijArtikel> EventwachtrijArtikelen { get; set; }
 
-    public virtual DbSet<GebruikersAccount> gebruikersaccounts { get; set; }
+    public virtual DbSet<GebruikersAccount> GebruikersAccounts { get; set; }
 
-    public virtual DbSet<InkomendeLevering> inkomendeleveringens { get; set; }
+    public virtual DbSet<InkomendeLevering> InkomendeLeveringens { get; set; }
 
-    public virtual DbSet<InkomendeLeveringslijn> inkomendeleveringslijnens { get; set; }
+    public virtual DbSet<InkomendeLeveringslijn> Inkomendeleveringslijnens { get; set; }
 
     public virtual DbSet<Klant> klantens { get; set; }
 
-    public virtual DbSet<KlantReview> klantenreviews { get; set; }
+    public virtual DbSet<KlantReview> KlantenReviews { get; set; }
 
-    public virtual DbSet<leverancier> leveranciers { get; set; }
+    public virtual DbSet<Leverancier> Leveranciers { get; set; }
 
-    public virtual DbSet<MagazijnPlaats> magazijnplaatsens { get; set; }
+    public virtual DbSet<MagazijnPlaats> MagazijnPlaatsen { get; set; }
 
-    public virtual DbSet<NatuurlijkePersoon> natuurlijkepersonens { get; set; }
+    public virtual DbSet<NatuurlijkePersoon> NatuurlijkePersonen { get; set; }
 
-    public virtual DbSet<PersoneelsLid> personeelsledens { get; set; }
+    public virtual DbSet<PersoneelsLid> PersoneelsLeden { get; set; }
 
-    public virtual DbSet<personeelslidaccount> personeelslidaccounts { get; set; }
+    public virtual DbSet<PersoneelsLidAccount> PersoneelsLidAccounts { get; set; }
 
-    public virtual DbSet<Plaats> plaatsens { get; set; }
+    public virtual DbSet<Plaats> Plaatsen { get; set; }
 
-    public virtual DbSet<RechtsPersoon> rechtspersonens { get; set; }
+    public virtual DbSet<RechtsPersoon> RechtsPersonen { get; set; }
 
-    public virtual DbSet<SecurityGroep> securitygroepens { get; set; }
+    public virtual DbSet<SecurityGroep> SecurityGroepen { get; set; }
 
-    public virtual DbSet<Toonpersoneelsledenmetsecuritygroep> toonpersoneelsledenmetsecuritygroepens { get; set; }
+    public virtual DbSet<Toonpersoneelsledenmetsecuritygroep> Toonpersoneelsledenmetsecuritygroepen { get; set; }
 
-    public virtual DbSet<UitgaandeLevering> uitgaandeleveringens { get; set; }
+    public virtual DbSet<UitgaandeLevering> UitgaandeLeveringen { get; set; }
 
-    public virtual DbSet<UitgaandeLeveringsStatus> uitgaandeleveringsstatussens { get; set; }
+    public virtual DbSet<UitgaandeLeveringsStatus> UitgaandeLeveringsStatussen { get; set; }
 
-    public virtual DbSet<veelgesteldevragenartikel> veelgesteldevragenartikels { get; set; }
+    public virtual DbSet<VeelgesteldevragenArtikel> VeelgesteldevragenArtikels { get; set; }
 
-    public virtual DbSet<wishlistitem> wishlistitems { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=localhost;database=prulariacom;user=root;password=seemeen.p", ServerVersion.Parse("8.0.44-mysql"));
+    public virtual DbSet<Wishlistitem> Wishlistitems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -88,29 +84,29 @@ public partial class PrulariaDbContext : DbContext
             .UseCollation("utf8mb3_general_ci")
             .HasCharSet("utf8mb3");
 
-        modelBuilder.Entity<actiecode>(entity =>
+        modelBuilder.Entity<Actiecode>(entity =>
         {
-            entity.HasKey(e => e.actiecodeId).HasName("PRIMARY");
+            entity.HasKey(e => e.ActiecodeId).HasName("PRIMARY");
 
-            entity.Property(e => e.naam).HasMaxLength(45);
+            entity.Property(e => e.Naam).HasMaxLength(45);
         });
 
         modelBuilder.Entity<Adres>(entity =>
         {
-            entity.HasKey(e => e.adresId).HasName("PRIMARY");
+            entity.HasKey(e => e.AdresId).HasName("PRIMARY");
 
             entity.ToTable("adressen");
 
-            entity.HasIndex(e => e.plaatsId, "fk_Adressen_Plaatsen_idx");
+            entity.HasIndex(e => e.PlaatsId, "fk_Adressen_Plaatsen_idx");
 
-            entity.Property(e => e.actief)
+            entity.Property(e => e.Actief)
                 .IsRequired()
                 .HasDefaultValueSql("'1'");
-            entity.Property(e => e.bus).HasMaxLength(5);
-            entity.Property(e => e.huisNummer).HasMaxLength(5);
-            entity.Property(e => e.straat).HasMaxLength(100);
+            entity.Property(e => e.Bus).HasMaxLength(5);
+            entity.Property(e => e.HuisNummer).HasMaxLength(5);
+            entity.Property(e => e.Straat).HasMaxLength(100);
 
-            entity.HasOne(d => d.plaats).WithMany(p => p.adressens)
+            entity.HasOne(d => d.Plaats).WithMany(p => p.Adressen)
                 .HasForeignKey(d => d.plaatsId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Adressen_Plaatsen");
@@ -118,41 +114,41 @@ public partial class PrulariaDbContext : DbContext
 
         modelBuilder.Entity<Artikel>(entity =>
         {
-            entity.HasKey(e => e.artikelId).HasName("PRIMARY");
+            entity.HasKey(e => e.ArtikelId).HasName("PRIMARY");
 
             entity.ToTable("artikelen");
 
-            entity.HasIndex(e => e.ean, "ean_UNIQUE").IsUnique();
+            entity.HasIndex(e => e.EAN, "ean_UNIQUE").IsUnique();
 
-            entity.HasIndex(e => e.leveranciersId, "fk_Artikelen_Leveranciers");
+            entity.HasIndex(e => e.LeveranciersId, "fk_Artikelen_Leveranciers");
 
-            entity.Property(e => e.beschrijving).HasMaxLength(255);
-            entity.Property(e => e.ean).HasMaxLength(13);
-            entity.Property(e => e.levertijd).HasDefaultValueSql("'1'");
-            entity.Property(e => e.naam).HasMaxLength(45);
-            entity.Property(e => e.prijs).HasPrecision(18, 5);
+            entity.Property(e => e.Beschrijving).HasMaxLength(255);
+            entity.Property(e => e.EAN).HasMaxLength(13);
+            entity.Property(e => e.Levertijd).HasDefaultValueSql("'1'");
+            entity.Property(e => e.Naam).HasMaxLength(45);
+            entity.Property(e => e.Prijs).HasPrecision(18, 5);
 
-            entity.HasOne(d => d.leveranciers).WithMany(p => p.artikelens)
-                .HasForeignKey(d => d.leveranciersId)
+            entity.HasOne(d => d.Leveranciers).WithMany(p => p.artikelens)
+                .HasForeignKey(d => d.LeveranciersId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Artikelen_Leveranciers");
         });
 
         modelBuilder.Entity<ArtikelLeveranciersInfolijn>(entity =>
         {
-            entity.HasKey(e => new { e.artikelLeveranciersInfoLijnId, e.artikelId })
+            entity.HasKey(e => new { e.ArtikelLeveranciersInfoLijnId, e.ArtikelId })
                 .HasName("PRIMARY")
                 .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
             entity.ToTable("artikelleveranciersinfolijnen");
 
-            entity.HasIndex(e => e.artikelId, "fk_ArtikelLeveranciersInfoLijnen_Artikelen1_idx");
+            entity.HasIndex(e => e.ArtikelId, "fk_ArtikelLeveranciersInfoLijnen_Artikelen1_idx");
 
-            entity.Property(e => e.artikelLeveranciersInfoLijnId).ValueGeneratedOnAdd();
-            entity.Property(e => e.antwoord).HasMaxLength(255);
-            entity.Property(e => e.vraag).HasMaxLength(255);
+            entity.Property(e => e.ArtikelLeveranciersInfoLijnId).ValueGeneratedOnAdd();
+            entity.Property(e => e.Antwoord).HasMaxLength(255);
+            entity.Property(e => e.Vraag).HasMaxLength(255);
 
-            entity.HasOne(d => d.artikel).WithMany(p => p.artikelleveranciersinfolijnens)
+            entity.HasOne(d => d.Artikel).WithMany(p => p.artikelleveranciersinfolijnens)
                 .HasForeignKey(d => d.artikelId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_ArtikelLeveranciersInfoLijnen_Artikelen1");
@@ -160,70 +156,70 @@ public partial class PrulariaDbContext : DbContext
 
         modelBuilder.Entity<Bestellijn>(entity =>
         {
-            entity.HasKey(e => e.bestellijnId).HasName("PRIMARY");
+            entity.HasKey(e => e.BestellijnId).HasName("PRIMARY");
 
             entity.ToTable("bestellijnen");
 
-            entity.HasIndex(e => e.artikelId, "fk_Bestellijnen_Artikelen1_idx");
+            entity.HasIndex(e => e.ArtikelId, "fk_Bestellijnen_Artikelen1_idx");
 
-            entity.HasIndex(e => e.bestelId, "fk_Bestellijnen_Bestellingen1_idx");
+            entity.HasIndex(e => e.BestelId, "fk_Bestellijnen_Bestellingen1_idx");
 
-            entity.HasOne(d => d.artikel).WithMany(p => p.bestellijnens)
+            entity.HasOne(d => d.Artikel).WithMany(p => p.bestellijnens)
                 .HasForeignKey(d => d.artikelId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Bestellijnen_Artikelen1");
 
-            entity.HasOne(d => d.bestel).WithMany(p => p.bestellijnens)
-                .HasForeignKey(d => d.bestelId)
+            entity.HasOne(d => d.Bestel).WithMany(p => p.Bestellijnen)
+                .HasForeignKey(d => d.BestelId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Bestellijnen_Bestellingen1");
         });
 
         modelBuilder.Entity<Bestelling>(entity =>
         {
-            entity.HasKey(e => e.bestelId).HasName("PRIMARY");
+            entity.HasKey(e => e.BestelId).HasName("PRIMARY");
 
             entity.ToTable("bestellingen");
 
-            entity.HasIndex(e => e.facturatieAdresId, "fk_Bestellingen_Adressen1_idx");
+            entity.HasIndex(e => e.FacturatieAdresId, "fk_Bestellingen_Adressen1_idx");
 
-            entity.HasIndex(e => e.leveringsAdresId, "fk_Bestellingen_Adressen2_idx");
+            entity.HasIndex(e => e.LeveringsAdresId, "fk_Bestellingen_Adressen2_idx");
 
-            entity.HasIndex(e => e.bestellingsStatusId, "fk_Bestellingen_BestellingsStatussen1_idx");
+            entity.HasIndex(e => e.BestellingsStatusId, "fk_Bestellingen_BestellingsStatussen1_idx");
 
-            entity.HasIndex(e => e.betaalwijzeId, "fk_Bestellingen_Betaalwijzes1_idx");
+            entity.HasIndex(e => e.BetaalwijzeId, "fk_Bestellingen_Betaalwijzes1_idx");
 
-            entity.HasIndex(e => e.klantId, "fk_Bestellingen_Klanten1_idx");
+            entity.HasIndex(e => e.KlantId, "fk_Bestellingen_Klanten1_idx");
 
-            entity.Property(e => e.bedrijfsnaam).HasMaxLength(45);
-            entity.Property(e => e.besteldatum).HasColumnType("datetime");
-            entity.Property(e => e.betalingscode).HasMaxLength(45);
-            entity.Property(e => e.btwNummer).HasMaxLength(45);
-            entity.Property(e => e.familienaam).HasMaxLength(45);
-            entity.Property(e => e.terugbetalingscode).HasMaxLength(45);
-            entity.Property(e => e.voornaam).HasMaxLength(45);
+            entity.Property(e => e.Bedrijfsnaam).HasMaxLength(45);
+            entity.Property(e => e.Besteldatum).HasColumnType("datetime");
+            entity.Property(e => e.Betalingscode).HasMaxLength(45);
+            entity.Property(e => e.BTWNummer).HasMaxLength(45);
+            entity.Property(e => e.Familienaam).HasMaxLength(45);
+            entity.Property(e => e.Terugbetalingscode).HasMaxLength(45);
+            entity.Property(e => e.Voornaam).HasMaxLength(45);
 
-            entity.HasOne(d => d.bestellingsStatus).WithMany(p => p.bestellingens)
-                .HasForeignKey(d => d.bestellingsStatusId)
+            entity.HasOne(d => d.BestellingsStatus).WithMany(p => p.Bestellingen)
+                .HasForeignKey(d => d.BestellingsStatusId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Bestellingen_BestellingsStatussen1");
 
-            entity.HasOne(d => d.betaalwijze).WithMany(p => p.bestellingens)
-                .HasForeignKey(d => d.betaalwijzeId)
+            entity.HasOne(d => d.Betaalwijze).WithMany(p => p.bestellingens)
+                .HasForeignKey(d => d.BetaalwijzeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Bestellingen_Betaalwijzes1");
 
-            entity.HasOne(d => d.facturatieAdres).WithMany(p => p.bestellingenfacturatieAdres)
+            entity.HasOne(d => d.FacturatieAdres).WithMany(p => p.bestellingenfacturatieAdres)
                 .HasForeignKey(d => d.facturatieAdresId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Bestellingen_Adressen1");
 
-            entity.HasOne(d => d.klant).WithMany(p => p.bestellingens)
-                .HasForeignKey(d => d.klantId)
+            entity.HasOne(d => d.Klant).WithMany(p => p.bestellingens)
+                .HasForeignKey(d => d.KlantId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Bestellingen_Klanten1");
 
-            entity.HasOne(d => d.leveringsAdres).WithMany(p => p.bestellingenleveringsAdres)
+            entity.HasOne(d => d.LeveringsAdres).WithMany(p => p.bestellingenleveringsAdres)
                 .HasForeignKey(d => d.leveringsAdresId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Bestellingen_Adressen2");
@@ -231,11 +227,11 @@ public partial class PrulariaDbContext : DbContext
 
         modelBuilder.Entity<Bestellingsstatus>(entity =>
         {
-            entity.HasKey(e => e.bestellingsStatusId).HasName("PRIMARY");
+            entity.HasKey(e => e.BestellingsStatusId).HasName("PRIMARY");
 
             entity.ToTable("bestellingsstatussen");
 
-            entity.Property(e => e.naam).HasMaxLength(45);
+            entity.Property(e => e.Naam).HasMaxLength(45);
         });
 
         modelBuilder.Entity<betaalwijze>(entity =>
@@ -247,19 +243,19 @@ public partial class PrulariaDbContext : DbContext
 
         modelBuilder.Entity<Categorie>(entity =>
         {
-            entity.HasKey(e => e.categorieId).HasName("PRIMARY");
+            entity.HasKey(e => e.CategorieId).HasName("PRIMARY");
 
             entity.ToTable("categorieen");
 
-            entity.HasIndex(e => e.hoofdCategorieId, "fk_Categorieen_Categorieen1_idx");
+            entity.HasIndex(e => e.HoofdCategorieId, "fk_Categorieen_Categorieen1_idx");
 
-            entity.Property(e => e.naam).HasMaxLength(45);
+            entity.Property(e => e.Naam).HasMaxLength(45);
 
-            entity.HasOne(d => d.hoofdCategorie).WithMany(p => p.InversehoofdCategorie)
-                .HasForeignKey(d => d.hoofdCategorieId)
+            entity.HasOne(d => d.HoofdCategorie).WithMany(p => p.InversehoofdCategorie)
+                .HasForeignKey(d => d.HoofdCategorieId)
                 .HasConstraintName("fk_Categorieen_Categorieen1");
 
-            entity.HasMany(d => d.artikels).WithMany(p => p.categories)
+            entity.HasMany(d => d.Artikelen).WithMany(p => p.categories)
                 .UsingEntity<Dictionary<string, object>>(
                     "artikelcategorieen",
                     r => r.HasOne<Artikel>().WithMany()
@@ -282,47 +278,47 @@ public partial class PrulariaDbContext : DbContext
 
         modelBuilder.Entity<Chatgesprek>(entity =>
         {
-            entity.HasKey(e => e.chatgesprekId).HasName("PRIMARY");
+            entity.HasKey(e => e.ChatgesprekId).HasName("PRIMARY");
 
             entity.ToTable("chatgesprekken");
 
-            entity.HasIndex(e => e.gebruikersAccountId, "fk_ChatGesprekken_GebruikersAccounts1_idx");
+            entity.HasIndex(e => e.GebruikersAccountId, "fk_ChatGesprekken_GebruikersAccounts1_idx");
 
-            entity.HasOne(d => d.gebruikersAccount).WithMany(p => p.chatgesprekkens)
-                .HasForeignKey(d => d.gebruikersAccountId)
+            entity.HasOne(d => d.GebruikersAccount).WithMany(p => p.chatgesprekkens)
+                .HasForeignKey(d => d.GebruikersAccountId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_ChatGesprekken_GebruikersAccounts1");
         });
 
         modelBuilder.Entity<Chatgespreklijn>(entity =>
         {
-            entity.HasKey(e => e.chatgesprekLijnId).HasName("PRIMARY");
+            entity.HasKey(e => e.ChatgesprekLijnId).HasName("PRIMARY");
 
             entity.ToTable("chatgespreklijnen");
 
-            entity.HasIndex(e => e.chatgesprekId, "fk_ChatgesprekLijnen_ChatGesprekken1_idx");
+            entity.HasIndex(e => e.ChatgesprekId, "fk_ChatgesprekLijnen_ChatGesprekken1_idx");
 
-            entity.HasIndex(e => e.gebruikersAccountId, "fk_ChatgesprekLijnen_GebruikersAccounts1_idx");
+            entity.HasIndex(e => e.GebruikersAccountId, "fk_ChatgesprekLijnen_GebruikersAccounts1_idx");
 
-            entity.HasIndex(e => e.personeelslidAccountId, "fk_ChatgesprekLijnen_PersoneelslidAccounts1_idx");
+            entity.HasIndex(e => e.PersoneelslidAccountId, "fk_ChatgesprekLijnen_PersoneelslidAccounts1_idx");
 
-            entity.Property(e => e.bericht).HasMaxLength(255);
-            entity.Property(e => e.gebruikersAccountId).HasDefaultValueSql("'0'");
-            entity.Property(e => e.personeelslidAccountId).HasDefaultValueSql("'0'");
-            entity.Property(e => e.tijdstip)
+            entity.Property(e => e.Bericht).HasMaxLength(255);
+            entity.Property(e => e.GebruikersAccountId).HasDefaultValueSql("'0'");
+            entity.Property(e => e.PersoneelslidAccountId).HasDefaultValueSql("'0'");
+            entity.Property(e => e.Tijdstip)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp");
 
-            entity.HasOne(d => d.chatgesprek).WithMany(p => p.chatgespreklijnens)
-                .HasForeignKey(d => d.chatgesprekId)
+            entity.HasOne(d => d.Chatgesprek).WithMany(p => p.Chatgespreklijnen)
+                .HasForeignKey(d => d.ChatgesprekId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_ChatgesprekLijnen_ChatGesprekken1");
 
-            entity.HasOne(d => d.gebruikersAccount).WithMany(p => p.chatgespreklijnens)
-                .HasForeignKey(d => d.gebruikersAccountId)
+            entity.HasOne(d => d.GebruikersAccount).WithMany(p => p.chatgespreklijnens)
+                .HasForeignKey(d => d.GebruikersAccountId)
                 .HasConstraintName("fk_ChatgesprekLijnen_GebruikersAccounts1");
 
-            entity.HasOne(d => d.personeelslidAccount).WithMany(p => p.chatgespreklijnens)
+            entity.HasOne(d => d.PersoneelsLidAccount).WithMany(p => p.chatgespreklijnens)
                 .HasForeignKey(d => d.personeelslidAccountId)
                 .HasConstraintName("fk_ChatgesprekLijnen_PersoneelslidAccounts1");
         });
@@ -447,7 +443,7 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.commentaar).HasMaxLength(255);
             entity.Property(e => e.nickname).HasMaxLength(45);
 
-            entity.HasOne(d => d.bestellijn).WithMany(p => p.klantenreviews)
+            entity.HasOne(d => d.bestellijn).WithMany(p => p.Klantenreviews)
                 .HasForeignKey(d => d.bestellijnId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_KlantenReviews_Bestellijnen1");
@@ -628,7 +624,7 @@ public partial class PrulariaDbContext : DbContext
 
             entity.Property(e => e.trackingcode).HasMaxLength(45);
 
-            entity.HasOne(d => d.bestel).WithMany(p => p.uitgaandeleveringens)
+            entity.HasOne(d => d.bestel).WithMany(p => p.Uitgaandeleveringen)
                 .HasForeignKey(d => d.bestelId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_UitgaandeLeveringen_Bestellingen1");

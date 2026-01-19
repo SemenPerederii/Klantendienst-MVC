@@ -5,21 +5,21 @@ namespace KlantenDienstData.Models;
 
 public partial class Chatgespreklijn
 {
-    public int chatgesprekLijnId { get; set; }
+    public int ChatgesprekLijnId { get; set; }
 
-    public int chatgesprekId { get; set; }
+    public int ChatgesprekId { get; set; }
 
-    public string bericht { get; set; } = null!;
+    public string Bericht { get; set; } = null!;
 
-    public DateTime tijdstip { get; set; }
+    public DateTime Tijdstip { get; set; }
 
-    public int? gebruikersAccountId { get; set; }
+    public int? GebruikersAccountId { get; set; }
 
-    public int? personeelslidAccountId { get; set; }
+    public int? PersoneelslidAccountId { get; set; }
 
-    public virtual Chatgesprek chatgesprek { get; set; } = null!;
+    public virtual Chatgesprek Chatgesprek { get; set; } = null!;
 
-    public virtual GebruikersAccount? gebruikersAccount { get; set; }
+    public virtual GebruikersAccount? GebruikersAccount { get; set; }
 
-    public virtual personeelslidaccount? personeelslidAccount { get; set; }
+    public virtual PersoneelsLidAccount? PersoneelsLidAccount { get; set; }
 }

@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class personeelslidaccount
+public partial class PersoneelsLidAccount
 {
-    public int personeelslidAccountId { get; set; }
+    public int PersoneelslidAccountId { get; set; }
 
-    public string emailadres { get; set; } = null!;
+    public string Emailadres { get; set; } = null!;
 
-    public string paswoord { get; set; } = null!;
+    public string Passwoord { get; set; } = null!;
 
-    public bool disabled { get; set; }
+    public bool Disabled { get; set; }
 
-    public virtual ICollection<Chatgespreklijn> chatgespreklijnens { get; set; } = new List<Chatgespreklijn>();
+    public virtual ICollection<Chatgespreklijn> Chatgespreklijnen { get; set; } = new List<Chatgespreklijn>();
 
-    public virtual ICollection<PersoneelsLid> personeelsledens { get; set; } = new List<PersoneelsLid>();
+    public virtual ICollection<PersoneelsLid> Personeelsleden { get; set; } = new List<PersoneelsLid>();
 }

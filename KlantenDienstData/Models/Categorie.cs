@@ -5,15 +5,15 @@ namespace KlantenDienstData.Models;
 
 public partial class Categorie
 {
-    public int categorieId { get; set; }
+    public int CategorieId { get; set; }
 
-    public string naam { get; set; } = null!;
+    public string Naam { get; set; } = null!;
 
-    public int? hoofdCategorieId { get; set; }
+    public int? HoofdCategorieId { get; set; }
 
     public virtual ICollection<Categorie> InversehoofdCategorie { get; set; } = new List<Categorie>();
 
-    public virtual Categorie? hoofdCategorie { get; set; }
+    public virtual Categorie? HoofdCategorie { get; set; }
 
-    public virtual ICollection<Artikel> artikels { get; set; } = new List<Artikel>();
+    public virtual ICollection<Artikel> Artikelen { get; set; } = new List<Artikel>();
 }

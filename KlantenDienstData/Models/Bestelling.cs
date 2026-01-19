@@ -5,51 +5,51 @@ namespace KlantenDienstData.Models;
 
 public partial class Bestelling
 {
-    public int bestelId { get; set; }
+    public int BestelId { get; set; }
 
-    public DateTime besteldatum { get; set; }
+    public DateTime Besteldatum { get; set; }
 
-    public int klantId { get; set; }
+    public int KlantId { get; set; }
 
-    public bool betaald { get; set; }
+    public bool Betaald { get; set; }
 
-    public string? betalingscode { get; set; }
+    public string? Betalingscode { get; set; }
 
-    public int betaalwijzeId { get; set; }
+    public int BetaalwijzeId { get; set; }
 
-    public bool annulatie { get; set; }
+    public bool Annulatie { get; set; }
 
-    public DateOnly? annulatiedatum { get; set; }
+    public DateOnly? AnnulatieDatum { get; set; }
 
-    public string? terugbetalingscode { get; set; }
+    public string? Terugbetalingscode { get; set; }
 
-    public int bestellingsStatusId { get; set; }
+    public int BestellingsStatusId { get; set; }
 
-    public bool actiecodeGebruikt { get; set; }
+    public bool ActiecodeGebruikt { get; set; }
 
-    public string? bedrijfsnaam { get; set; }
+    public string? Bedrijfsnaam { get; set; }
 
-    public string? btwNummer { get; set; }
+    public string? BTWNummer { get; set; }
 
-    public string voornaam { get; set; } = null!;
+    public string Voornaam { get; set; } = null!;
 
-    public string familienaam { get; set; } = null!;
+    public string Familienaam { get; set; } = null!;
 
-    public int facturatieAdresId { get; set; }
+    public int FacturatieAdresId { get; set; }
 
-    public int leveringsAdresId { get; set; }
+    public int LeveringsAdresId { get; set; }
 
-    public virtual ICollection<Bestellijn> bestellijnens { get; set; } = new List<Bestellijn>();
+    public virtual ICollection<Bestellijn> Bestellijnen { get; set; } = new List<Bestellijn>();
 
-    public virtual Bestellingsstatus bestellingsStatus { get; set; } = null!;
+    public virtual Bestellingsstatus BestellingsStatus { get; set; } = null!;
 
-    public virtual betaalwijze betaalwijze { get; set; } = null!;
+    public virtual Betaalwijze Betaalwijze { get; set; } = null!;
 
-    public virtual Adres facturatieAdres { get; set; } = null!;
+    public virtual Adres FacturatieAdres { get; set; } = null!;
 
-    public virtual Klant klant { get; set; } = null!;
+    public virtual Klant Klant { get; set; } = null!;
 
-    public virtual Adres leveringsAdres { get; set; } = null!;
+    public virtual Adres LeveringsAdres { get; set; } = null!;
 
-    public virtual ICollection<UitgaandeLevering> uitgaandeleveringens { get; set; } = new List<UitgaandeLevering>();
+    public virtual ICollection<UitgaandeLevering> Uitgaandeleveringen { get; set; } = new List<UitgaandeLevering>();
 }
