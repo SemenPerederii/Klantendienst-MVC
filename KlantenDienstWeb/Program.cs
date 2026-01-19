@@ -5,14 +5,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<PrulariaDbContext>(
-    options =>
-    {
-        options.UseSqlServer(
-            connectionString: builder.Configuration.GetConnectionString(name: "KlantenDienstConnection"),
-            x => x.MigrationsAssembly("KlantenDienstData"));
-    }
-    );
+builder.Services.AddDbContext<PrulariaDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 33))
+    ));
 
 
 var app = builder.Build();
