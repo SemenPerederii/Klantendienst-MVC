@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class chatgespreklijnen
+public partial class Chatgespreklijn
 {
     public int chatgesprekLijnId { get; set; }
 
@@ -17,9 +17,9 @@ public partial class chatgespreklijnen
 
     public int? personeelslidAccountId { get; set; }
 
-    public virtual chatgesprekken chatgesprek { get; set; } = null!;
+    public virtual Chatgesprek chatgesprek { get; set; } = null!;
 
-    public virtual gebruikersaccount? gebruikersAccount { get; set; }
+    public virtual GebruikersAccount? gebruikersAccount { get; set; }
 
     public virtual personeelslidaccount? personeelslidAccount { get; set; }
 }

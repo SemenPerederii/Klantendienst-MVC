@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class betaalwijze
+public partial class Betaalwijze
 {
     public int betaalwijzeId { get; set; }
 
     public string naam { get; set; } = null!;
 
-    public virtual ICollection<bestellingen> bestellingens { get; set; } = new List<bestellingen>();
+    public virtual ICollection<Bestelling> bestellingens { get; set; } = new List<Bestelling>();
 }

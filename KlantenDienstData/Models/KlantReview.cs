@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class klantenreview
+public partial class KlantReview
 {
     public int klantenReviewId { get; set; }
 
@@ -17,5 +17,5 @@ public partial class klantenreview
 
     public int bestellijnId { get; set; }
 
-    public virtual bestellijnen bestellijn { get; set; } = null!;
+    public virtual Bestellijn bestellijn { get; set; } = null!;
 }

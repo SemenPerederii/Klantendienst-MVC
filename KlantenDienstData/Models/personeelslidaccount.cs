@@ -13,7 +13,7 @@ public partial class personeelslidaccount
 
     public bool disabled { get; set; }
 
-    public virtual ICollection<chatgespreklijnen> chatgespreklijnens { get; set; } = new List<chatgespreklijnen>();
+    public virtual ICollection<Chatgespreklijn> chatgespreklijnens { get; set; } = new List<Chatgespreklijn>();
 
-    public virtual ICollection<personeelsleden> personeelsledens { get; set; } = new List<personeelsleden>();
+    public virtual ICollection<PersoneelsLid> personeelsledens { get; set; } = new List<PersoneelsLid>();
 }

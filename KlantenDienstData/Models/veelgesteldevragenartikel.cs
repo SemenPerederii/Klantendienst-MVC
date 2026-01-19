@@ -13,5 +13,5 @@ public partial class veelgesteldevragenartikel
 
     public string antwoord { get; set; } = null!;
 
-    public virtual artikelen artikel { get; set; } = null!;
+    public virtual Artikel artikel { get; set; } = null!;
 }

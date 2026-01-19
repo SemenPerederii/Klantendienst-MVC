@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class eventwachtrijartikelen
+public partial class EventwachtrijArtikel
 {
     public int artikelId { get; set; }
 

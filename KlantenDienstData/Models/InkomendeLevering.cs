@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class inkomendeleveringen
+public partial class InkomendeLevering
 {
     public int inkomendeLeveringsId { get; set; }
 
@@ -17,9 +17,9 @@ public partial class inkomendeleveringen
 
     public int ontvangerPersoneelslidId { get; set; }
 
-    public virtual ICollection<inkomendeleveringslijnen> inkomendeleveringslijnens { get; set; } = new List<inkomendeleveringslijnen>();
+    public virtual ICollection<InkomendeLeveringslijn> inkomendeleveringslijnens { get; set; } = new List<InkomendeLeveringslijn>();
 
     public virtual leverancier leveranciers { get; set; } = null!;
 
-    public virtual personeelsleden ontvangerPersoneelslid { get; set; } = null!;
+    public virtual PersoneelsLid ontvangerPersoneelslid { get; set; } = null!;
 }

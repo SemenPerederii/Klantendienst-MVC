@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class uitgaandeleveringen
+public partial class UitgaandeLevering
 {
     public int uitgaandeLeveringsId { get; set; }
 
@@ -19,9 +19,9 @@ public partial class uitgaandeleveringen
 
     public int uitgaandeLeveringsStatusId { get; set; }
 
-    public virtual bestellingen bestel { get; set; } = null!;
+    public virtual Bestelling bestel { get; set; } = null!;
 
-    public virtual klanten klant { get; set; } = null!;
+    public virtual Klant klant { get; set; } = null!;
 
-    public virtual uitgaandeleveringsstatussen uitgaandeLeveringsStatus { get; set; } = null!;
+    public virtual UitgaandeLeveringsStatus uitgaandeLeveringsStatus { get; set; } = null!;
 }

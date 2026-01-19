@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class personeelsleden
+public partial class PersoneelsLid
 {
     public int personeelslidId { get; set; }
 
@@ -15,9 +15,9 @@ public partial class personeelsleden
 
     public int personeelslidAccountId { get; set; }
 
-    public virtual ICollection<inkomendeleveringen> inkomendeleveringens { get; set; } = new List<inkomendeleveringen>();
+    public virtual ICollection<InkomendeLevering> inkomendeleveringens { get; set; } = new List<InkomendeLevering>();
 
     public virtual personeelslidaccount personeelslidAccount { get; set; } = null!;
 
-    public virtual ICollection<securitygroepen> securityGroeps { get; set; } = new List<securitygroepen>();
+    public virtual ICollection<SecurityGroep> securityGroeps { get; set; } = new List<SecurityGroep>();
 }

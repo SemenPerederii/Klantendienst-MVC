@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class wishlistitem
+public partial class Wishlistitem
 {
     public int wishListItemId { get; set; }
 
@@ -17,7 +17,7 @@ public partial class wishlistitem
 
     public DateOnly? emailGestuurdDatum { get; set; }
 
-    public virtual artikelen artikel { get; set; } = null!;
+    public virtual Artikel artikel { get; set; } = null!;
 
-    public virtual gebruikersaccount gebruikersAccount { get; set; } = null!;
+    public virtual GebruikersAccount gebruikersAccount { get; set; } = null!;
 }

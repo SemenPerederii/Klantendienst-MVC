@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class actiecode
+public partial class Actiecode
 {
     public int actiecodeId { get; set; }
 

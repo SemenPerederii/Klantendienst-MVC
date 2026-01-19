@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class magazijnplaatsen
+public partial class MagazijnPlaats
 {
     public int magazijnPlaatsId { get; set; }
 
@@ -15,5 +15,5 @@ public partial class magazijnplaatsen
 
     public int aantal { get; set; }
 
-    public virtual artikelen? artikel { get; set; }
+    public virtual Artikel? artikel { get; set; }
 }
