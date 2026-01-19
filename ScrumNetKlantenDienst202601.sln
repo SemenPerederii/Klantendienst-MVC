@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36811.4
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11408.102 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlantenDienstWeb", "KlantenDienstWeb\KlantenDienstWeb.csproj", "{A5B26F98-B4A9-4B76-8897-B0ABD7F139EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlantenDienstData", "KlantenDienstData\KlantenDienstData.csproj", "{49ABCE74-ED83-42F1-A6A1-664F62A7CAB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlantDienstServices", "KlantDienstServices\KlantDienstServices.csproj", "{F5394736-9668-4274-A314-FF4FB9820042}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlantenDienstServices", "KlantDienstServices\KlantenDienstServices.csproj", "{F5394736-9668-4274-A314-FF4FB9820042}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KlantDienstServices\KlantDienstServices.csproj" />
+    <ProjectReference Include="..\KlantDienstServices\KlantenDienstServices.csproj" />
     <ProjectReference Include="..\KlantenDienstData\KlantenDienstData.csproj" />
   </ItemGroup>
 
