@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KlantenDienstData.Models
+namespace KlantenDienstData
 {
     public class PrulariaDbContext : DbContext
     {

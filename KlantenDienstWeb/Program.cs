@@ -1,4 +1,4 @@
-using KlantenDienstData.Models;
+using KlantenDienstData;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
