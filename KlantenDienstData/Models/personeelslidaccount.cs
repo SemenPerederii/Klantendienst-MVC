@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace KlantenDienstData.Models;
 
-namespace KlantenDienstData.Models;
-
-public partial class PersoneelsLidAccount
+public partial class PersoneelslidAccount
 {
     public int PersoneelslidAccountId { get; set; }
 

@@ -17,7 +17,7 @@ public partial class PersoneelsLid
 
     public virtual ICollection<InkomendeLevering> Inkomendeleveringen { get; set; } = new List<InkomendeLevering>();
 
-    public virtual PersoneelsLidAccount PersoneelslidAccount { get; set; } = null!;
+    public virtual PersoneelslidAccount PersoneelslidAccount { get; set; } = null!;
 
     public virtual ICollection<SecurityGroep> SecurityGroepen { get; set; } = new List<SecurityGroep>();
 }

@@ -60,7 +60,7 @@ public partial class PrulariaDbContext : DbContext
 
     public virtual DbSet<PersoneelsLid> PersoneelsLeden { get; set; }
 
-    public virtual DbSet<PersoneelsLidAccount> PersoneelsLidAccounts { get; set; }
+    public virtual DbSet<PersoneelslidAccount> PersoneelslidAccounts { get; set; }
 
     public virtual DbSet<Plaats> Plaatsen { get; set; }
 
@@ -318,9 +318,9 @@ public partial class PrulariaDbContext : DbContext
                 .HasForeignKey(d => d.GebruikersAccountId)
                 .HasConstraintName("fk_ChatgesprekLijnen_GebruikersAccounts1");
 
-            entity.HasOne(d => d.PersoneelsLidAccount).WithMany(p => p.Chatgespreklijnen)
-                .HasForeignKey(d => d.PersoneelslidAccountId)
-                .HasConstraintName("fk_ChatgesprekLijnen_PersoneelslidAccounts1");
+            //entity.HasOne(d => d.PersoneelslidAccount).WithMany(p => p.Chatgespreklijnen)
+            //    .HasForeignKey(d => d.PersoneelslidAccountId)
+            //    .HasConstraintName("fk_ChatgesprekLijnen_PersoneelslidAccounts1");
         });
 
         modelBuilder.Entity<Contactpersoon>(entity =>
@@ -553,7 +553,7 @@ public partial class PrulariaDbContext : DbContext
                     });
         });
 
-        modelBuilder.Entity<PersoneelsLidAccount>(entity =>
+        modelBuilder.Entity<PersoneelslidAccount>(entity =>
         {
             entity.HasKey(e => e.PersoneelslidAccountId).HasName("PRIMARY");
 
