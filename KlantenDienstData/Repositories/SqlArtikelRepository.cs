@@ -1,4 +1,5 @@
 ﻿using KlantenDienstData.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,12 @@ namespace KlantenDienstData.Repositories
             _context = context;
         }
 
-        public Task<IEnumerable<Artikel>> GetAllArtikelenAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<Artikel>> GetAllArtikelenAsync() =>
+            await _context.Artikelen
+            .Include(a => a.Categorieën)
+            .Include(a => a.Bestellijnen)
+            .Include(a => a.Inkomendeleveringslijnen)
+            .Include(a => a.Magazijnplaatsen)
+            .ToListAsync();
     }
 }
