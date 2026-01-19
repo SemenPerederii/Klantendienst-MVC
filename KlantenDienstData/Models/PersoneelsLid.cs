@@ -5,19 +5,19 @@ namespace KlantenDienstData.Models;
 
 public partial class PersoneelsLid
 {
-    public int personeelslidId { get; set; }
+    public int PersoneelslidId { get; set; }
 
-    public string voornaam { get; set; } = null!;
+    public string Voornaam { get; set; } = null!;
 
-    public string familienaam { get; set; } = null!;
+    public string Familienaam { get; set; } = null!;
 
-    public bool? inDienst { get; set; }
+    public bool? InDienst { get; set; }
 
-    public int personeelslidAccountId { get; set; }
+    public int PersoneelslidAccountId { get; set; }
 
-    public virtual ICollection<InkomendeLevering> inkomendeleveringens { get; set; } = new List<InkomendeLevering>();
+    public virtual ICollection<InkomendeLevering> Inkomendeleveringens { get; set; } = new List<InkomendeLevering>();
 
-    public virtual personeelslidaccount personeelslidAccount { get; set; } = null!;
+    public virtual PersoneelsLidAccount PersoneelslidAccount { get; set; } = null!;
 
-    public virtual ICollection<SecurityGroep> securityGroeps { get; set; } = new List<SecurityGroep>();
+    public virtual ICollection<SecurityGroep> SecurityGroepen { get; set; } = new List<SecurityGroep>();
 }

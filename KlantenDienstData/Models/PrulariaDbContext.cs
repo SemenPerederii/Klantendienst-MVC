@@ -128,7 +128,7 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.Naam).HasMaxLength(45);
             entity.Property(e => e.Prijs).HasPrecision(18, 5);
 
-            entity.HasOne(d => d.Leveranciers).WithMany(p => p.artikelens)
+            entity.HasOne(d => d.Leveranciers).WithMany(p => p.Artikelen)
                 .HasForeignKey(d => d.LeveranciersId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Artikelen_Leveranciers");
@@ -384,7 +384,7 @@ public partial class PrulariaDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_InkomendeLeveringen_Leveranciers1");
 
-            entity.HasOne(d => d.ontvangerPersoneelslid).WithMany(p => p.inkomendeleveringens)
+            entity.HasOne(d => d.ontvangerPersoneelslid).WithMany(p => p.Inkomendeleveringens)
                 .HasForeignKey(d => d.ontvangerPersoneelslidId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_InkomendeLeveringen_Personeelsleden1");
@@ -471,15 +471,15 @@ public partial class PrulariaDbContext : DbContext
 
         modelBuilder.Entity<MagazijnPlaats>(entity =>
         {
-            entity.HasKey(e => e.magazijnPlaatsId).HasName("PRIMARY");
+            entity.HasKey(e => e.MagazijnPlaatsId).HasName("PRIMARY");
 
             entity.ToTable("magazijnplaatsen");
 
-            entity.HasIndex(e => e.artikelId, "fk_MagazijnPlaatsen_Artikelen1_idx");
+            entity.HasIndex(e => e.ArtikelId, "fk_MagazijnPlaatsen_Artikelen1_idx");
 
-            entity.HasIndex(e => new { e.rij, e.rek }, "uinx_rijrek").IsUnique();
+            entity.HasIndex(e => new { e.Rij, e.Rek }, "uinx_rijrek").IsUnique();
 
-            entity.Property(e => e.rij)
+            entity.Property(e => e.Rij)
                 .HasMaxLength(1)
                 .IsFixedLength();
 
@@ -490,45 +490,45 @@ public partial class PrulariaDbContext : DbContext
 
         modelBuilder.Entity<NatuurlijkePersoon>(entity =>
         {
-            entity.HasKey(e => e.klantId).HasName("PRIMARY");
+            entity.HasKey(e => e.KlantId).HasName("PRIMARY");
 
             entity.ToTable("natuurlijkepersonen");
 
-            entity.HasIndex(e => e.gebruikersAccountId, "fk_NatuurlijkePersonen_gebruikersAccountId_idx");
+            entity.HasIndex(e => e.GebruikersAccountId, "fk_NatuurlijkePersonen_gebruikersAccountId_idx");
 
-            entity.HasIndex(e => e.klantId, "fk_PrivateKlanten_Klanten1_idx");
+            entity.HasIndex(e => e.KlantId, "fk_PrivateKlanten_Klanten1_idx");
 
-            entity.Property(e => e.klantId).ValueGeneratedNever();
-            entity.Property(e => e.familienaam).HasMaxLength(45);
-            entity.Property(e => e.voornaam).HasMaxLength(45);
+            entity.Property(e => e.KlantId).ValueGeneratedNever();
+            entity.Property(e => e.Familienaam).HasMaxLength(45);
+            entity.Property(e => e.Voornaam).HasMaxLength(45);
 
-            entity.HasOne(d => d.gebruikersAccount).WithMany(p => p.natuurlijkepersonens)
-                .HasForeignKey(d => d.gebruikersAccountId)
+            entity.HasOne(d => d.GebruikersAccount).WithMany(p => p.natuurlijkepersonens)
+                .HasForeignKey(d => d.GebruikersAccountId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_NatuurlijkePersonen_Gebruikersnamen1");
 
-            entity.HasOne(d => d.klant).WithOne(p => p.natuurlijkepersonen)
-                .HasForeignKey<NatuurlijkePersoon>(d => d.klantId)
+            entity.HasOne(d => d.Klant).WithOne(p => p.natuurlijkepersonen)
+                .HasForeignKey<NatuurlijkePersoon>(d => d.KlantId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_PrivateKlanten_Klanten1");
         });
 
         modelBuilder.Entity<PersoneelsLid>(entity =>
         {
-            entity.HasKey(e => e.personeelslidId).HasName("PRIMARY");
+            entity.HasKey(e => e.PersoneelslidId).HasName("PRIMARY");
 
             entity.ToTable("personeelsleden");
 
-            entity.HasIndex(e => e.personeelslidAccountId, "fk_Personeelsleden_PersoneelslidAccounts1_idx");
+            entity.HasIndex(e => e.PersoneelslidAccountId, "fk_Personeelsleden_PersoneelslidAccounts1_idx");
 
-            entity.Property(e => e.familienaam).HasMaxLength(45);
-            entity.Property(e => e.inDienst)
+            entity.Property(e => e.Familienaam).HasMaxLength(45);
+            entity.Property(e => e.InDienst)
                 .IsRequired()
                 .HasDefaultValueSql("'1'");
-            entity.Property(e => e.voornaam).HasMaxLength(45);
+            entity.Property(e => e.Voornaam).HasMaxLength(45);
 
             entity.HasOne(d => d.personeelslidAccount).WithMany(p => p.personeelsledens)
-                .HasForeignKey(d => d.personeelslidAccountId)
+                .HasForeignKey(d => d.PersoneelslidAccountId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Personeelsleden_PersoneelslidAccounts1");
 

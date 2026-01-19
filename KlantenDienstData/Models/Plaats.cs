@@ -5,13 +5,13 @@ namespace KlantenDienstData.Models;
 
 public partial class Plaats
 {
-    public int plaatsId { get; set; }
+    public int PlaatsId { get; set; }
 
-    public string postcode { get; set; } = null!;
+    public string Postcode { get; set; } = null!;
 
-    public string plaats { get; set; } = null!;
+    public string PlaatsNaam { get; set; } = null!;
 
-    public virtual ICollection<Adres> adressens { get; set; } = new List<Adres>();
+    public virtual ICollection<Adres> Adressen { get; set; } = new List<Adres>();
 
-    public virtual ICollection<leverancier> leveranciers { get; set; } = new List<leverancier>();
+    public virtual ICollection<Leverancier> Leveranciers { get; set; } = new List<leverancier>();
 }
