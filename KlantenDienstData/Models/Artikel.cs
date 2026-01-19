@@ -33,19 +33,19 @@ public partial class Artikel
 
     public int LeveranciersId { get; set; }
 
-    public virtual ICollection<ArtikelLeveranciersInfolijn> Artikelleveranciersinfolijnens { get; set; } = new List<ArtikelLeveranciersInfolijn>();
+    public virtual ICollection<ArtikelLeveranciersInfolijn> Artikelleveranciersinfolijnen { get; set; } = new List<ArtikelLeveranciersInfolijn>();
 
-    public virtual ICollection<Bestellijn> Bestellijnens { get; set; } = new List<Bestellijn>();
+    public virtual ICollection<Bestellijn> Bestellijnen { get; set; } = new List<Bestellijn>();
 
-    public virtual ICollection<InkomendeLeveringslijn> Inkomendeleveringslijnens { get; set; } = new List<InkomendeLeveringslijn>();
+    public virtual ICollection<InkomendeLeveringslijn> Inkomendeleveringslijnen { get; set; } = new List<InkomendeLeveringslijn>();
 
     public virtual Leverancier Leveranciers { get; set; } = null!;
 
-    public virtual ICollection<MagazijnPlaats> Magazijnplaatsens { get; set; } = new List<MagazijnPlaats>();
+    public virtual ICollection<MagazijnPlaats> Magazijnplaatsen { get; set; } = new List<MagazijnPlaats>();
 
     public virtual ICollection<VeelgesteldevragenArtikel> Veelgesteldevragenartikels { get; set; } = new List<VeelgesteldevragenArtikel>();
 
-    public virtual ICollection<Wishlistitem> wishlistitems { get; set; } = new List<Wishlistitem>();
+    public virtual ICollection<Wishlistitem> Wishlistitems { get; set; } = new List<Wishlistitem>();
 
-    public virtual ICollection<Categorie> categories { get; set; } = new List<Categorie>();
+    public virtual ICollection<Categorie> Categorieën { get; set; } = new List<Categorie>();
 }

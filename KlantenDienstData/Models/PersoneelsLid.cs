@@ -15,7 +15,7 @@ public partial class PersoneelsLid
 
     public int PersoneelslidAccountId { get; set; }
 
-    public virtual ICollection<InkomendeLevering> Inkomendeleveringens { get; set; } = new List<InkomendeLevering>();
+    public virtual ICollection<InkomendeLevering> Inkomendeleveringen { get; set; } = new List<InkomendeLevering>();
 
     public virtual PersoneelsLidAccount PersoneelslidAccount { get; set; } = null!;
 

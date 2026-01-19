@@ -9,5 +9,5 @@ public partial class UitgaandeLeveringsStatus
 
     public string Naam { get; set; } = null!;
 
-    public virtual ICollection<UitgaandeLevering> Uitgaandeleveringens { get; set; } = new List<UitgaandeLevering>();
+    public virtual ICollection<UitgaandeLevering> Uitgaandeleveringen { get; set; } = new List<UitgaandeLevering>();
 }

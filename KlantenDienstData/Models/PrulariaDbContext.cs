@@ -44,11 +44,11 @@ public partial class PrulariaDbContext : DbContext
 
     public virtual DbSet<GebruikersAccount> GebruikersAccounts { get; set; }
 
-    public virtual DbSet<InkomendeLevering> InkomendeLeveringens { get; set; }
+    public virtual DbSet<InkomendeLevering> InkomendeLeveringen { get; set; }
 
-    public virtual DbSet<InkomendeLeveringslijn> Inkomendeleveringslijnens { get; set; }
+    public virtual DbSet<InkomendeLeveringslijn> Inkomendeleveringslijnen { get; set; }
 
-    public virtual DbSet<Klant> klantens { get; set; }
+    public virtual DbSet<Klant> Klanten { get; set; }
 
     public virtual DbSet<KlantReview> KlantenReviews { get; set; }
 
@@ -107,7 +107,7 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.Straat).HasMaxLength(100);
 
             entity.HasOne(d => d.Plaats).WithMany(p => p.Adressen)
-                .HasForeignKey(d => d.plaatsId)
+                .HasForeignKey(d => d.PlaatsId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Adressen_Plaatsen");
         });
@@ -148,8 +148,8 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.Antwoord).HasMaxLength(255);
             entity.Property(e => e.Vraag).HasMaxLength(255);
 
-            entity.HasOne(d => d.Artikel).WithMany(p => p.artikelleveranciersinfolijnens)
-                .HasForeignKey(d => d.artikelId)
+            entity.HasOne(d => d.Artikel).WithMany(p => p.Artikelleveranciersinfolijnen)
+                .HasForeignKey(d => d.ArtikelId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_ArtikelLeveranciersInfoLijnen_Artikelen1");
         });
@@ -164,8 +164,8 @@ public partial class PrulariaDbContext : DbContext
 
             entity.HasIndex(e => e.BestelId, "fk_Bestellijnen_Bestellingen1_idx");
 
-            entity.HasOne(d => d.Artikel).WithMany(p => p.bestellijnens)
-                .HasForeignKey(d => d.artikelId)
+            entity.HasOne(d => d.Artikel).WithMany(p => p.Bestellijnen)
+                .HasForeignKey(d => d.ArtikelId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Bestellijnen_Artikelen1");
 
@@ -204,13 +204,13 @@ public partial class PrulariaDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Bestellingen_BestellingsStatussen1");
 
-            entity.HasOne(d => d.Betaalwijze).WithMany(p => p.bestellingens)
+            entity.HasOne(d => d.Betaalwijze).WithMany(p => p.Bestellingen)
                 .HasForeignKey(d => d.BetaalwijzeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Bestellingen_Betaalwijzes1");
 
-            entity.HasOne(d => d.FacturatieAdres).WithMany(p => p.bestellingenfacturatieAdres)
-                .HasForeignKey(d => d.facturatieAdresId)
+            entity.HasOne(d => d.FacturatieAdres).WithMany(p => p.BestellingenfacturatieAdres)
+                .HasForeignKey(d => d.FacturatieAdresId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Bestellingen_Adressen1");
 
@@ -219,8 +219,8 @@ public partial class PrulariaDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Bestellingen_Klanten1");
 
-            entity.HasOne(d => d.LeveringsAdres).WithMany(p => p.bestellingenleveringsAdres)
-                .HasForeignKey(d => d.leveringsAdresId)
+            entity.HasOne(d => d.LeveringsAdres).WithMany(p => p.BestellingenleveringsAdres)
+                .HasForeignKey(d => d.LeveringsAdresId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Bestellingen_Adressen2");
         });
@@ -234,11 +234,11 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.Naam).HasMaxLength(45);
         });
 
-        modelBuilder.Entity<betaalwijze>(entity =>
+        modelBuilder.Entity<Betaalwijze>(entity =>
         {
-            entity.HasKey(e => e.betaalwijzeId).HasName("PRIMARY");
+            entity.HasKey(e => e.BetaalwijzeId).HasName("PRIMARY");
 
-            entity.Property(e => e.naam).HasMaxLength(45);
+            entity.Property(e => e.Naam).HasMaxLength(45);
         });
 
         modelBuilder.Entity<Categorie>(entity =>
@@ -255,7 +255,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasForeignKey(d => d.HoofdCategorieId)
                 .HasConstraintName("fk_Categorieen_Categorieen1");
 
-            entity.HasMany(d => d.Artikelen).WithMany(p => p.categories)
+            entity.HasMany(d => d.Artikelen).WithMany(p => p.Categorieën)
                 .UsingEntity<Dictionary<string, object>>(
                     "artikelcategorieen",
                     r => r.HasOne<Artikel>().WithMany()
@@ -318,8 +318,8 @@ public partial class PrulariaDbContext : DbContext
                 .HasForeignKey(d => d.GebruikersAccountId)
                 .HasConstraintName("fk_ChatgesprekLijnen_GebruikersAccounts1");
 
-            entity.HasOne(d => d.PersoneelsLidAccount).WithMany(p => p.chatgespreklijnens)
-                .HasForeignKey(d => d.personeelslidAccountId)
+            entity.HasOne(d => d.PersoneelsLidAccount).WithMany(p => p.Chatgespreklijnen)
+                .HasForeignKey(d => d.PersoneelslidAccountId)
                 .HasConstraintName("fk_ChatgesprekLijnen_PersoneelslidAccounts1");
         });
 
@@ -342,19 +342,19 @@ public partial class PrulariaDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Contactpersonen_GebruikersAccounts1");
 
-            entity.HasOne(d => d.Klant).WithMany(p => p.contactpersonens)
-                .HasForeignKey(d => d.klantId)
+            entity.HasOne(d => d.Klant).WithMany(p => p.Contactpersonen)
+                .HasForeignKey(d => d.KlantId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Contactpersonen_Rechtspersonen1");
         });
 
-        modelBuilder.Entity<Eventwachtrijartikel>(entity =>
+        modelBuilder.Entity<EventwachtrijArtikel>(entity =>
         {
-            entity.HasKey(e => e.artikelId).HasName("PRIMARY");
+            entity.HasKey(e => e.ArtikelId).HasName("PRIMARY");
 
             entity.ToTable("eventwachtrijartikelen");
 
-            entity.Property(e => e.artikelId).ValueGeneratedNever();
+            entity.Property(e => e.ArtikelId).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<GebruikersAccount>(entity =>
@@ -379,12 +379,12 @@ public partial class PrulariaDbContext : DbContext
 
             entity.Property(e => e.LeveringsbonNummer).HasMaxLength(45);
 
-            entity.HasOne(d => d.Leveranciers).WithMany(p => p.inkomendeleveringens)
+            entity.HasOne(d => d.Leveranciers).WithMany(p => p.Inkomendeleveringen)
                 .HasForeignKey(d => d.LeveranciersId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_InkomendeLeveringen_Leveranciers1");
 
-            entity.HasOne(d => d.OntvangerPersoneelslid).WithMany(p => p.inkomendeleveringens)
+            entity.HasOne(d => d.OntvangerPersoneelslid).WithMany(p => p.Inkomendeleveringen)
                 .HasForeignKey(d => d.OntvangerPersoneelslidId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_InkomendeLeveringen_Personeelsleden1");
@@ -392,7 +392,7 @@ public partial class PrulariaDbContext : DbContext
 
         modelBuilder.Entity<InkomendeLeveringslijn>(entity =>
         {
-            entity.HasKey(e => new { e.inkomendeLeveringsId, e.ArtikelId, e.MagazijnPlaatsId })
+            entity.HasKey(e => new { e.InkomendeLeveringsId, e.ArtikelId, e.MagazijnPlaatsId })
                 .HasName("PRIMARY")
                 .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0, 0 });
 
@@ -402,13 +402,13 @@ public partial class PrulariaDbContext : DbContext
 
             entity.HasIndex(e => e.MagazijnPlaatsId, "fk_InkomendeLeverongsLijnen_MagazijnPlaatsen1_idx");
 
-            entity.HasOne(d => d.Artikel).WithMany(p => p.inkomendeleveringslijnens)
-                .HasForeignKey(d => d.artikelId)
+            entity.HasOne(d => d.Artikel).WithMany(p => p.Inkomendeleveringslijnen)
+                .HasForeignKey(d => d.ArtikelId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_InkomendeLeverongsLijnen_Artikelen1");
 
             entity.HasOne(d => d.InkomendeLevering).WithMany(p => p.Inkomendeleveringslijnen)
-                .HasForeignKey(d => d.inkomendeLeveringsId)
+                .HasForeignKey(d => d.InkomendeLeveringsId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_InkomendeLeverongsLijnen_InkomendeLeveringen1");
         });
@@ -423,13 +423,13 @@ public partial class PrulariaDbContext : DbContext
 
             entity.HasIndex(e => e.LeveringsAdresId, "fk_Klanten_Adressen2_idx");
 
-            entity.HasOne(d => d.FacturatieAdres).WithMany(p => p.klantenfacturatieAdres)
-                .HasForeignKey(d => d.facturatieAdresId)
+            entity.HasOne(d => d.FacturatieAdres).WithMany(p => p.KlantenfacturatieAdres)
+                .HasForeignKey(d => d.FacturatieAdresId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Klanten_Adressen1");
 
-            entity.HasOne(d => d.LeveringsAdres).WithMany(p => p.klantenleveringsAdres)
-                .HasForeignKey(d => d.leveringsAdresId)
+            entity.HasOne(d => d.LeveringsAdres).WithMany(p => p.KlantenleveringsAdres)
+                .HasForeignKey(d => d.LeveringsAdresId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Klanten_Adressen2");
         });
@@ -449,22 +449,22 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_KlantenReviews_Bestellijnen1");
         });
 
-        modelBuilder.Entity<leverancier>(entity =>
+        modelBuilder.Entity<Leverancier>(entity =>
         {
-            entity.HasKey(e => e.leveranciersId).HasName("PRIMARY");
+            entity.HasKey(e => e.LeveranciersId).HasName("PRIMARY");
 
-            entity.HasIndex(e => e.plaatsId, "fk_Leveranciers_Plaatsen1_idx");
+            entity.HasIndex(e => e.PlaatsId, "fk_Leveranciers_Plaatsen1_idx");
 
-            entity.Property(e => e.btwNummer).HasMaxLength(45);
-            entity.Property(e => e.bus).HasMaxLength(5);
-            entity.Property(e => e.familienaamContactpersoon).HasMaxLength(45);
-            entity.Property(e => e.huisNummer).HasMaxLength(5);
-            entity.Property(e => e.naam).HasMaxLength(45);
-            entity.Property(e => e.straat).HasMaxLength(45);
-            entity.Property(e => e.voornaamContactpersoon).HasMaxLength(45);
+            entity.Property(e => e.BTWNummer).HasMaxLength(45);
+            entity.Property(e => e.Bus).HasMaxLength(5);
+            entity.Property(e => e.FamilienaamContactpersoon).HasMaxLength(45);
+            entity.Property(e => e.HuisNummer).HasMaxLength(5);
+            entity.Property(e => e.Naam).HasMaxLength(45);
+            entity.Property(e => e.Straat).HasMaxLength(45);
+            entity.Property(e => e.VoornaamContactpersoon).HasMaxLength(45);
 
-            entity.HasOne(d => d.plaats).WithMany(p => p.leveranciers)
-                .HasForeignKey(d => d.plaatsId)
+            entity.HasOne(d => d.Plaats).WithMany(p => p.Leveranciers)
+                .HasForeignKey(d => d.PlaatsId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Leveranciers_Plaatsen1");
         });
@@ -483,8 +483,8 @@ public partial class PrulariaDbContext : DbContext
                 .HasMaxLength(1)
                 .IsFixedLength();
 
-            entity.HasOne(d => d.artikel).WithMany(p => p.magazijnplaatsens)
-                .HasForeignKey(d => d.artikelId)
+            entity.HasOne(d => d.artikel).WithMany(p => p.Magazijnplaatsen)
+                .HasForeignKey(d => d.ArtikelId)
                 .HasConstraintName("fk_MagazijnPlaatsen_Artikelen1");
         });
 
@@ -502,13 +502,13 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.Familienaam).HasMaxLength(45);
             entity.Property(e => e.Voornaam).HasMaxLength(45);
 
-            entity.HasOne(d => d.GebruikersAccount).WithMany(p => p.natuurlijkepersonens)
+            entity.HasOne(d => d.GebruikersAccount).WithMany(p => p.Natuurlijkepersonen)
                 .HasForeignKey(d => d.GebruikersAccountId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_NatuurlijkePersonen_Gebruikersnamen1");
 
-            entity.HasOne(d => d.klant).WithOne(p => p.Natuurlijkepersonen)
-                .HasForeignKey<NatuurlijkePersoon>(d => d.klantId)
+            entity.HasOne(d => d.Klant).WithOne(p => p.Natuurlijkepersonen)
+                .HasForeignKey<NatuurlijkePersoon>(d => d.KlantId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_PrivateKlanten_Klanten1");
         });
@@ -527,12 +527,12 @@ public partial class PrulariaDbContext : DbContext
                 .HasDefaultValueSql("'1'");
             entity.Property(e => e.Voornaam).HasMaxLength(45);
 
-            entity.HasOne(d => d.personeelslidAccount).WithMany(p => p.personeelsledens)
+            entity.HasOne(d => d.PersoneelslidAccount).WithMany(p => p.Personeelsleden)
                 .HasForeignKey(d => d.PersoneelslidAccountId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Personeelsleden_PersoneelslidAccounts1");
 
-            entity.HasMany(d => d.securityGroeps).WithMany(p => p.personeelslids)
+            entity.HasMany(d => d.SecurityGroepen).WithMany(p => p.Personeelslids)
                 .UsingEntity<Dictionary<string, object>>(
                     "personeelslidsecuritygroepen",
                     r => r.HasOne<SecurityGroep>().WithMany()
@@ -553,49 +553,49 @@ public partial class PrulariaDbContext : DbContext
                     });
         });
 
-        modelBuilder.Entity<personeelslidaccount>(entity =>
+        modelBuilder.Entity<PersoneelsLidAccount>(entity =>
         {
-            entity.HasKey(e => e.personeelslidAccountId).HasName("PRIMARY");
+            entity.HasKey(e => e.PersoneelslidAccountId).HasName("PRIMARY");
 
-            entity.HasIndex(e => e.emailadres, "emailadres_UNIQUE").IsUnique();
+            entity.HasIndex(e => e.Emailadres, "emailadres_UNIQUE").IsUnique();
 
-            entity.Property(e => e.emailadres).HasMaxLength(45);
-            entity.Property(e => e.paswoord).HasMaxLength(255);
+            entity.Property(e => e.Emailadres).HasMaxLength(45);
+            entity.Property(e => e.Paswoord).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Plaats>(entity =>
         {
-            entity.HasKey(e => e.plaatsId).HasName("PRIMARY");
+            entity.HasKey(e => e.PlaatsId).HasName("PRIMARY");
 
             entity.ToTable("plaatsen");
 
-            entity.Property(e => e.plaats).HasMaxLength(150);
-            entity.Property(e => e.postcode).HasMaxLength(4);
+            entity.Property(e => e.PlaatsNaam).HasMaxLength(150);
+            entity.Property(e => e.Postcode).HasMaxLength(4);
         });
 
         modelBuilder.Entity<RechtsPersoon>(entity =>
         {
-            entity.HasKey(e => e.klantId).HasName("PRIMARY");
+            entity.HasKey(e => e.KlantId).HasName("PRIMARY");
 
             entity.ToTable("rechtspersonen");
 
-            entity.Property(e => e.klantId).ValueGeneratedNever();
-            entity.Property(e => e.btwNummer).HasMaxLength(10);
-            entity.Property(e => e.naam).HasMaxLength(45);
+            entity.Property(e => e.KlantId).ValueGeneratedNever();
+            entity.Property(e => e.BTWNummer).HasMaxLength(10);
+            entity.Property(e => e.Naam).HasMaxLength(45);
 
-            entity.HasOne(d => d.klant).WithOne(p => p.rechtspersonen)
-                .HasForeignKey<RechtsPersoon>(d => d.klantId)
+            entity.HasOne(d => d.Klant).WithOne(p => p.Rechtspersonen)
+                .HasForeignKey<RechtsPersoon>(d => d.KlantId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Rechtspersonen_Klanten1");
         });
 
         modelBuilder.Entity<SecurityGroep>(entity =>
         {
-            entity.HasKey(e => e.securityGroepId).HasName("PRIMARY");
+            entity.HasKey(e => e.SecurityGroepId).HasName("PRIMARY");
 
             entity.ToTable("securitygroepen");
 
-            entity.Property(e => e.naam).HasMaxLength(45);
+            entity.Property(e => e.Naam).HasMaxLength(45);
         });
 
         modelBuilder.Entity<Toonpersoneelsledenmetsecuritygroep>(entity =>
@@ -604,86 +604,86 @@ public partial class PrulariaDbContext : DbContext
                 .HasNoKey()
                 .ToView("toonpersoneelsledenmetsecuritygroepen");
 
-            entity.Property(e => e.emailadres).HasMaxLength(45);
-            entity.Property(e => e.familienaam).HasMaxLength(45);
-            entity.Property(e => e.naam).HasMaxLength(45);
-            entity.Property(e => e.voornaam).HasMaxLength(45);
+            entity.Property(e => e.Emailadres).HasMaxLength(45);
+            entity.Property(e => e.Familienaam).HasMaxLength(45);
+            entity.Property(e => e.Naam).HasMaxLength(45);
+            entity.Property(e => e.Voornaam).HasMaxLength(45);
         });
 
         modelBuilder.Entity<UitgaandeLevering>(entity =>
         {
-            entity.HasKey(e => e.uitgaandeLeveringsId).HasName("PRIMARY");
+            entity.HasKey(e => e.UitgaandeLeveringsId).HasName("PRIMARY");
 
             entity.ToTable("uitgaandeleveringen");
 
-            entity.HasIndex(e => e.bestelId, "fk_UitgaandeLeveringen_Bestellingen1_idx");
+            entity.HasIndex(e => e.BestelId, "fk_UitgaandeLeveringen_Bestellingen1_idx");
 
-            entity.HasIndex(e => e.klantId, "fk_UitgaandeLeveringen_Klanten1_idx");
+            entity.HasIndex(e => e.KlantId, "fk_UitgaandeLeveringen_Klanten1_idx");
 
-            entity.HasIndex(e => e.uitgaandeLeveringsStatusId, "fk_UitgaandeLeveringen_UitgaandeLeveringsStatussn1_idx");
+            entity.HasIndex(e => e.UitgaandeLeveringsStatusId, "fk_UitgaandeLeveringen_UitgaandeLeveringsStatussn1_idx");
 
-            entity.Property(e => e.trackingcode).HasMaxLength(45);
+            entity.Property(e => e.Trackingcode).HasMaxLength(45);
 
-            entity.HasOne(d => d.bestel).WithMany(p => p.Uitgaandeleveringen)
-                .HasForeignKey(d => d.bestelId)
+            entity.HasOne(d => d.Bestelling).WithMany(p => p.Uitgaandeleveringen)
+                .HasForeignKey(d => d.BestelId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_UitgaandeLeveringen_Bestellingen1");
 
-            entity.HasOne(d => d.klant).WithMany(p => p.uitgaandeleveringens)
-                .HasForeignKey(d => d.klantId)
+            entity.HasOne(d => d.Klant).WithMany(p => p.Uitgaandeleveringen)
+                .HasForeignKey(d => d.KlantId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_UitgaandeLeveringen_Klanten1");
 
-            entity.HasOne(d => d.uitgaandeLeveringsStatus).WithMany(p => p.uitgaandeleveringens)
-                .HasForeignKey(d => d.uitgaandeLeveringsStatusId)
+            entity.HasOne(d => d.UitgaandeLeveringsStatus).WithMany(p => p.Uitgaandeleveringen)
+                .HasForeignKey(d => d.UitgaandeLeveringsStatusId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_UitgaandeLeveringen_UitgaandeLeveringsStatussn1");
         });
 
         modelBuilder.Entity<UitgaandeLeveringsStatus>(entity =>
         {
-            entity.HasKey(e => e.uitgaandeLeveringsStatusId).HasName("PRIMARY");
+            entity.HasKey(e => e.UitgaandeLeveringsStatusId).HasName("PRIMARY");
 
             entity.ToTable("uitgaandeleveringsstatussen");
 
-            entity.Property(e => e.naam).HasMaxLength(45);
+            entity.Property(e => e.Naam).HasMaxLength(45);
         });
 
-        modelBuilder.Entity<veelgesteldevragenartikel>(entity =>
+        modelBuilder.Entity<VeelgesteldevragenArtikel>(entity =>
         {
-            entity.HasKey(e => e.veelgesteldeVragenArtikelId).HasName("PRIMARY");
+            entity.HasKey(e => e.VeelgesteldeVragenArtikelId).HasName("PRIMARY");
 
-            entity.HasIndex(e => e.artikelId, "fk_VeelgesteldeVragenArtikels_Artikelen1_idx");
+            entity.HasIndex(e => e.ArtikelId, "fk_VeelgesteldeVragenArtikels_Artikelen1_idx");
 
-            entity.Property(e => e.antwoord).HasMaxLength(255);
-            entity.Property(e => e.vraag).HasMaxLength(255);
+            entity.Property(e => e.Antwoord).HasMaxLength(255);
+            entity.Property(e => e.Vraag).HasMaxLength(255);
 
-            entity.HasOne(d => d.artikel).WithMany(p => p.veelgesteldevragenartikels)
-                .HasForeignKey(d => d.artikelId)
+            entity.HasOne(d => d.Artikel).WithMany(p => p.Veelgesteldevragenartikels)
+                .HasForeignKey(d => d.ArtikelId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_VeelgesteldeVragenArtikels_Artikelen1");
         });
 
-        modelBuilder.Entity<wishlistitem>(entity =>
+        modelBuilder.Entity<Wishlistitem>(entity =>
         {
-            entity.HasKey(e => new { e.wishListItemId, e.gebruikersAccountId })
+            entity.HasKey(e => new { e.WishListItemId, e.GebruikersAccountId })
                 .HasName("PRIMARY")
                 .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
-            entity.HasIndex(e => e.artikelId, "fk_WishListItems_Artikelen1_idx");
+            entity.HasIndex(e => e.ArtikelId, "fk_WishListItems_Artikelen1_idx");
 
-            entity.HasIndex(e => e.gebruikersAccountId, "fk_WishListItems_GebruikersAccounts1_idx");
+            entity.HasIndex(e => e.GebruikersAccountId, "fk_WishListItems_GebruikersAccounts1_idx");
 
-            entity.Property(e => e.wishListItemId).ValueGeneratedOnAdd();
-            entity.Property(e => e.aantal).HasDefaultValueSql("'1'");
+            entity.Property(e => e.WishListItemId).ValueGeneratedOnAdd();
+            entity.Property(e => e.Aantal).HasDefaultValueSql("'1'");
 
-            entity.HasOne(d => d.artikel).WithMany(p => p.wishlistitems)
-                .HasForeignKey(d => d.artikelId)
+            entity.HasOne(d => d.Artikel).WithMany(p => p.Wishlistitems)
+                .HasForeignKey(d => d.ArtikelId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_WishListItems_Artikelen1");
 
-            entity.HasOne(d => d.gebruikersAccount).WithMany(p => p.wishlistitems)
-                .HasForeignKey(d => d.gebruikersAccountId)
+            entity.HasOne(d => d.GebruikersAccount).WithMany(p => p.Wishlistitems)
+                .HasForeignKey(d => d.GebruikersAccountId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_WishListItems_GebruikersAccounts1");
         });

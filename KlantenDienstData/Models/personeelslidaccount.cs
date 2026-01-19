@@ -9,7 +9,7 @@ public partial class PersoneelsLidAccount
 
     public string Emailadres { get; set; } = null!;
 
-    public string Passwoord { get; set; } = null!;
+    public string Paswoord { get; set; } = null!;
 
     public bool Disabled { get; set; }
 

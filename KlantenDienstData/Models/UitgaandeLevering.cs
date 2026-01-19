@@ -19,7 +19,7 @@ public partial class UitgaandeLevering
 
     public int UitgaandeLeveringsStatusId { get; set; }
 
-    public virtual Bestelling Bestel { get; set; } = null!;
+    public virtual Bestelling Bestelling { get; set; } = null!;
 
     public virtual Klant Klant { get; set; } = null!;
 

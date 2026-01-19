@@ -13,5 +13,5 @@ public partial class Plaats
 
     public virtual ICollection<Adres> Adressen { get; set; } = new List<Adres>();
 
-    public virtual ICollection<Leverancier> Leveranciers { get; set; } = new List<leverancier>();
+    public virtual ICollection<Leverancier> Leveranciers { get; set; } = new List<Leverancier>();
 }
