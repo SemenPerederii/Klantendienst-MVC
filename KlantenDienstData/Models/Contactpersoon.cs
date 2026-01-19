@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class contactpersonen
+public partial class Contactpersoon
 {
     public int contactpersoonId { get; set; }
 
@@ -17,7 +17,7 @@ public partial class contactpersonen
 
     public int gebruikersAccountId { get; set; }
 
-    public virtual gebruikersaccount gebruikersAccount { get; set; } = null!;
+    public virtual GebruikersAccount gebruikersAccount { get; set; } = null!;
 
-    public virtual rechtspersonen klant { get; set; } = null!;
+    public virtual RechtsPersoon klant { get; set; } = null!;
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class leverancier
+public partial class Leverancier
 {
     public int leveranciersId { get; set; }
 
@@ -23,9 +23,9 @@ public partial class leverancier
 
     public string voornaamContactpersoon { get; set; } = null!;
 
-    public virtual ICollection<artikelen> artikelens { get; set; } = new List<artikelen>();
+    public virtual ICollection<Artikel> artikelens { get; set; } = new List<Artikel>();
 
-    public virtual ICollection<inkomendeleveringen> inkomendeleveringens { get; set; } = new List<inkomendeleveringen>();
+    public virtual ICollection<InkomendeLevering> inkomendeleveringens { get; set; } = new List<InkomendeLevering>();
 
-    public virtual plaatsen plaats { get; set; } = null!;
+    public virtual Plaats plaats { get; set; } = null!;
 }

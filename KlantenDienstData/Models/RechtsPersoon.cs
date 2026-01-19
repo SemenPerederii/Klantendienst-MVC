@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class rechtspersonen
+public partial class RechtsPersoon
 {
     public int klantId { get; set; }
 
@@ -11,7 +11,7 @@ public partial class rechtspersonen
 
     public string btwNummer { get; set; } = null!;
 
-    public virtual ICollection<contactpersonen> contactpersonens { get; set; } = new List<contactpersonen>();
+    public virtual ICollection<Contactpersoon> contactpersonens { get; set; } = new List<Contactpersoon>();
 
-    public virtual klanten klant { get; set; } = null!;
+    public virtual Klant klant { get; set; } = null!;
 }

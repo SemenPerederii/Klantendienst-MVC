@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class bestellingen
+public partial class Bestelling
 {
     public int bestelId { get; set; }
 
@@ -39,17 +39,17 @@ public partial class bestellingen
 
     public int leveringsAdresId { get; set; }
 
-    public virtual ICollection<bestellijnen> bestellijnens { get; set; } = new List<bestellijnen>();
+    public virtual ICollection<Bestellijn> bestellijnens { get; set; } = new List<Bestellijn>();
 
-    public virtual bestellingsstatussen bestellingsStatus { get; set; } = null!;
+    public virtual Bestellingsstatus bestellingsStatus { get; set; } = null!;
 
     public virtual betaalwijze betaalwijze { get; set; } = null!;
 
-    public virtual adressen facturatieAdres { get; set; } = null!;
+    public virtual Adres facturatieAdres { get; set; } = null!;
 
-    public virtual klanten klant { get; set; } = null!;
+    public virtual Klant klant { get; set; } = null!;
 
-    public virtual adressen leveringsAdres { get; set; } = null!;
+    public virtual Adres leveringsAdres { get; set; } = null!;
 
-    public virtual ICollection<uitgaandeleveringen> uitgaandeleveringens { get; set; } = new List<uitgaandeleveringen>();
+    public virtual ICollection<UitgaandeLevering> uitgaandeleveringens { get; set; } = new List<UitgaandeLevering>();
 }

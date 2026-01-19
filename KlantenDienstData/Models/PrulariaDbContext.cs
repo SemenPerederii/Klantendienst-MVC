@@ -18,61 +18,61 @@ public partial class PrulariaDbContext : DbContext
 
     public virtual DbSet<actiecode> actiecodes { get; set; }
 
-    public virtual DbSet<adressen> adressens { get; set; }
+    public virtual DbSet<Adres> adressens { get; set; }
 
-    public virtual DbSet<artikelen> artikelens { get; set; }
+    public virtual DbSet<Artikel> artikelens { get; set; }
 
-    public virtual DbSet<artikelleveranciersinfolijnen> artikelleveranciersinfolijnens { get; set; }
+    public virtual DbSet<ArtikelLeveranciersInfolijn> artikelleveranciersinfolijnens { get; set; }
 
-    public virtual DbSet<bestellijnen> bestellijnens { get; set; }
+    public virtual DbSet<Bestellijn> bestellijnens { get; set; }
 
-    public virtual DbSet<bestellingen> bestellingens { get; set; }
+    public virtual DbSet<Bestelling> bestellingens { get; set; }
 
-    public virtual DbSet<bestellingsstatussen> bestellingsstatussens { get; set; }
+    public virtual DbSet<Bestellingsstatus> bestellingsstatussens { get; set; }
 
     public virtual DbSet<betaalwijze> betaalwijzes { get; set; }
 
-    public virtual DbSet<categorieen> categorieens { get; set; }
+    public virtual DbSet<Categorie> categorieens { get; set; }
 
-    public virtual DbSet<chatgesprekken> chatgesprekkens { get; set; }
+    public virtual DbSet<Chatgesprek> chatgesprekkens { get; set; }
 
-    public virtual DbSet<chatgespreklijnen> chatgespreklijnens { get; set; }
+    public virtual DbSet<Chatgespreklijn> chatgespreklijnens { get; set; }
 
-    public virtual DbSet<contactpersonen> contactpersonens { get; set; }
+    public virtual DbSet<Contactpersoon> contactpersonens { get; set; }
 
-    public virtual DbSet<eventwachtrijartikelen> eventwachtrijartikelens { get; set; }
+    public virtual DbSet<Eventwachtrijartikel> eventwachtrijartikelens { get; set; }
 
-    public virtual DbSet<gebruikersaccount> gebruikersaccounts { get; set; }
+    public virtual DbSet<GebruikersAccount> gebruikersaccounts { get; set; }
 
-    public virtual DbSet<inkomendeleveringen> inkomendeleveringens { get; set; }
+    public virtual DbSet<InkomendeLevering> inkomendeleveringens { get; set; }
 
-    public virtual DbSet<inkomendeleveringslijnen> inkomendeleveringslijnens { get; set; }
+    public virtual DbSet<InkomendeLeveringslijn> inkomendeleveringslijnens { get; set; }
 
-    public virtual DbSet<klanten> klantens { get; set; }
+    public virtual DbSet<Klant> klantens { get; set; }
 
-    public virtual DbSet<klantenreview> klantenreviews { get; set; }
+    public virtual DbSet<KlantReview> klantenreviews { get; set; }
 
     public virtual DbSet<leverancier> leveranciers { get; set; }
 
-    public virtual DbSet<magazijnplaatsen> magazijnplaatsens { get; set; }
+    public virtual DbSet<MagazijnPlaats> magazijnplaatsens { get; set; }
 
-    public virtual DbSet<natuurlijkepersonen> natuurlijkepersonens { get; set; }
+    public virtual DbSet<NatuurlijkePersoon> natuurlijkepersonens { get; set; }
 
-    public virtual DbSet<personeelsleden> personeelsledens { get; set; }
+    public virtual DbSet<PersoneelsLid> personeelsledens { get; set; }
 
     public virtual DbSet<personeelslidaccount> personeelslidaccounts { get; set; }
 
-    public virtual DbSet<plaatsen> plaatsens { get; set; }
+    public virtual DbSet<Plaats> plaatsens { get; set; }
 
-    public virtual DbSet<rechtspersonen> rechtspersonens { get; set; }
+    public virtual DbSet<RechtsPersoon> rechtspersonens { get; set; }
 
-    public virtual DbSet<securitygroepen> securitygroepens { get; set; }
+    public virtual DbSet<SecurityGroep> securitygroepens { get; set; }
 
-    public virtual DbSet<toonpersoneelsledenmetsecuritygroepen> toonpersoneelsledenmetsecuritygroepens { get; set; }
+    public virtual DbSet<Toonpersoneelsledenmetsecuritygroep> toonpersoneelsledenmetsecuritygroepens { get; set; }
 
-    public virtual DbSet<uitgaandeleveringen> uitgaandeleveringens { get; set; }
+    public virtual DbSet<UitgaandeLevering> uitgaandeleveringens { get; set; }
 
-    public virtual DbSet<uitgaandeleveringsstatussen> uitgaandeleveringsstatussens { get; set; }
+    public virtual DbSet<UitgaandeLeveringsStatus> uitgaandeleveringsstatussens { get; set; }
 
     public virtual DbSet<veelgesteldevragenartikel> veelgesteldevragenartikels { get; set; }
 
@@ -95,7 +95,7 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.naam).HasMaxLength(45);
         });
 
-        modelBuilder.Entity<adressen>(entity =>
+        modelBuilder.Entity<Adres>(entity =>
         {
             entity.HasKey(e => e.adresId).HasName("PRIMARY");
 
@@ -116,7 +116,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_Adressen_Plaatsen");
         });
 
-        modelBuilder.Entity<artikelen>(entity =>
+        modelBuilder.Entity<Artikel>(entity =>
         {
             entity.HasKey(e => e.artikelId).HasName("PRIMARY");
 
@@ -138,7 +138,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_Artikelen_Leveranciers");
         });
 
-        modelBuilder.Entity<artikelleveranciersinfolijnen>(entity =>
+        modelBuilder.Entity<ArtikelLeveranciersInfolijn>(entity =>
         {
             entity.HasKey(e => new { e.artikelLeveranciersInfoLijnId, e.artikelId })
                 .HasName("PRIMARY")
@@ -158,7 +158,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_ArtikelLeveranciersInfoLijnen_Artikelen1");
         });
 
-        modelBuilder.Entity<bestellijnen>(entity =>
+        modelBuilder.Entity<Bestellijn>(entity =>
         {
             entity.HasKey(e => e.bestellijnId).HasName("PRIMARY");
 
@@ -179,7 +179,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_Bestellijnen_Bestellingen1");
         });
 
-        modelBuilder.Entity<bestellingen>(entity =>
+        modelBuilder.Entity<Bestelling>(entity =>
         {
             entity.HasKey(e => e.bestelId).HasName("PRIMARY");
 
@@ -229,7 +229,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_Bestellingen_Adressen2");
         });
 
-        modelBuilder.Entity<bestellingsstatussen>(entity =>
+        modelBuilder.Entity<Bestellingsstatus>(entity =>
         {
             entity.HasKey(e => e.bestellingsStatusId).HasName("PRIMARY");
 
@@ -245,7 +245,7 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.naam).HasMaxLength(45);
         });
 
-        modelBuilder.Entity<categorieen>(entity =>
+        modelBuilder.Entity<Categorie>(entity =>
         {
             entity.HasKey(e => e.categorieId).HasName("PRIMARY");
 
@@ -262,11 +262,11 @@ public partial class PrulariaDbContext : DbContext
             entity.HasMany(d => d.artikels).WithMany(p => p.categories)
                 .UsingEntity<Dictionary<string, object>>(
                     "artikelcategorieen",
-                    r => r.HasOne<artikelen>().WithMany()
+                    r => r.HasOne<Artikel>().WithMany()
                         .HasForeignKey("artikelId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("fk_ArtikelCategorieen_Artikelen1"),
-                    l => l.HasOne<categorieen>().WithMany()
+                    l => l.HasOne<Categorie>().WithMany()
                         .HasForeignKey("categorieId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("fk_ArtikelCategorieen_Categorieen1"),
@@ -280,7 +280,7 @@ public partial class PrulariaDbContext : DbContext
                     });
         });
 
-        modelBuilder.Entity<chatgesprekken>(entity =>
+        modelBuilder.Entity<Chatgesprek>(entity =>
         {
             entity.HasKey(e => e.chatgesprekId).HasName("PRIMARY");
 
@@ -294,7 +294,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_ChatGesprekken_GebruikersAccounts1");
         });
 
-        modelBuilder.Entity<chatgespreklijnen>(entity =>
+        modelBuilder.Entity<Chatgespreklijn>(entity =>
         {
             entity.HasKey(e => e.chatgesprekLijnId).HasName("PRIMARY");
 
@@ -327,7 +327,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_ChatgesprekLijnen_PersoneelslidAccounts1");
         });
 
-        modelBuilder.Entity<contactpersonen>(entity =>
+        modelBuilder.Entity<Contactpersoon>(entity =>
         {
             entity.HasKey(e => e.contactpersoonId).HasName("PRIMARY");
 
@@ -352,7 +352,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_Contactpersonen_Rechtspersonen1");
         });
 
-        modelBuilder.Entity<eventwachtrijartikelen>(entity =>
+        modelBuilder.Entity<Eventwachtrijartikel>(entity =>
         {
             entity.HasKey(e => e.artikelId).HasName("PRIMARY");
 
@@ -361,7 +361,7 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.artikelId).ValueGeneratedNever();
         });
 
-        modelBuilder.Entity<gebruikersaccount>(entity =>
+        modelBuilder.Entity<GebruikersAccount>(entity =>
         {
             entity.HasKey(e => e.gebruikersAccountId).HasName("PRIMARY");
 
@@ -371,7 +371,7 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.paswoord).HasMaxLength(255);
         });
 
-        modelBuilder.Entity<inkomendeleveringen>(entity =>
+        modelBuilder.Entity<InkomendeLevering>(entity =>
         {
             entity.HasKey(e => e.inkomendeLeveringsId).HasName("PRIMARY");
 
@@ -394,7 +394,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_InkomendeLeveringen_Personeelsleden1");
         });
 
-        modelBuilder.Entity<inkomendeleveringslijnen>(entity =>
+        modelBuilder.Entity<InkomendeLeveringslijn>(entity =>
         {
             entity.HasKey(e => new { e.inkomendeLeveringsId, e.artikelId, e.magazijnPlaatsId })
                 .HasName("PRIMARY")
@@ -417,7 +417,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_InkomendeLeverongsLijnen_InkomendeLeveringen1");
         });
 
-        modelBuilder.Entity<klanten>(entity =>
+        modelBuilder.Entity<Klant>(entity =>
         {
             entity.HasKey(e => e.klantId).HasName("PRIMARY");
 
@@ -438,7 +438,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_Klanten_Adressen2");
         });
 
-        modelBuilder.Entity<klantenreview>(entity =>
+        modelBuilder.Entity<KlantReview>(entity =>
         {
             entity.HasKey(e => e.klantenReviewId).HasName("PRIMARY");
 
@@ -473,7 +473,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_Leveranciers_Plaatsen1");
         });
 
-        modelBuilder.Entity<magazijnplaatsen>(entity =>
+        modelBuilder.Entity<MagazijnPlaats>(entity =>
         {
             entity.HasKey(e => e.magazijnPlaatsId).HasName("PRIMARY");
 
@@ -492,7 +492,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_MagazijnPlaatsen_Artikelen1");
         });
 
-        modelBuilder.Entity<natuurlijkepersonen>(entity =>
+        modelBuilder.Entity<NatuurlijkePersoon>(entity =>
         {
             entity.HasKey(e => e.klantId).HasName("PRIMARY");
 
@@ -512,12 +512,12 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_NatuurlijkePersonen_Gebruikersnamen1");
 
             entity.HasOne(d => d.klant).WithOne(p => p.natuurlijkepersonen)
-                .HasForeignKey<natuurlijkepersonen>(d => d.klantId)
+                .HasForeignKey<NatuurlijkePersoon>(d => d.klantId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_PrivateKlanten_Klanten1");
         });
 
-        modelBuilder.Entity<personeelsleden>(entity =>
+        modelBuilder.Entity<PersoneelsLid>(entity =>
         {
             entity.HasKey(e => e.personeelslidId).HasName("PRIMARY");
 
@@ -539,11 +539,11 @@ public partial class PrulariaDbContext : DbContext
             entity.HasMany(d => d.securityGroeps).WithMany(p => p.personeelslids)
                 .UsingEntity<Dictionary<string, object>>(
                     "personeelslidsecuritygroepen",
-                    r => r.HasOne<securitygroepen>().WithMany()
+                    r => r.HasOne<SecurityGroep>().WithMany()
                         .HasForeignKey("securityGroepId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("fk_PersoneelslidSecurityGroepen_SecurityGroepen1"),
-                    l => l.HasOne<personeelsleden>().WithMany()
+                    l => l.HasOne<PersoneelsLid>().WithMany()
                         .HasForeignKey("personeelslidId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("fk_PersoneelslidSecurityGroepen_Personeelsleden1"),
@@ -567,7 +567,7 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.paswoord).HasMaxLength(255);
         });
 
-        modelBuilder.Entity<plaatsen>(entity =>
+        modelBuilder.Entity<Plaats>(entity =>
         {
             entity.HasKey(e => e.plaatsId).HasName("PRIMARY");
 
@@ -577,7 +577,7 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.postcode).HasMaxLength(4);
         });
 
-        modelBuilder.Entity<rechtspersonen>(entity =>
+        modelBuilder.Entity<RechtsPersoon>(entity =>
         {
             entity.HasKey(e => e.klantId).HasName("PRIMARY");
 
@@ -588,12 +588,12 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.naam).HasMaxLength(45);
 
             entity.HasOne(d => d.klant).WithOne(p => p.rechtspersonen)
-                .HasForeignKey<rechtspersonen>(d => d.klantId)
+                .HasForeignKey<RechtsPersoon>(d => d.klantId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Rechtspersonen_Klanten1");
         });
 
-        modelBuilder.Entity<securitygroepen>(entity =>
+        modelBuilder.Entity<SecurityGroep>(entity =>
         {
             entity.HasKey(e => e.securityGroepId).HasName("PRIMARY");
 
@@ -602,7 +602,7 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.naam).HasMaxLength(45);
         });
 
-        modelBuilder.Entity<toonpersoneelsledenmetsecuritygroepen>(entity =>
+        modelBuilder.Entity<Toonpersoneelsledenmetsecuritygroep>(entity =>
         {
             entity
                 .HasNoKey()
@@ -614,7 +614,7 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.voornaam).HasMaxLength(45);
         });
 
-        modelBuilder.Entity<uitgaandeleveringen>(entity =>
+        modelBuilder.Entity<UitgaandeLevering>(entity =>
         {
             entity.HasKey(e => e.uitgaandeLeveringsId).HasName("PRIMARY");
 
@@ -644,7 +644,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_UitgaandeLeveringen_UitgaandeLeveringsStatussn1");
         });
 
-        modelBuilder.Entity<uitgaandeleveringsstatussen>(entity =>
+        modelBuilder.Entity<UitgaandeLeveringsStatus>(entity =>
         {
             entity.HasKey(e => e.uitgaandeLeveringsStatusId).HasName("PRIMARY");
 

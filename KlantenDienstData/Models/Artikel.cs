@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class artikelen
+public partial class Artikel
 {
     public int artikelId { get; set; }
 
@@ -33,19 +33,19 @@ public partial class artikelen
 
     public int leveranciersId { get; set; }
 
-    public virtual ICollection<artikelleveranciersinfolijnen> artikelleveranciersinfolijnens { get; set; } = new List<artikelleveranciersinfolijnen>();
+    public virtual ICollection<ArtikelLeveranciersInfolijn> artikelleveranciersinfolijnens { get; set; } = new List<ArtikelLeveranciersInfolijn>();
 
-    public virtual ICollection<bestellijnen> bestellijnens { get; set; } = new List<bestellijnen>();
+    public virtual ICollection<Bestellijn> bestellijnens { get; set; } = new List<Bestellijn>();
 
-    public virtual ICollection<inkomendeleveringslijnen> inkomendeleveringslijnens { get; set; } = new List<inkomendeleveringslijnen>();
+    public virtual ICollection<InkomendeLeveringslijn> inkomendeleveringslijnens { get; set; } = new List<InkomendeLeveringslijn>();
 
     public virtual leverancier leveranciers { get; set; } = null!;
 
-    public virtual ICollection<magazijnplaatsen> magazijnplaatsens { get; set; } = new List<magazijnplaatsen>();
+    public virtual ICollection<MagazijnPlaats> magazijnplaatsens { get; set; } = new List<MagazijnPlaats>();
 
     public virtual ICollection<veelgesteldevragenartikel> veelgesteldevragenartikels { get; set; } = new List<veelgesteldevragenartikel>();
 
     public virtual ICollection<wishlistitem> wishlistitems { get; set; } = new List<wishlistitem>();
 
-    public virtual ICollection<categorieen> categories { get; set; } = new List<categorieen>();
+    public virtual ICollection<Categorie> categories { get; set; } = new List<Categorie>();
 }

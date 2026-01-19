@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class toonpersoneelsledenmetsecuritygroepen
+public partial class Toonpersoneelsledenmetsecuritygroep
 {
     public string voornaam { get; set; } = null!;
 

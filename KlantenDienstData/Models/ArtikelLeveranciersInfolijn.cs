@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class artikelleveranciersinfolijnen
+public partial class ArtikelLeveranciersInfolijn
 {
     public int artikelLeveranciersInfoLijnId { get; set; }
 
@@ -13,5 +13,5 @@ public partial class artikelleveranciersinfolijnen
 
     public string antwoord { get; set; } = null!;
 
-    public virtual artikelen artikel { get; set; } = null!;
+    public virtual Artikel artikel { get; set; } = null!;
 }
