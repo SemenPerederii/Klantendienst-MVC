@@ -5,15 +5,15 @@ namespace KlantenDienstData.Models;
 
 public partial class NatuurlijkePersoon
 {
-    public int klantId { get; set; }
+    public int KlantId { get; set; }
 
-    public string voornaam { get; set; } = null!;
+    public string Voornaam { get; set; } = null!;
 
-    public string familienaam { get; set; } = null!;
+    public string Familienaam { get; set; } = null!;
 
-    public int gebruikersAccountId { get; set; }
+    public int GebruikersAccountId { get; set; }
 
-    public virtual GebruikersAccount gebruikersAccount { get; set; } = null!;
+    public virtual GebruikersAccount GebruikersAccount { get; set; } = null!;
 
-    public virtual Klant klant { get; set; } = null!;
+    public virtual Klant Klant { get; set; } = null!;
 }

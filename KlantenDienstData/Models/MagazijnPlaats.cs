@@ -5,13 +5,13 @@ namespace KlantenDienstData.Models;
 
 public partial class MagazijnPlaats
 {
-    public int magazijnPlaatsId { get; set; }
+    public int MagazijnPlaatsId { get; set; }
 
-    public int? artikelId { get; set; }
+    public int? ArtikelId { get; set; }
 
-    public string rij { get; set; } = null!;
+    public string Rij { get; set; } = null!;
 
-    public int rek { get; set; }
+    public int Rek { get; set; }
 
     public int aantal { get; set; }
 
