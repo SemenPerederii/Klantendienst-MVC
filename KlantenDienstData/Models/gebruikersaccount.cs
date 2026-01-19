@@ -5,21 +5,21 @@ namespace KlantenDienstData.Models;
 
 public partial class GebruikersAccount
 {
-    public int gebruikersAccountId { get; set; }
+    public int GebruikersAccountId { get; set; }
 
-    public string emailadres { get; set; } = null!;
+    public string Emailadres { get; set; } = null!;
 
-    public string paswoord { get; set; } = null!;
+    public string Paswoord { get; set; } = null!;
 
-    public bool disabled { get; set; }
+    public bool Disabled { get; set; }
 
-    public virtual ICollection<Chatgesprek> chatgesprekkens { get; set; } = new List<Chatgesprek>();
+    public virtual ICollection<Chatgesprek> Chatgesprekken { get; set; } = new List<Chatgesprek>();
 
-    public virtual ICollection<Chatgespreklijn> chatgespreklijnens { get; set; } = new List<Chatgespreklijn>();
+    public virtual ICollection<Chatgespreklijn> Chatgespreklijnen { get; set; } = new List<Chatgespreklijn>();
 
-    public virtual ICollection<Contactpersoon> contactpersonens { get; set; } = new List<Contactpersoon>();
+    public virtual ICollection<Contactpersoon> Contactpersonen { get; set; } = new List<Contactpersoon>();
 
-    public virtual ICollection<NatuurlijkePersoon> natuurlijkepersonens { get; set; } = new List<NatuurlijkePersoon>();
+    public virtual ICollection<NatuurlijkePersoon> Natuurlijkepersonen { get; set; } = new List<NatuurlijkePersoon>();
 
-    public virtual ICollection<wishlistitem> wishlistitems { get; set; } = new List<wishlistitem>();
+    public virtual ICollection<Wishlistitem> Wishlistitems { get; set; } = new List<Wishlistitem>();
 }

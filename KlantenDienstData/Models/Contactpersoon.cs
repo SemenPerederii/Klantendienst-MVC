@@ -5,19 +5,19 @@ namespace KlantenDienstData.Models;
 
 public partial class Contactpersoon
 {
-    public int contactpersoonId { get; set; }
+    public int ContactpersoonId { get; set; }
 
-    public string voornaam { get; set; } = null!;
+    public string Voornaam { get; set; } = null!;
 
-    public string familienaam { get; set; } = null!;
+    public string Familienaam { get; set; } = null!;
 
-    public string functie { get; set; } = null!;
+    public string Functie { get; set; } = null!;
 
-    public int klantId { get; set; }
+    public int KlantId { get; set; }
 
-    public int gebruikersAccountId { get; set; }
+    public int GebruikersAccountId { get; set; }
 
-    public virtual GebruikersAccount gebruikersAccount { get; set; } = null!;
+    public virtual GebruikersAccount GebruikersAccount { get; set; } = null!;
 
-    public virtual RechtsPersoon klant { get; set; } = null!;
+    public virtual RechtsPersoon Klant { get; set; } = null!;
 }

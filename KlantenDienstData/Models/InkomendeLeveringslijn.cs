@@ -5,19 +5,19 @@ namespace KlantenDienstData.Models;
 
 public partial class InkomendeLeveringslijn
 {
-    public int inkomendeLeveringsId { get; set; }
+    public int InkomendeLeveringsId { get; set; }
 
-    public int artikelId { get; set; }
+    public int ArtikelId { get; set; }
 
-    public int aantalBesteld { get; set; }
+    public int AantalBesteld { get; set; }
 
-    public int aantalGoedgekeurd { get; set; }
+    public int AantalGoedgekeurd { get; set; }
 
-    public int aantalTeruggestuurd { get; set; }
+    public int AantalTeruggestuurd { get; set; }
 
-    public int magazijnPlaatsId { get; set; }
+    public int MagazijnPlaatsId { get; set; }
 
-    public virtual Artikel artikel { get; set; } = null!;
+    public virtual Artikel Artikel { get; set; } = null!;
 
-    public virtual InkomendeLevering inkomendeLeverings { get; set; } = null!;
+    public virtual InkomendeLevering InkomendeLevering { get; set; } = null!;
 }

@@ -5,9 +5,9 @@ namespace KlantenDienstData.Models;
 
 public partial class EventwachtrijArtikel
 {
-    public int artikelId { get; set; }
+    public int ArtikelId { get; set; }
 
-    public int aantal { get; set; }
+    public int Aantal { get; set; }
 
-    public int maxAantalInMagazijnPlaats { get; set; }
+    public int MaxAantalInMagazijnPlaats { get; set; }
 }
