@@ -1,7 +1,19 @@
+using KlantenDienstData.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<PrulariaDbContext>(
+    options =>
+    {
+        options.UseSqlServer(
+            connectionString: builder.Configuration.GetConnectionString(name: "KlantenDienstConnection"),
+            x => x.MigrationsAssembly("KlantenDienstData"));
+    }
+    );
+
 
 var app = builder.Build();
 
