@@ -21,5 +21,18 @@ namespace KlantenDienstServices
         {
             return await _repositoryCategorie.GetAll();
         }
+
+        public List<Categorie> BuildTree(List<Categorie> allCategories)
+        {
+            var lookup = allCategories.ToLookup(c => c.HoofdCategorieId);
+
+            foreach (var categorie in allCategories)
+            {
+                categorie.InversehoofdCategorie = lookup[categorie.CategorieId].ToList();
+            }
+
+            return lookup[null].ToList();
+        }
+
     }
 }

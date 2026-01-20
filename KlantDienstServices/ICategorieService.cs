@@ -10,5 +10,6 @@ namespace KlantenDienstServices
     public interface ICategorieService
     {
         Task<List<Categorie>> GetAllCategorieAsync();
+        List<Categorie> BuildTree(List<Categorie> allCategories);
     }
 }

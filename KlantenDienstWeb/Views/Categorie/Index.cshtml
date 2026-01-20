@@ -1,25 +1,10 @@
 ﻿@using KlantenDienstData.Models
 
-@model List<Categorie>
+@model IEnumerable<Categorie>
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Categorieen</h1>
 
-@* voorbeeld *@
-@foreach (var categorie in Model)
-{
-    <h3>@categorie.Naam</h3>
-
-    @if (categorie.InversehoofdCategorie.Any())
-    {
-        <ul>
-            @foreach (var sub in categorie.InversehoofdCategorie)
-            {
-                <li>@sub.Naam</li>
-            }
-        </ul>
-    }
-}
-
+@await Html.PartialAsync("_CategorieTree", Model)

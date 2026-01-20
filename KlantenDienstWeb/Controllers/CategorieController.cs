@@ -15,7 +15,9 @@ namespace KlantenDienstWeb.Controllers
         public async Task<IActionResult> Index()
         {
             var categories = await _serviceCategorie.GetAllCategorieAsync();
-            return View(categories);
+            var tree = _serviceCategorie.BuildTree(categories);
+
+            return View(tree);
         }
     }
 }

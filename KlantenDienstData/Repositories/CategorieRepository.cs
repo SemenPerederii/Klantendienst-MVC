@@ -18,10 +18,7 @@ namespace KlantenDienstData.Repositories
         }
         public async Task<List<Categorie>> GetAll()
         {
-            return await _context.Categorieen
-                .Include(c => c.HoofdCategorie)
-                .Include(c => c.InversehoofdCategorie)
-                .ToListAsync();
+            return await _context.Categorieen.ToListAsync();
         }
     }
 }
