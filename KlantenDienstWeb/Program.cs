@@ -24,6 +24,9 @@ builder.Services.AddScoped<ArtikelService>();
 builder.Services.AddScoped<ICategorieRepository, CategorieRepository>();
 builder.Services.AddScoped<ICategorieService, CategorieService>();
 
+builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<IPersoneelslidRepository, PersoneelslidRepository>();
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
