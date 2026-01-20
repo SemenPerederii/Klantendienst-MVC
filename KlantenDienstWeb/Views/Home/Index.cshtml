@@ -1,8 +1,27 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-4" style="max-width: 300px;">
+    <p class="mb-3" style="white-space: nowrap;">Welkom bij Prularia Klantendienst</p>
+
+    <form asp-action="Inloggen" method="post" asp-controller="Home">
+        <div class="mb-3">
+            <label asp-for="Emailadres" class="form-label"></label>
+            <input asp-for="Emailadres" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Emailadres" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Paswoord" class="form-label"></label>
+            <input asp-for="Paswoord" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Paswoord" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary px-3 py-2">Aanmelden</button>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </form>
 </div>

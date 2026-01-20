@@ -22,20 +22,33 @@ namespace KlantenDienstWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> LogIn(LoginViewModel loginModel)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Inloggen(LoginViewModel loginViewModel)
         {
             if (!ModelState.IsValid)
-                return View(nameof(LogIn), loginModel);
-            var personeelslid = await _accountService.Login(loginModel.Emailadres, loginModel.Paswoord);
-            if (personeelslid is null ||
-                 (personeelslid.InDienst.HasValue && !personeelslid.InDienst.Value) ||
-                 personeelslid.PersoneelslidAccount.Disabled)
             {
-                loginModel.ErrorMessage = "Deze gebruiker/paswoord combinatie is fout.";
-                return View(nameof(LogIn), loginModel);
+                return View(nameof(Index), loginViewModel);
             }
-            //await SecurityManager.SignIn(this.HttpContext, personeelslid);
-            return LocalRedirect(loginModel.ReturnUrl);
+            var account = await _accountService.Login(loginViewModel.Emailadres, loginViewModel.Paswoord);
+            if (account == null)
+            {
+                loginViewModel.ErrorMessage = "Deze gebruiker/paswoord combinatie is fout.";
+                return View(nameof(Index), loginViewModel);
+            }
+            if (account.Disabled)
+            {
+                loginViewModel.ErrorMessage = "Deze gebruiker/paswoord combinatie is fout.";
+                return View(nameof(Index), loginViewModel);
+            }
+            var heeftActiefPersoneelslid = account.Personeelsleden.Any(p => p.InDienst == true);
+            if (!heeftActiefPersoneelslid)
+            {
+                loginViewModel.ErrorMessage = "Deze gebruiker/paswoord combinatie is fout.";
+                return View(nameof(Index), loginViewModel);
+            }
+            // TODO: cookies
+            // await SecurityManager.SignIn(HttpContext, account);
+            return LocalRedirect(loginViewModel.ReturnUrl ?? "/"); //naar landingspagina leiden
         }
 
         public IActionResult Privacy()
