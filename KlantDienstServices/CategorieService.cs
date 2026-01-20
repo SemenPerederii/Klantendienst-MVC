@@ -17,6 +17,22 @@ namespace KlantenDienstServices
             _repositoryCategorie = repository;
         }
 
+        public async Task DeleteCategorieAsync(int id)
+        {
+            var categorie = await _repositoryCategorie.GetByIdAsync(id);
+
+            if (categorie == null)
+                throw new Exception("Categorie niet gevonden");
+
+            var hasChildren = await _repositoryCategorie.HasChildrenAsync(id);
+
+            if (hasChildren)
+                throw new InvalidOperationException("Categorie kan niet worden verwijderd omdat zij subcategorieën heeft.");
+
+            await _repositoryCategorie.DeleteAsync(categorie);
+            await _repositoryCategorie.SaveChangesAsync();
+        }
+
         public async Task<List<Categorie>> GetAllCategorieAsync()
         {
             return await _repositoryCategorie.GetAll();
