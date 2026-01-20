@@ -9,8 +9,6 @@ public partial class InkomendeLeveringslijn
 
     public int ArtikelId { get; set; }
 
-    public int AantalBesteld { get; set; }
-
     public int AantalGoedgekeurd { get; set; }
 
     public int AantalTeruggestuurd { get; set; }
