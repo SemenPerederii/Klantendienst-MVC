@@ -33,10 +33,10 @@ body {
     background-color: #ABD7A8;
 }
 .cs-logo{
-    height:3rem;
+    height:4rem;
 }
 .cs-navlink{
-    font-size:1.5rem;
-    color:#808080;
+    color: #808080;
     text-decoration:none;
+    font-size:2rem;
 }
