@@ -1,4 +1,6 @@
 using KlantenDienstData.Models;
+using KlantenDienstData.Repositories;
+using KlantenDienstServices;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,10 @@ builder.Services.AddDbContext<PrulariaDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection"),
         new MySqlServerVersion(new Version(8, 0, 33))
     ));
+
+
+builder.Services.AddScoped<ICategorieRepository, CategorieRepository>();
+builder.Services.AddScoped<ICategorieService, CategorieService>();
 
 
 var app = builder.Build();
