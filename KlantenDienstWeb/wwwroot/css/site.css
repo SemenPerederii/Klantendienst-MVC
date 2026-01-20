@@ -33,10 +33,10 @@ body {
     background-color: #ABD7A8;
 }
 .cs-logo{
-    height:4rem;
+    height:calc(3rem + 2vw);
 }
-.cs-navlink{
+.cs-navlink {
     color: #808080;
-    text-decoration:none;
-    font-size:2rem;
+    text-decoration: none;
+    font-size: calc(2vw);
 }
