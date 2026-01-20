@@ -1,5 +1,3 @@
-using KlantenDienstData.Models;
-using KlantenDienstData.Repositories;
 using KlantenDienstServices;
 using KlantenDienstWeb.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,34 +8,34 @@ namespace KlantenDienstWeb.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly PrulariaDbContext _context;
-        private readonly PersoneelslidRepository _repository;
+        private readonly AccountService _accountService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, AccountService accountService)
         {
             _logger = logger;
+            _accountService = accountService;
         }
 
         public IActionResult Index()
         {
-            var loginKlant = new LoginViewModel();
-            return View(loginKlant);
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
-        public async Task<ActionResult> Inloggen(LoginViewModel loginViewModel)
+        public async Task<ActionResult> LogIn(LoginViewModel loginModel)
         {
             if (!ModelState.IsValid)
-                return View(nameof(Inloggen), loginViewModel);
-            var personeelslid = await AccountService.Login(loginViewModel.Emailadres,loginViewModel.Paswoord);
+                return View(nameof(LogIn), loginModel);
+            var personeelslid = await _accountService.Login(loginModel.Emailadres, loginModel.Paswoord);
             if (personeelslid is null ||
-                (personeelslid.InDienst.HasValue && !personeelslid.InDienst.Value) || personeelslid.PersoneelslidAccount.Disabled)
+                 (personeelslid.InDienst.HasValue && !personeelslid.InDienst.Value) ||
+                 personeelslid.PersoneelslidAccount.Disabled)
             {
-                loginViewModel.ErrorMessage = "Deze gebruiker/paswoord combinatie is fout.";
-                return View(nameof(Inloggen), loginViewModel);
+                loginModel.ErrorMessage = "Deze gebruiker/paswoord combinatie is fout.";
+                return View(nameof(LogIn), loginModel);
             }
             //await SecurityManager.SignIn(this.HttpContext, personeelslid);
-            return LocalRedirect(loginViewModel.ReturnUrl);
+            return LocalRedirect(loginModel.ReturnUrl);
         }
 
         public IActionResult Privacy()
@@ -48,7 +46,10 @@ namespace KlantenDienstWeb.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
         }
     }
 }

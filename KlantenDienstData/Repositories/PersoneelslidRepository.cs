@@ -1,23 +1,23 @@
 ﻿using KlantenDienstData.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace KlantenDienstData.Repositories
+namespace KlantenDienstData.Repositories;
+public class PersoneelslidRepository : IPersoneelslidRepository
 {
-    public class PersoneelslidRepository : IPersoneelslidRepository //moeten beide nog geinjecteerd worden in program.cs
+    private readonly PrulariaDbContext _context;
+
+    public PersoneelslidRepository(PrulariaDbContext context)
     {
-        private readonly PrulariaDbContext _context;
-        public PersoneelslidRepository(PrulariaDbContext context)
-        {
-            _context = context;
-        }
-        public async Task<List<PersoneelslidAccount>> GetAllePersoneelslidAccountsAsync()
-        {
-            var personeelslidAccounts = _context.PersoneelslidAccounts.ToListAsync();
-            return await personeelslidAccounts;
-        }
-        public async Task<PersoneelslidAccount?> FindByEmailAsync(string email)
-        {
-            return await _context.PersoneelslidAccounts.FindAsync(email);
-        }
+        _context = context;
+    }
+
+    public async Task<List<PersoneelslidAccount>> GetAllePersoneelslidAccountsAsync()
+    {
+        return await _context.PersoneelslidAccounts.ToListAsync();
+    }
+
+    public async Task<PersoneelslidAccount?> FindByEmailAsync(string email)
+    {
+        return await _context.PersoneelslidAccounts.SingleOrDefaultAsync(p => p.Emailadres == email);
     }
 }

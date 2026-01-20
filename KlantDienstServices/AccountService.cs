@@ -1,23 +1,39 @@
 ﻿using KlantenDienstData.Models;
 using KlantenDienstData.Repositories;
 
-namespace KlantenDienstServices
+namespace KlantenDienstServices;
+public class AccountService
 {
-    public class AccountService //moet nog geinjecteerd worden in program.cs
+    private readonly IPersoneelslidRepository _repository;
+
+    public AccountService(IPersoneelslidRepository repository)
     {
-        public async Task<Personeelslid?> Login(string email, string paswoord)
+        _repository = repository;
+    }
+
+    public async Task<PersoneelslidAccount?> Login(string email, string paswoord)
+    {
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(paswoord))
         {
-            var personeelslid = await PersoneelslidRepository.FindByEmailAsync(email);
-            if (personeelslid is null || !VerifyPaswoord(paswoord, personeelslid.PersoneelslidAccount.Paswoord))
-            {
-                return null;
-            }
-            return personeelslid;
+            return null;
         }
 
-        private bool VerifyPaswoord(string paswoord, string paswoordHash)
+        var personeelslid = await _repository.FindByEmailAsync(email);
+        if (personeelslid == null)
         {
-            return BCrypt.Net.BCrypt.Verify(paswoord, paswoordHash);
+            return null;
         }
+
+        if (!VerifyPaswoord(paswoord, personeelslid.Paswoord))
+        {
+            return null;
+        }
+
+        return personeelslid;
+    }
+
+    private bool VerifyPaswoord(string paswoord, string paswoordHash)
+    {
+        return BCrypt.Net.BCrypt.Verify(paswoord, paswoordHash);
     }
 }

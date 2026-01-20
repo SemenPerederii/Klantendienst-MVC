@@ -1,4 +1,5 @@
 using KlantenDienstData.Models;
+using KlantenDienstServices;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,7 @@ builder.Services.AddDbContext<PrulariaDbContext>(options =>
         x => x.MigrationsAssembly("KlantenDienstData")
     )
 );
-
+builder.Services.AddScoped<AccountService>();
 
 var app = builder.Build();
 

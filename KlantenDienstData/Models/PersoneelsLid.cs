@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace KlantenDienstData.Models;
+﻿namespace KlantenDienstData.Models;
 
 public partial class Personeelslid
 {
