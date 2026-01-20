@@ -12,8 +12,9 @@ builder.Services.AddDbContext<PrulariaDbContext>(options =>
         builder.Configuration.GetConnectionString("PrulariaComConnection"),
         new MySqlServerVersion(new Version(8, 0, 36)),
         x => x.MigrationsAssembly("KlantenDienstData")
-    )
-);
+              .EnableRetryOnFailure(maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(10), errorNumbersToAdd: null)
+       )
+   );
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<IPersoneelslidRepository, PersoneelslidRepository>();
 
@@ -36,6 +37,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthorization();
 

@@ -13,10 +13,11 @@ public class PersoneelslidRepository : IPersoneelslidRepository
     {
         return await _context.PersoneelslidAccounts.ToListAsync();
     }
-    public async Task<PersoneelslidAccount?> FindByEmailAsync(string email)
-    {
-        return await _context.PersoneelslidAccounts.SingleOrDefaultAsync(p => p.Emailadres == email);
-    }
+    public async Task<PersoneelslidAccount?> FindByEmailAsync(string email) =>
+        await _context.PersoneelslidAccounts
+        .Include(pa => pa.Personeelsleden)
+        .FirstOrDefaultAsync(pa => pa.Emailadres == email);
+
     public async Task<Personeelslid?> FindPersoneelslidByIdAsync(int personeelslidId)
     {
         return await _context.Personeelsleden.FindAsync(personeelslidId);
