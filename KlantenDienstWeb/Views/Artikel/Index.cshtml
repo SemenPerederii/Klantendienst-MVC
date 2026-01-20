@@ -1,28 +1,33 @@
 ﻿@model ArtikelViewModel
 @{
-        ViewData["Title"] = "Overzicht Artikelen";
+    ViewData["Title"] = "Overzicht Artikelen";
 }
 <h1>@ViewData["Title"]</h1>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
+            <th>EAN-Code</th>
             <th>Naam</th>
             <th>Beschrijving</th>
             <th>Prijs</th>
-            <th>Categorie</th>
+            <th>Momenteel in voorraad</th>
+            <th>Categorie(ën)</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var artikel in Model.Artikelen)
         {
             <tr>
+                <td>@artikel.EAN</td>
                 <td>@artikel.Naam</td>
                 <td>@artikel.Beschrijving</td>
-                <td>@artikel.Prijs.ToString("C")</td>
+                <td>@artikel.Prijs.ToString("€ #,##0.00")</td>
+                <td>@artikel.Voorraad</td>
                 <td>
-                    <ul>@foreach(var categorie in artikel.Categorieën)
+                    <ul>
+                        @foreach (var categorie in artikel.Categorieën)
                         {
-                            <li>@categorie.Naam</li>
+                            <li><a href="#">@categorie.Naam</a></li>
                         }
                     </ul>
                 </td>
