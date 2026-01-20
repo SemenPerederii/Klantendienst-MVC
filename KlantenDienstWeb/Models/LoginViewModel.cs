@@ -4,7 +4,7 @@ namespace KlantenDienstWeb.Models;
 public class LoginViewModel
 {
 
-    [Display(Name = "Gebruikersnaam")]
+    [Display(Name = "Emailadres")]
     [Required(ErrorMessage = "Verplicht")]
     public string Emailadres { get; set; } = string.Empty;
     [Required(ErrorMessage = "Verplicht")]

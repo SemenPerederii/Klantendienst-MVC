@@ -48,7 +48,12 @@ namespace KlantenDienstWeb.Controllers
             }
             // TODO: cookies
             // await SecurityManager.SignIn(HttpContext, account);
-            return LocalRedirect(loginViewModel.ReturnUrl ?? "/"); //naar landingspagina leiden
+            return RedirectToAction(nameof(Landingspagina)); //naar landingspagina leiden
+        }
+
+        public IActionResult Landingspagina()
+        {
+            return View();
         }
 
         public IActionResult Privacy()

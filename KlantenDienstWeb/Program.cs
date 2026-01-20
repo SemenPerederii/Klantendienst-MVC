@@ -1,4 +1,5 @@
 using KlantenDienstData.Models;
+using KlantenDienstData.Repositories;
 using KlantenDienstServices;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,14 @@ builder.Services.AddDbContext<PrulariaDbContext>(options =>
     )
 );
 builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<IPersoneelslidRepository, PersoneelslidRepository>();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
