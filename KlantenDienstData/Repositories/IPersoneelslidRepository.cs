@@ -6,5 +6,6 @@ namespace KlantenDienstData.Repositories
     {
         Task<List<PersoneelslidAccount>> GetAllePersoneelslidAccountsAsync();
         Task<PersoneelslidAccount?> FindByEmailAsync(string email);
+        Task<Personeelslid?> FindPersoneelslidByIdAsync(int personeelslidId);
     }
 }

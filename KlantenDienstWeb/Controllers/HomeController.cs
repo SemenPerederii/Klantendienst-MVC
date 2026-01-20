@@ -1,3 +1,4 @@
+using KlantenDienstData.Models;
 using KlantenDienstServices;
 using KlantenDienstWeb.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -29,27 +30,42 @@ namespace KlantenDienstWeb.Controllers
             {
                 return View(nameof(Index), loginViewModel);
             }
-            var account = await _accountService.Login(loginViewModel.Emailadres, loginViewModel.Paswoord);
-            if (account == null)
+            try
             {
-                loginViewModel.ErrorMessage = "Deze gebruiker/paswoord combinatie is fout.";
+                var account = await _accountService.Login(loginViewModel.Emailadres, loginViewModel.Paswoord);
+                if (!IsGeldigAccount(account))
+                {
+                    return LoginMislukt(loginViewModel);
+                }
+                var personeelslid = await _accountService.GetPersoneelslidById(account!.PersoneelslidAccountId);
+                HttpContext.Session.SetInt32("PersoneelslidId", account.PersoneelslidAccountId);
+                HttpContext.Session.SetString("Voornaam", personeelslid?.Voornaam ?? string.Empty);
+                return RedirectToAction(nameof(Landingspagina));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Fout bij het aanmelden van klant.");
+                ModelState.AddModelError(string.Empty, "Er is een fout opgetreden. Probeer het later opnieuw.");
                 return View(nameof(Index), loginViewModel);
             }
-            if (account.Disabled)
-            {
-                loginViewModel.ErrorMessage = "Deze gebruiker/paswoord combinatie is fout.";
-                return View(nameof(Index), loginViewModel);
-            }
-            var heeftActiefPersoneelslid = account.Personeelsleden.Any(p => p.InDienst == true);
-            if (!heeftActiefPersoneelslid)
-            {
-                loginViewModel.ErrorMessage = "Deze gebruiker/paswoord combinatie is fout.";
-                return View(nameof(Index), loginViewModel);
-            }
-            // TODO: cookies
             // await SecurityManager.SignIn(HttpContext, account);
-            return RedirectToAction(nameof(Landingspagina)); //naar landingspagina leiden
         }
+
+        private bool IsGeldigAccount(PersoneelslidAccount? account)
+        {
+            if (account == null || account.Disabled)
+            {
+                return false;
+            }
+            return account.Personeelsleden.Any(p => p.InDienst == true);
+        }
+
+        private IActionResult LoginMislukt(LoginViewModel model)
+        {
+            ModelState.AddModelError(string.Empty, "Onbekende gebruiker, probeer opnieuw");
+            return View(nameof(Index), model);
+        }
+
 
         public IActionResult Landingspagina()
         {
