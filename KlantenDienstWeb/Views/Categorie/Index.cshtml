@@ -5,11 +5,21 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Categorieen</h1>
 
-<ul>
-    @foreach (var categorie in Model)
+@* voorbeeld *@
+@foreach (var categorie in Model)
+{
+    <h3>@categorie.Naam</h3>
+
+    @if (categorie.InversehoofdCategorie.Any())
     {
-        <li>@categorie.Naam</li>
+        <ul>
+            @foreach (var sub in categorie.InversehoofdCategorie)
+            {
+                <li>@sub.Naam</li>
+            }
+        </ul>
     }
-</ul>
+}
+
