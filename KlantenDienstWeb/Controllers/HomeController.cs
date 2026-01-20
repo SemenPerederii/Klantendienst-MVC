@@ -1,8 +1,9 @@
-using System.Diagnostics;
 using KlantenDienstData.Models;
 using KlantenDienstData.Repositories;
+using KlantenDienstServices;
 using KlantenDienstWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace KlantenDienstWeb.Controllers
 {
@@ -22,26 +23,22 @@ namespace KlantenDienstWeb.Controllers
             var loginKlant = new LoginViewModel();
             return View(loginKlant);
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Index(LoginViewModel klant)
-        //{
-        //    var personeelsLid = _context.PersoneelslidAccount.ToList();
-        //    var ingeloggedKlant = klanten
-        //        .FirstOrDefault(k => k.Naam.Equals(klant.Naam, StringComparison.CurrentCultureIgnoreCase)
-        //        && k.Postcode == klant.Postcode);
-        //    if (ingeloggedKlant != null)
-        //    {
-        //        HttpContext.Session.SetString("KlantNaam", ingeloggedKlant.Naam);
-        //        HttpContext.Session.SetString("KlantVoornaam", ingeloggedKlant.Voornaam);
-        //        return RedirectToAction("GenreKiezen");
-        //    }
-        //    else
-        //    {
-        //        ModelState.AddModelError(string.Empty, "Onbekend klant");
-        //        return View(klant);
-        //    }
-        //}
+
+        [HttpPost]
+        public async Task<ActionResult> Inloggen(LoginViewModel loginViewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(nameof(Inloggen), loginViewModel);
+            var personeelslid = await AccountService.Login(loginViewModel.Emailadres,loginViewModel.Paswoord);
+            if (personeelslid is null ||
+                (personeelslid.InDienst.HasValue && !personeelslid.InDienst.Value) || personeelslid.PersoneelslidAccount.Disabled)
+            {
+                loginViewModel.ErrorMessage = "Deze gebruiker/paswoord combinatie is fout.";
+                return View(nameof(Inloggen), loginViewModel);
+            }
+            //await SecurityManager.SignIn(this.HttpContext, personeelslid);
+            return LocalRedirect(loginViewModel.ReturnUrl);
+        }
 
         public IActionResult Privacy()
         {
