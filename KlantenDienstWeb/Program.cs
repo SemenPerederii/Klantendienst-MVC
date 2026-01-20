@@ -7,9 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<PrulariaDbContext>(options =>
     options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(8, 0, 33))
-    ));
+        builder.Configuration.GetConnectionString("PrulariaComConnection"),
+        new MySqlServerVersion(new Version(8, 0, 36)),
+        x => x.MigrationsAssembly("KlantenDienstData")
+    )
+);
 
 
 var app = builder.Build();
