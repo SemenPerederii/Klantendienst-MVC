@@ -1,0 +1,15 @@
+﻿@using KlantenDienstData.Models
+
+@model List<Categorie>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<ul>
+    @foreach (var categorie in Model)
+    {
+        <li>@categorie.Naam</li>
+    }
+</ul>
