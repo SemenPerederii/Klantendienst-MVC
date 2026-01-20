@@ -17,7 +17,7 @@ namespace KlantenDienstServices
             _repositoryCategorie = repository;
         }
 
-        public async Task<List<Categorie>> GetAllCategorie()
+        public async Task<List<Categorie>> GetAllCategorieAsync()
         {
             return await _repositoryCategorie.GetAll();
         }
