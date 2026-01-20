@@ -1,0 +1,20 @@
+﻿@using KlantenDienstData.Models
+
+@model IEnumerable<Categorie>
+@{
+    ViewData["Title"] = "_CategorieTree";
+}
+
+<ul>
+    @foreach (var categorie in Model)
+    {
+        <li>
+            <span>@categorie.Naam</span>
+
+            @if (categorie.InversehoofdCategorie.Any())
+            {
+                @await Html.PartialAsync("_CategorieTree", categorie.InversehoofdCategorie)
+            }
+        </li>
+    }
+</ul>

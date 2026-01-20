@@ -1,0 +1,10 @@
+﻿@using KlantenDienstData.Models
+
+@model IEnumerable<Categorie>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Categorieen</h1>
+
+@await Html.PartialAsync("_CategorieTree", Model)

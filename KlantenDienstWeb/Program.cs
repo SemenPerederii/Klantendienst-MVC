@@ -21,6 +21,10 @@ builder.Services.AddScoped<IArtikelRepository, SqlArtikelRepository>();
 builder.Services.AddScoped<ArtikelService>();
 
 
+builder.Services.AddScoped<ICategorieRepository, CategorieRepository>();
+builder.Services.AddScoped<ICategorieService, CategorieService>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

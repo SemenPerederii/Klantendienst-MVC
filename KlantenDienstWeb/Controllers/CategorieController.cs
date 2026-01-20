@@ -1,12 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using KlantenDienstServices;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KlantenDienstWeb.Controllers
 {
     public class CategorieController : Controller
     {
-        public IActionResult Index()
+        private readonly ICategorieService _serviceCategorie;
+
+        public CategorieController(ICategorieService serviceCategorie)
         {
-            return View();
+            _serviceCategorie = serviceCategorie;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var categories = await _serviceCategorie.GetAllCategorieAsync();
+            var tree = _serviceCategorie.BuildTree(categories);
+
+            return View(tree);
         }
     }
 }
