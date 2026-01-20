@@ -21,5 +21,5 @@ public partial class InkomendeLevering
 
     public virtual Leverancier Leveranciers { get; set; } = null!;
 
-    public virtual PersoneelsLid OntvangerPersoneelslid { get; set; } = null!;
+    public virtual Personeelslid OntvangerPersoneelslid { get; set; } = null!;
 }
