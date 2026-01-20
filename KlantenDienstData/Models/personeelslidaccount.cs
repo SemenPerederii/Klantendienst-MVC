@@ -12,5 +12,5 @@ public partial class PersoneelslidAccount
 
     public virtual ICollection<Chatgespreklijn> Chatgespreklijnen { get; set; } = new List<Chatgespreklijn>();
 
-    public virtual ICollection<PersoneelsLid> Personeelsleden { get; set; } = new List<PersoneelsLid>();
+    public virtual ICollection<Personeelslid> Personeelsleden { get; set; } = new List<Personeelslid>();
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KlantenDienstData.Models;
 
-public partial class PersoneelsLid
+public partial class Personeelslid
 {
     public int PersoneelslidId { get; set; }
 

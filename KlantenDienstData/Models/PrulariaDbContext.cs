@@ -58,7 +58,7 @@ public partial class PrulariaDbContext : DbContext
 
     public virtual DbSet<NatuurlijkePersoon> NatuurlijkePersonen { get; set; }
 
-    public virtual DbSet<PersoneelsLid> PersoneelsLeden { get; set; }
+    public virtual DbSet<Personeelslid> PersoneelsLeden { get; set; }
 
     public virtual DbSet<PersoneelslidAccount> PersoneelslidAccounts { get; set; }
 
@@ -318,9 +318,9 @@ public partial class PrulariaDbContext : DbContext
                 .HasForeignKey(d => d.GebruikersAccountId)
                 .HasConstraintName("fk_ChatgesprekLijnen_GebruikersAccounts1");
 
-            //entity.HasOne(d => d.PersoneelslidAccount).WithMany(p => p.Chatgespreklijnen)
-            //    .HasForeignKey(d => d.PersoneelslidAccountId)
-            //    .HasConstraintName("fk_ChatgesprekLijnen_PersoneelslidAccounts1");
+            entity.HasOne(d => d.PersoneelslidAccount).WithMany(p => p.Chatgespreklijnen)
+                .HasForeignKey(d => d.PersoneelslidAccountId)
+                .HasConstraintName("fk_ChatgesprekLijnen_PersoneelslidAccounts1");
         });
 
         modelBuilder.Entity<Contactpersoon>(entity =>
@@ -513,7 +513,7 @@ public partial class PrulariaDbContext : DbContext
                 .HasConstraintName("fk_PrivateKlanten_Klanten1");
         });
 
-        modelBuilder.Entity<PersoneelsLid>(entity =>
+        modelBuilder.Entity<Personeelslid>(entity =>
         {
             entity.HasKey(e => e.PersoneelslidId).HasName("PRIMARY");
 
@@ -532,14 +532,14 @@ public partial class PrulariaDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Personeelsleden_PersoneelslidAccounts1");
 
-            entity.HasMany(d => d.SecurityGroepen).WithMany(p => p.Personeelslids)
+            entity.HasMany(d => d.SecurityGroepen).WithMany(p => p.Personeelsleden)
                 .UsingEntity<Dictionary<string, object>>(
                     "personeelslidsecuritygroepen",
                     r => r.HasOne<SecurityGroep>().WithMany()
                         .HasForeignKey("securityGroepId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("fk_PersoneelslidSecurityGroepen_SecurityGroepen1"),
-                    l => l.HasOne<PersoneelsLid>().WithMany()
+                    l => l.HasOne<Personeelslid>().WithMany()
                         .HasForeignKey("personeelslidId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("fk_PersoneelslidSecurityGroepen_Personeelsleden1"),

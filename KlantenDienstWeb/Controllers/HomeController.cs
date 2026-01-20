@@ -10,7 +10,7 @@ namespace KlantenDienstWeb.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly PrulariaDbContext _context;
-        private readonly SQLLoginRepository _repository;
+        private readonly PersoneelslidRepository _repository;
 
         public HomeController(ILogger<HomeController> logger)
         {
