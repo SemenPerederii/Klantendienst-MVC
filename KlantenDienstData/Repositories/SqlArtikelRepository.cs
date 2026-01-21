@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,5 +25,24 @@ namespace KlantenDienstData.Repositories
             .Include(a => a.Inkomendeleveringslijnen)
             .Include(a => a.Magazijnplaatsen)
             .ToListAsync();
+
+        public async Task<bool> VoegArtikelToeAsync(Artikel artikel)
+        {
+            await _context.Artikelen.AddAsync(artikel);
+            return await _context.Artikelen.ContainsAsync(artikel);
+        }
+
+        public async Task<bool> WijzigArtikelAsync(int artikelId, Artikel niewArtikel)
+        {
+            Artikel? oud = await _context.Artikelen.FindAsync(artikelId);
+            if (oud == null)
+                return false;
+            if (oud.Equals(niewArtikel))
+                return false;
+            //aanpassen
+            _context.Artikelen.Entry(oud).CurrentValues.SetValues(niewArtikel);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

@@ -20,5 +20,7 @@ namespace KlantenDienstServices
         {
             return await _artikelRepository.GetAllArtikelenAsync();
         }
+        public async Task<bool> VoegArtikelToeAsync(Artikel artikel) => await _artikelRepository.VoegArtikelToeAsync(artikel);
+        public async Task<bool> WijzigArtikelAsync(int artikelId, Artikel nieuwArtikel) => await _artikelRepository.WijzigArtikelAsync(artikelId, nieuwArtikel);
     }
 }
