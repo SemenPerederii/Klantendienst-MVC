@@ -3,9 +3,101 @@
     ViewData["Title"] = "Overzicht Artikelen";
 }
 <h1 class="d-flex justify-content-center">@ViewData["Title"]</h1>
-<form asp-action="Zoeken op Filter" method="post">
+<form asp-action="ZoekenOpFilter" method="post">
 
+    <div class="dropdown mb-4">
+
+        <button class="btn btn-primary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+            Zoekfilters
+        </button>
+
+        <div class="dropdown-menu p-4" style="min-width: 420px;">
+
+            <!-- ID -->
+            <div class="mb-3">
+                <label class="form-label">Id</label>
+                <input asp-for="Id" class="form-control" />
+            </div>
+
+            <!-- EAN -->
+            <div class="mb-3">
+                <label class="form-label">EAN</label>
+                <input asp-for="EAN" class="form-control" />
+            </div>
+
+            <!-- Naam -->
+            <div class="mb-3">
+                <label class="form-label">Naam</label>
+                <input asp-for="Naam" class="form-control" />
+            </div>
+
+            <!-- Prijs -->
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="form-label">Min prijs</label>
+                    <input asp-for="MinPrijs" class="form-control" />
+                </div>
+                <div class="col">
+                    <label class="form-label">Max prijs</label>
+                    <input asp-for="MaxPrijs" class="form-control" />
+                </div>
+            </div>
+
+            <!-- Gewicht -->
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="form-label">Min gewicht (g)</label>
+                    <input asp-for="MinGewichtInGram" class="form-control" />
+                </div>
+                <div class="col">
+                    <label class="form-label">Max gewicht (g)</label>
+                    <input asp-for="MaxGewichtInGram" class="form-control" />
+                </div>
+            </div>
+
+            <!-- In voorraad -->
+            <div class="form-check mb-3">
+                <input asp-for="InVoorraad" class="form-check-input" />
+                <label class="form-check-label">
+                    Enkel artikelen in voorraad
+                </label>
+            </div>
+
+            <!-- Categorieën -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Categorieën</label>
+
+                @foreach (var categorie in Model.Categorieën)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               name="GeselecteerdeCategorieIds"
+                               value="@categorie.CategorieId"
+                               @(Model.GeselecteerdeCategorieIds.Contains(categorie.CategorieId) ? "checked" : "") />
+
+                        <label class="form-check-label">
+                            @categorie.Naam
+                        </label>
+                    </div>
+                }
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success">
+                    Zoeken
+                </button>
+            </div>
+
+        </div>
+    </div>
 </form>
+
+
+
 <table class="table table-striped">
     <thead>
         <tr>

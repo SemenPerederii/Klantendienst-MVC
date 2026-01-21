@@ -15,7 +15,7 @@ namespace KlantenDienstWeb.Controllers
         {
             var artikelVM = new ArtikelViewModel()
             {
-                Artikelen = await _artikelService.GetAllArtikelenAsync()
+                Artikelen = await _artikelService.GetAllArtikelenAsync(),
             };
             return View(artikelVM);
         }
