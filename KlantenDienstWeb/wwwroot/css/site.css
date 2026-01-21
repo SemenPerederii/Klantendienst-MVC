@@ -35,6 +35,18 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+.cs-groen {
+    background-color: #ABD7A8;
+}
+.cs-logo{
+    height:calc(3rem + 2vw);
+}
+.cs-navlink {
+    color: #808080;
+    text-decoration: none;
+    font-size: calc(2vw);
+}
+
 .table-striped > tbody > tr:nth-of-type(odd) > * {
     background-color: #ABD7A8 !important;
 }
