@@ -15,22 +15,22 @@ public partial class Artikel
 
     public string Beschrijving { get; set; } = null!;
     [DisplayFormat(DataFormatString = "{0:€ #,##0.00}")]
-    [Range(0, 1000, ErrorMessage = "Prijs buiten range")]
+    [Range(0, 1000, ErrorMessage = "buiten range")]
     public decimal Prijs { get; set; }
-    [Range(0, 1000, ErrorMessage = "Gewicht buiten range")]
+    [Range(0, 1000, ErrorMessage = "buiten range")]
     [Display(Name = "Gewicht in gram")]
     public int GewichtInGram { get; set; }
-    [Range(0, 1000, ErrorMessage = "Bestelpijl buiten range")]
+    [Range(0, 1000, ErrorMessage = "buiten range")]
     public int Bestelpeil { get; set; }
 
     public int Voorraad { get; set; }
-    [Range(1, 1000, ErrorMessage = "Minimum buiten range")]
+    [Range(1, 1000, ErrorMessage = "buiten range")]
     [Display(Name = "Minimum vorraad")]
     public int MinimumVoorraad { get; set; }
-    [Range(1, 1000, ErrorMessage = "Maximum buiten range")]
+    [Range(1, 1000, ErrorMessage = "buiten range")]
     [Display(Name = "Maximum vorraad")]
     public int MaximumVoorraad { get; set; }
-    [Range(1, 1000, ErrorMessage = "Levertijd buiten range")]
+    [Range(1, 1000, ErrorMessage = "buiten range")]
     public int Levertijd { get; set; }
 
     [Display(Name ="Aantal Besteld Leverancier")]
