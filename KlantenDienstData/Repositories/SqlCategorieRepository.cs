@@ -25,7 +25,7 @@ namespace KlantenDienstData.Repositories
 
         public async Task<List<Categorie>> GetAll()
         {
-            return await _context.Categorieen.ToListAsync();
+            return await _context.Categorieen.AsNoTracking().ToListAsync();
         }
 
         public async Task<Categorie> GetByIdAsync(int id)
@@ -41,6 +41,11 @@ namespace KlantenDienstData.Repositories
         public async Task<bool> HasChildrenAsync(int id)
         {
             return await _context.Categorieen.AnyAsync(c => c.HoofdCategorieId == id);
+        }
+
+        public async Task<bool> IsUsedByArtikelenAsync(int id)
+        {
+            return await _context.ArtikelCategorieen.AnyAsync(ac => ac.CategorieId == id);
         }
     }
 }

@@ -27,7 +27,14 @@ namespace KlantenDienstServices
             var hasChildren = await _repositoryCategorie.HasChildrenAsync(id);
 
             if (hasChildren)
-                throw new InvalidOperationException("Categorie kan niet worden verwijderd omdat zij subcategorieën heeft.");
+                throw new InvalidOperationException(
+                    "Categorie kan niet worden verwijderd omdat zij subcategorieën heeft.");
+
+            var usedByArtikelen = await _repositoryCategorie.IsUsedByArtikelenAsync(id);
+
+            if (usedByArtikelen)
+                throw new InvalidOperationException(
+            "Categorie kan niet worden verwijderd omdat zij wordt gebruikt door artikelen.");
 
             await _repositoryCategorie.DeleteAsync(categorie);
             await _repositoryCategorie.SaveChangesAsync();
@@ -47,7 +54,9 @@ namespace KlantenDienstServices
                 categorie.InversehoofdCategorie = lookup[categorie.CategorieId].ToList();
             }
 
-            return lookup[null].ToList();
+            return allCategories
+                .Where(c => c.HoofdCategorieId == null)
+                .ToList();
         }
 
     }
