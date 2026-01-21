@@ -41,12 +41,6 @@ namespace KlantenDienstServices
             if (filters.MaxPrijs.HasValue)
                 query = query.Where(a => a.Prijs <= filters.MaxPrijs.Value);
 
-            if (filters.MinGewichtInGram.HasValue)
-                query = query.Where(a => a.GewichtInGram >= filters.MinGewichtInGram.Value);
-
-            if (filters.MaxGewichtInGram.HasValue)
-                query = query.Where(a => a.GewichtInGram <= filters.MaxGewichtInGram.Value);
-
             if (filters.EnkelInVoorraad)
                 query = query.Where(a => a.Voorraad > 0);
 
