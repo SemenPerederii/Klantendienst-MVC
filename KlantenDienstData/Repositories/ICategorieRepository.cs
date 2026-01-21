@@ -14,6 +14,6 @@ namespace KlantenDienstData.Repositories
         Task DeleteAsync(Categorie categorie);
         Task SaveChangesAsync();
         Task<bool> HasChildrenAsync(int id);
-        Task<bool> IsUsedByArtikelenAsync(int id);
+        Task<bool> HasArtikelenAsync(int id);
     }
 }

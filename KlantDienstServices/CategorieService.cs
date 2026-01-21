@@ -30,9 +30,9 @@ namespace KlantenDienstServices
                 throw new InvalidOperationException(
                     "Categorie kan niet worden verwijderd omdat zij subcategorieën heeft.");
 
-            var usedByArtikelen = await _repositoryCategorie.IsUsedByArtikelenAsync(id);
+            var hasArtikelen = await _repositoryCategorie.HasArtikelenAsync(id);
 
-            if (usedByArtikelen)
+            if (hasArtikelen)
                 throw new InvalidOperationException(
             "Categorie kan niet worden verwijderd omdat zij wordt gebruikt door artikelen.");
 

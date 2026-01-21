@@ -43,7 +43,7 @@ namespace KlantenDienstData.Repositories
             return await _context.Categorieen.AnyAsync(c => c.HoofdCategorieId == id);
         }
 
-        public async Task<bool> IsUsedByArtikelenAsync(int id)
+        public async Task<bool> HasArtikelenAsync(int id)
         {
             return await _context.ArtikelCategorieen.AnyAsync(ac => ac.CategorieId == id);
         }
