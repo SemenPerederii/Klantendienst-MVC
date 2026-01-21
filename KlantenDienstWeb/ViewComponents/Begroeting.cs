@@ -8,7 +8,7 @@ namespace KlantenDienstWeb.ViewComponents
         {
             var sessionVariabeleNaam = HttpContext.Session.GetString("Voornaam");
             if (string.IsNullOrEmpty(sessionVariabeleNaam))
-                return View((object)"Naam niet gevonden");
+                return View((object)"Voornaam niet gevonden");
             return View((object)$"Welkom {sessionVariabeleNaam}!");
         }
     }
