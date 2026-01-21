@@ -17,12 +17,12 @@ namespace KlantenDienstServices
             _repositoryCategorie = repository;
         }
 
-        public async Task<List<Categorie>> GetAllCategorieAsync()
+        public async Task<IEnumerable<Categorie>> GetAllCategorieAsync()
         {
             return await _repositoryCategorie.GetAll();
         }
 
-        public List<Categorie> BuildTree(List<Categorie> allCategories)
+        public IEnumerable<Categorie> BuildTree(IEnumerable<Categorie> allCategories)
         {
             var lookup = allCategories.ToLookup(c => c.HoofdCategorieId);
 

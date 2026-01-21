@@ -1,5 +1,11 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
 }
 
 @media (min-width: 768px) {
@@ -16,15 +22,6 @@ html {
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #abd7a8;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -49,4 +46,67 @@ body {
 
 .table-striped > tbody > tr:nth-of-type(odd) > * {
     background-color: #ABD7A8 !important;
+}
+
+.cs-categorieBlock {
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 6px;
+    border: 2px solid grey;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cs-subcategorieContainer {
+    display: none;
+    margin-left: 20px;
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+}
+
+    .cs-subcategorieContainer .cs-categorieBlock {
+        background-color: lightblue;
+    }
+
+    .cs-subcategorieContainer .cs-subcategorieContainer .cs-categorieBlock {
+        background-color: lightgray;
+    }
+
+.cs-editDeleteAddBtns {
+    display: inline;
+    margin-right: 1rem;
+}
+
+.cs-btnsImg {
+    background-color: transparent;
+    border: none;
+    width: 20px;
+    height: 20px;
+}
+
+    .cs-btnsImg:hover {
+        filter: brightness(0.8);
+    }
+
+.cs-btns {
+    background-color: transparent;
+    border: 1px solid black;
+}
+    .cs-btns:hover {
+    background-color: #abd7a8;
+    }
+
+.cs-arrow {
+    transition: transform 0.2s ease;
+}
+
+    .cs-arrow.open {
+        transform: rotate(180deg);
+    }
+
+.cs-categorieNaam {
+    text-transform: uppercase; 
+    font-size: 1.2rem; 
+    font-weight: 600;
 }
