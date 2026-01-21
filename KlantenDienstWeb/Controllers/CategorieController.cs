@@ -1,7 +1,6 @@
-﻿using KlantenDienstData.Models;
-using KlantenDienstServices;
+﻿using KlantenDienstServices;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace KlantenDienstWeb.Controllers
 {
@@ -22,26 +21,23 @@ namespace KlantenDienstWeb.Controllers
             return View(tree);
         }
         [HttpGet]
-        public async Task<IActionResult> VoegCategorieToe()
+        public async Task<IActionResult> Toevoegen()
         {
-            var categories = await _serviceCategorie.GetAllCategorieAsync();
-            ViewBag.Categorieen = categories;
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> VoegCategorieToe(Categorie categorie)
-        {
-            if (await _serviceCategorie.CategorieBestaatAlAsync(categorie.Naam))
+            var categorieen = await _serviceCategorie.GetAllCategorieAsync();
+            var model = new CategorieDropdownViewModel
             {
-                ModelState.AddModelError(nameof(Categorie.Naam), "Deze categorie bestaat al.");
-            }
-            if (!ModelState.IsValid)
-            {
-                return View(categorie);
-            }
-            await _serviceCategorie.AddCategorieAsync(categorie);
-            return RedirectToAction(nameof(Index));
+                Categorieen = categorieen.Select(c => new SelectListItem
+                {
+                    Value = c.CategorieId.ToString(),
+                    Text = c.Naam
+                }),
+                SubCategorieen = categorieen.Select(c => new SelectListItem
+                {
+                    Value = c.CategorieId.ToString(),
+                    Text = c.Naam
+                })
+            };
+            return View(model);
         }
     }
 }

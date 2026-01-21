@@ -3,13 +3,15 @@ using KlantenDienstData.Repositories;
 
 namespace KlantenDienstServices
 {
-    public class CategorieService : ICategorieService
+    public class CategorieService
     {
-        private readonly CategorieRepository _repositoryCategorie;
+        private readonly ICategorieRepository _repositoryCategorie;
+        private readonly CategorieRepository _repository;
 
-        public CategorieService(CategorieRepository repository)
+        public CategorieService(ICategorieRepository repository, CategorieRepository repo)
         {
             _repositoryCategorie = repository;
+            _repository = repo;
         }
 
         public async Task<List<Categorie>> GetAllCategorieAsync()
@@ -34,7 +36,7 @@ namespace KlantenDienstServices
         }
         public async Task<bool> CategorieBestaatAlAsync(string naam)
         {
-            return await _repositoryCategorie.CategorieBestaatAlAsync(naam);
+            return await _repository.CategorieBestaatAlAsync(naam);
         }
     }
 }
