@@ -13,7 +13,8 @@ namespace KlantenDienstWeb.Controllers
             _artikelService = artikelService;
             _categorieService = categorieService;
         }
-        public async Task<IActionResult> IndexAsync()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
             var artikelVM = new ArtikelViewModel()
             {
@@ -21,6 +22,11 @@ namespace KlantenDienstWeb.Controllers
                 Categorieën = await _categorieService.GetAllCategorieAsync()
             };
             return View(artikelVM);
+        }
+        [HttpPost]
+        public IActionResult ZoekenOpFilter(ArtikelViewModel avm)
+        {
+            return View();
         }
     }
 }

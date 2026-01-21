@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KlantenDienstServices
 {
-    public class ArtikelService
+    public class ArtikelService : IArtikelService
     {
         private readonly IArtikelRepository _artikelRepository;
         public ArtikelService(IArtikelRepository artikelRepository)
@@ -19,6 +19,11 @@ namespace KlantenDienstServices
         public async Task<List<Artikel>> GetAllArtikelenAsync()
         {
             return await _artikelRepository.GetAllArtikelenAsync();
+        }
+
+        public Task<List<Artikel>> ZoekArtikelenOpFilterAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }
