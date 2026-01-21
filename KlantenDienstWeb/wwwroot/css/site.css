@@ -29,3 +29,8 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/*Bootstrap table-striped class met aanpassing naar kleur van de klant*/
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: #ABD7A8;
+}
