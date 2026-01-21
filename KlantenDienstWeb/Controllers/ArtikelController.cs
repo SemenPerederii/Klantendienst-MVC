@@ -16,31 +16,37 @@ namespace KlantenDienstWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var alleCategorieën = await _categorieService.GetAllCategorieAsync();
+
             var artikelVM = new ArtikelViewModel()
             {
                 Artikelen = await _artikelService.GetAllArtikelenAsync(),
-                Categorieën = await _categorieService.GetAllCategorieAsync()
+                Categorieën = alleCategorieën.Where(c => c.HoofdCategorieId == null).ToList(),
+                GeselecteerdeCategorieIds = new List<int>()
             };
             return View(artikelVM);
         }
         [HttpPost]
         public async Task<IActionResult> ZoekenOpFilterAsync(ArtikelViewModel vm)
         {
+            vm.GeselecteerdeCategorieIds ??= new List<int>();
+
             var filter = new ArtikelFilterDto
             {
                 Id = vm.Id,
-                Ean = vm.EAN, // of vm.Ean, afhankelijk van jouw VM
+                Ean = vm.EAN,
                 Naam = vm.Naam,
                 MinPrijs = vm.MinPrijs,
                 MaxPrijs = vm.MaxPrijs,
                 EnkelInVoorraad = vm.InVoorraad,
-                CategorieIds = vm.GeselecteerdeCategorieIds ?? new List<int>()
+                CategorieIds = vm.GeselecteerdeCategorieIds
             };
 
             vm.Artikelen = await _artikelService.ZoekArtikelenOpFilterAsync(filter);
 
-            // Cruciaal: categorieën terug vullen, anders zijn je checkboxen weg na post
-            vm.Categorieën = await _categorieService.GetAllCategorieAsync();
+          
+            var alleCats = await _categorieService.GetAllCategorieAsync();
+            vm.Categorieën = alleCats.Where(c => c.HoofdCategorieId == null).ToList();
 
             return View("Index", vm);
         }
