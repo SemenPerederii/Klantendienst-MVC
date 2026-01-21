@@ -29,6 +29,7 @@ namespace KlantenDienstData.Repositories
         public async Task<bool> VoegArtikelToeAsync(Artikel artikel)
         {
             await _context.Artikelen.AddAsync(artikel);
+            await _context.SaveChangesAsync();
             return await _context.Artikelen.ContainsAsync(artikel);
         }
 
