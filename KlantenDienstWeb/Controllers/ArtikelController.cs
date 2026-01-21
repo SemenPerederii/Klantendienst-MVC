@@ -24,9 +24,27 @@ namespace KlantenDienstWeb.Controllers
             return View(artikelVM);
         }
         [HttpPost]
-        public IActionResult ZoekenOpFilter(ArtikelViewModel avm)
+        public async Task<IActionResult> ZoekenOpFilterAsync(ArtikelViewModel vm)
         {
-            return View();
+            var filter = new ArtikelFilterDto
+            {
+                Id = vm.Id,
+                Ean = vm.EAN, // of vm.Ean, afhankelijk van jouw VM
+                Naam = vm.Naam,
+                MinPrijs = vm.MinPrijs,
+                MaxPrijs = vm.MaxPrijs,
+                MinGewichtInGram = vm.MinGewichtInGram,
+                MaxGewichtInGram = vm.MaxGewichtInGram,
+                EnkelInVoorraad = vm.InVoorraad,
+                CategorieIds = vm.GeselecteerdeCategorieIds ?? new List<int>()
+            };
+
+            vm.Artikelen = await _artikelService.ZoekArtikelenOpFilterAsync(filter);
+
+            // Cruciaal: categorieën terug vullen, anders zijn je checkboxen weg na post
+            vm.Categorieën = await _categorieService.GetAllCategorieAsync();
+
+            return View("Index", vm);
         }
     }
 }

@@ -10,6 +10,6 @@ namespace KlantenDienstServices
     public interface IArtikelService
     {
         Task<List<Artikel>> GetAllArtikelenAsync();
-        Task<List<Artikel>> ZoekArtikelenOpFilterAsync();
+        Task<List<Artikel>> ZoekArtikelenOpFilterAsync(ArtikelFilterDto filters);
     }
 }
