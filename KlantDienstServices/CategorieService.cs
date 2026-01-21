@@ -1,18 +1,13 @@
 ﻿using KlantenDienstData.Models;
 using KlantenDienstData.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KlantenDienstServices
 {
     public class CategorieService : ICategorieService
     {
-        private readonly ICategorieRepository _repositoryCategorie;
+        private readonly CategorieRepository _repositoryCategorie;
 
-        public CategorieService(ICategorieRepository repository)
+        public CategorieService(CategorieRepository repository)
         {
             _repositoryCategorie = repository;
         }
@@ -33,6 +28,13 @@ namespace KlantenDienstServices
 
             return lookup[null].ToList();
         }
-
+        public async Task<Categorie?> AddCategorieAsync(Categorie categorie)
+        {
+            return await _repositoryCategorie.AddCategorieAsync(categorie);
+        }
+        public async Task<bool> CategorieBestaatAlAsync(string naam)
+        {
+            return await _repositoryCategorie.CategorieBestaatAlAsync(naam);
+        }
     }
 }
