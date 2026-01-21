@@ -1,0 +1,42 @@
+﻿@using KlantenDienstData.Models
+@model Categorie
+
+<div class="cs-categorieenBlock">
+
+    <div class="cs-categorieBlock">
+        <a asp-action="ArtikelsPerCategorie" asp-controller="Artikel" asp-route-id="@Model.CategorieId" class="btn btn-sm cs-categorieNaam">@Model.Naam</a>
+
+        <div class="cs-editDeleteAddBtns">
+            @if (Model.InversehoofdCategorie.Any())
+            {
+                <button type="button" class="btn btn-sm cs-btns" onclick="toggleSub('@Model.CategorieId', this)">
+                    <img src="/images/arrowBtn.png" alt="Subcategorieen" class="cs-btnsImg cs-arrow" />
+                </button>
+            }
+            <!-- ToevoegenSubcategorie -->
+            <a asp-action="AddSubcategorie" asp-controller="Categorie" asp-route-id="@Model.CategorieId" class="btn btn-sm cs-btns">
+                Toevoegen <img src="/images/addBtn.png" alt="Toevoegen" class="cs-btnsImg" />
+            </a>
+
+            <!-- Wijzigen -->
+            <a asp-action="EditCategorie" asp-controller="Categorie" asp-route-id="@Model.CategorieId" class="btn btn-sm cs-btns">
+                Wijzigen <img src="/images/editBtn.png" alt="Wijzigen" class="cs-btnsImg" />
+            </a>
+
+            <!-- Verwijderen -->
+            <a asp-action="DeleteCategorie" asp-controller="Categorie" asp-route-id="@Model.CategorieId" class="btn btn-sm cs-btns">
+                Verwijderen <img src="/images/deleteBtn.png" alt="Wijzigen" class="cs-btnsImg" />
+            </a>
+        </div>
+    </div>
+
+    @if (Model.InversehoofdCategorie.Any())
+    {
+        <div id="sub-@Model.CategorieId" class="cs-subcategorieContainer">
+            @foreach (var sub in Model.InversehoofdCategorie)
+            {
+                @await Html.PartialAsync("_CategorieButton", sub)
+            }
+        </div>
+    }
+</div>
