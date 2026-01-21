@@ -45,6 +45,7 @@ namespace KlantenDienstWeb.Controllers
             {
                 return RedirectToAction(nameof(ToevoegFormulier));
             }
+            //leverancier toekennen
             if (!this.ModelState.IsValid)
             {
                 return View(nameof(ToevoegFormulier), artikel);
