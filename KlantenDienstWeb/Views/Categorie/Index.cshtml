@@ -7,4 +7,31 @@
 
 <h1>Categorieen</h1>
 
-@await Html.PartialAsync("_CategorieTree", Model)
+@if (Model != null)
+{
+    <a asp-action="CategorieToevoegen" asp-controller="Categorie" class="btn btn-sm btn-primary mb-2">
+    Categorie Toevoegen</a>
+    <div>
+        @foreach (var category in Model)
+        {
+            @await Html.PartialAsync("_CategorieButton", category)
+        }
+    </div>
+}
+
+<script>
+    function toggleSub(id, btn) {
+         const element = document.getElementById("sub-" + id);
+         if (!element) return;
+
+         const imgArrow = btn.querySelector('.cs-arrow');
+
+         if (element.style.display === "none" || element.style.display === "") {
+                element.style.display = "block";
+                imgArrow.classList.add('open');
+         } else {
+                element.style.display = "none";
+                imgArrow.classList.remove('open');
+         }
+    }
+</script>
