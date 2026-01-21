@@ -9,9 +9,13 @@ namespace KlantenDienstWeb.Controllers
     public class ArtikelController : Controller
     {
         private readonly ArtikelService _artikelService;
-        public ArtikelController(ArtikelService artikelService)
+        private readonly LeverancierService _leverancierService;
+        private readonly ICategorieService _categorieService;
+        public ArtikelController(ArtikelService artikelService,LeverancierService leverancierService, ICategorieService categorieService)
         {
             _artikelService = artikelService;
+            _leverancierService = leverancierService;
+            _categorieService = categorieService;
         }
         public async Task<IActionResult> IndexAsync()
         {
@@ -24,11 +28,24 @@ namespace KlantenDienstWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> ToevoegFormulier()
         {
+            ArtikelToevoegViewModel artikelToevoegViewModel = new ArtikelToevoegViewModel();
+            var categorieën = await _categorieService.GetAllCategorieAsync();
+            artikelToevoegViewModel.Categorieën = new List<SimpeleCategorie>();
+            foreach (var categorie in categorieën)
+            {
+                artikelToevoegViewModel.Categorieën.Add(new SimpeleCategorie
+                {
+                    Id = categorie.CategorieId,
+                    Naam = categorie.Naam,
+                    Gekozen = false
+                });
+            }
             //EAN ZETTEN
             List<Artikel> artikelen = await _artikelService.GetAllArtikelenAsync();
+            
             var EANstring = artikelen.Last().EAN;
-            int EANNummer;
-            if(int.TryParse(EANstring, out EANNummer))
+            long EANNummer;
+            if(long.TryParse(EANstring, out EANNummer))
             {
                 EANNummer++;
             }
@@ -36,22 +53,36 @@ namespace KlantenDienstWeb.Controllers
             {
                 EAN = EANNummer.ToString()
             };
-            return View(leegArtikel);
+            artikelToevoegViewModel.Artikel = leegArtikel;
+            return View(artikelToevoegViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> Toevoegen(Artikel artikel)
+        public async Task<IActionResult> Toevoegen(ArtikelToevoegViewModel artikelToevoegViewModel)
         {
-            if (artikel == null)
+            if (artikelToevoegViewModel == null)
             {
                 return RedirectToAction(nameof(ToevoegFormulier));
             }
             //leverancier toekennen
+            Leverancier? leverancier = await _leverancierService.GetLeverancierAsync(artikelToevoegViewModel.Artikel.LeveranciersId);
+            if (leverancier != null)
+                artikelToevoegViewModel.Artikel.Leverancier = leverancier;
+
             if (!this.ModelState.IsValid)
             {
-                return View(nameof(ToevoegFormulier), artikel);
+                return View(nameof(ToevoegFormulier), artikelToevoegViewModel);
+            }
+            foreach(var categorie in artikelToevoegViewModel.Categorieën)
+            {
+                if(categorie.Gekozen == true)
+                {
+                    Categorie? volledgeCategorie = await _categorieService.GetCategorieAsync(categorie.Id);
+                    if(volledgeCategorie != null)
+                        artikelToevoegViewModel.Artikel.Categorieën.Add(volledgeCategorie );
+                }
             }
             //toevoegen
-            await _artikelService.VoegArtikelToeAsync(artikel);
+            await _artikelService.VoegArtikelToeAsync(artikelToevoegViewModel.Artikel);
             return RedirectToAction(nameof(Index));
         }
     }

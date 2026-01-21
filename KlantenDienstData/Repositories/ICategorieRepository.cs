@@ -10,5 +10,6 @@ namespace KlantenDienstData.Repositories
     public interface ICategorieRepository
     {
         Task<List<Categorie>> GetAll();
+        Task<Categorie?> GetCategorieAsync(int id);
     }
 }

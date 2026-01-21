@@ -27,6 +27,9 @@ builder.Services.AddScoped<ICategorieService, CategorieService>();
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<IPersoneelslidRepository, PersoneelslidRepository>();
 
+builder.Services.AddScoped<LeverancierService>();
+builder.Services.AddScoped<ILeverancierRepository, SQLLeverancierRepository>();
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
