@@ -6,10 +6,11 @@ namespace KlantenDienstWeb.ViewComponents
     {
         public IViewComponentResult Invoke(string plaats)
         {
-            var sessionVariabeleNaam = HttpContext.Session.GetString("Voornaam");
-            if (string.IsNullOrEmpty(sessionVariabeleNaam))
+            var sessionVariabeleVoornaam = HttpContext.Session.GetString("Voornaam");
+            var sessionVariabeleFamilienaam = HttpContext.Session.GetString("Familienaam");
+            if (string.IsNullOrEmpty(sessionVariabeleVoornaam) && string.IsNullOrEmpty(sessionVariabeleFamilienaam))
                 return View((object)String.Empty);
-            return View((object)$"Welkom {sessionVariabeleNaam}!");
+            return View((object)$"Welkom {sessionVariabeleVoornaam} {sessionVariabeleFamilienaam}!");
         }
     }
 }

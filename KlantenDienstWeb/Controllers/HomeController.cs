@@ -40,6 +40,7 @@ namespace KlantenDienstWeb.Controllers
                 var personeelslid = await _accountService.GetPersoneelslidById(account!.PersoneelslidAccountId);
                 HttpContext.Session.SetInt32("PersoneelslidId", account.PersoneelslidAccountId);
                 HttpContext.Session.SetString("Voornaam", personeelslid?.Voornaam ?? string.Empty);
+                HttpContext.Session.SetString("Familienaam", personeelslid?.Familienaam ?? string.Empty);
                 return RedirectToAction(nameof(Landingspagina));
             }
             catch (Exception ex)
