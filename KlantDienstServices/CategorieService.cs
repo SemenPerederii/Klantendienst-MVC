@@ -40,7 +40,6 @@ namespace KlantenDienstServices
             await _repositoryCategorie.SaveChangesAsync();
         }
 
-        public async Task<List<Categorie>> GetAllCategorieAsync()
         public async Task<IEnumerable<Categorie>> GetAllCategorieAsync()
         {
             return await _repositoryCategorie.GetAll();

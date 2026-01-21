@@ -11,5 +11,6 @@ namespace KlantenDienstServices
     {
         Task<IEnumerable<Categorie>> GetAllCategorieAsync();
         IEnumerable<Categorie> BuildTree(IEnumerable<Categorie> allCategories);
+        Task DeleteCategorieAsync(int id);
     }
 }

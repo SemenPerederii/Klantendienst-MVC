@@ -11,10 +11,6 @@
         <li>
             <span>@categorie.Naam</span>
 
-            <form asp-route-id="@categorie.CategorieId" asp-controller="Categorie" asp-action="Verwijderen" method="post" style="display:inline">
-                <button type="submit">Delete</button>
-            </form>
-
             @if (categorie.InversehoofdCategorie.Any())
             {
                 @await Html.PartialAsync("_CategorieTree", categorie.InversehoofdCategorie)
