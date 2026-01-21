@@ -5,7 +5,8 @@
 <h1 class="d-flex justify-content-center">@ViewData["Title"]</h1>
 <form asp-action="ZoekenOpFilter" method="post">
 
-    <div class="dropdown mb-4">
+    <div class="dropdown mb-4 " 
+         data-bs-auto-close="outside">
 
         <button class="btn btn-primary dropdown-toggle"
                 type="button"
@@ -85,6 +86,7 @@
                     </div>
                 }
             </div>
+
 
             <div class="d-grid">
                 <button type="submit" class="btn btn-success">
