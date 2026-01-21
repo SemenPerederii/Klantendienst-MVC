@@ -21,5 +21,5 @@ public partial class Chatgespreklijn
 
     public virtual GebruikersAccount? GebruikersAccount { get; set; }
 
-    public virtual PersoneelsLidAccount? PersoneelsLidAccount { get; set; }
+    public virtual PersoneelslidAccount? PersoneelslidAccount { get; set; }
 }

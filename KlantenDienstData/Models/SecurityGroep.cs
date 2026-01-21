@@ -9,5 +9,5 @@ public partial class SecurityGroep
 
     public string Naam { get; set; } = null!;
 
-    public virtual ICollection<PersoneelsLid> Personeelslids { get; set; } = new List<PersoneelsLid>();
+    public virtual ICollection<Personeelslid> Personeelsleden { get; set; } = new List<Personeelslid>();
 }
