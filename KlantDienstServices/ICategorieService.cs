@@ -14,4 +14,11 @@
 //    }
 //}
 
-//een interface voor een service is niet nodig. stel voor om dit te verwijderen.
+namespace KlantenDienstServices
+{
+    public interface ICategorieService
+    {
+        Task<IEnumerable<Categorie>> GetAllCategorieAsync();
+        IEnumerable<Categorie> BuildTree(IEnumerable<Categorie> allCategories);
+    }
+}
