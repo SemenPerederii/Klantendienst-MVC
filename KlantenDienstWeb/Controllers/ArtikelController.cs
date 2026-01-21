@@ -24,7 +24,19 @@ namespace KlantenDienstWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> ToevoegFormulier()
         {
-            return View(new Artikel());
+            //EAN ZETTEN
+            List<Artikel> artikelen = await _artikelService.GetAllArtikelenAsync();
+            var EANstring = artikelen.Last().EAN;
+            int EANNummer;
+            if(int.TryParse(EANstring, out EANNummer))
+            {
+                EANNummer++;
+            }
+            Artikel leegArtikel = new Artikel
+            {
+                EAN = EANNummer.ToString()
+            };
+            return View(leegArtikel);
         }
         [HttpPost]
         public async Task<IActionResult> Toevoegen(Artikel artikel)

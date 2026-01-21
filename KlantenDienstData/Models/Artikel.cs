@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace KlantenDienstData.Models;
 
@@ -12,9 +13,10 @@ public partial class Artikel
     public string Naam { get; set; } = null!;
 
     public string Beschrijving { get; set; } = null!;
-
+    [DisplayFormat(DataFormatString = "{0:€ #,##0.00}")]
+    [Range(0, 1000, ErrorMessage = "Prijs buiten range")]
     public decimal Prijs { get; set; }
-
+    [Range(0, 1000, ErrorMessage = "Gewicht buiten range")]
     public int GewichtInGram { get; set; }
 
     public int Bestelpeil { get; set; }
