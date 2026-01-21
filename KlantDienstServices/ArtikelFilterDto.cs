@@ -15,9 +15,6 @@ namespace KlantenDienstServices
         public decimal? MinPrijs { get; set; }
         public decimal? MaxPrijs { get; set; }
 
-        public int? MinGewichtInGram { get; set; }
-        public int? MaxGewichtInGram { get; set; }
-
         public bool EnkelInVoorraad { get; set; }
 
         public List<int> CategorieIds { get; set; } = new();

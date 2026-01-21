@@ -33,8 +33,6 @@ namespace KlantenDienstWeb.Controllers
                 Naam = vm.Naam,
                 MinPrijs = vm.MinPrijs,
                 MaxPrijs = vm.MaxPrijs,
-                MinGewichtInGram = vm.MinGewichtInGram,
-                MaxGewichtInGram = vm.MaxGewichtInGram,
                 EnkelInVoorraad = vm.InVoorraad,
                 CategorieIds = vm.GeselecteerdeCategorieIds ?? new List<int>()
             };
