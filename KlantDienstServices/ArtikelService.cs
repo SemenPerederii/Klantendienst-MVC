@@ -17,6 +17,19 @@ namespace KlantenDienstServices
             _artikelRepository = artikelRepository;
         }
 
+        public bool CheckStatusActief(Artikel artikel)
+        {
+            if (artikel.MinimumVoorraad > 0 && artikel.MaximumVoorraad > 0 && artikel.Bestelpeil > 0 && artikel.AantalBesteldLeverancier > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+                
+        }
+
         public async Task<List<Artikel>> GetAllArtikelenAsync()
         {
             return await _artikelRepository.GetAllArtikelenAsync();
