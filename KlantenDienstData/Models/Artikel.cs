@@ -14,7 +14,7 @@ public partial class Artikel
     public string Naam { get; set; } = null!;
 
     public string Beschrijving { get; set; } = null!;
-    [DisplayFormat(DataFormatString = "{0:€ #,##0.00}")]
+    [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
     [Range(0, 1000, ErrorMessage = "buiten range")]
     public decimal Prijs { get; set; }
     [Range(0, 1000, ErrorMessage = "buiten range")]

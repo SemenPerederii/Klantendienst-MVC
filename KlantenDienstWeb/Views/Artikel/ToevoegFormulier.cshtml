@@ -4,8 +4,8 @@
 }
 <h1>Nieuw Artikel</h1>
 <form asp-action="Toevoegen" class="form-control" method="post" novalidate>
-    <input asp-for="Artikel.EAN" class="form-control" hidden/>
-    
+    <input asp-for="Artikel.EAN" class="form-control" hidden />
+
     <div class="form-group">
         <label asp-for="Artikel.Naam"></label>
         <span asp-validation-for="Artikel.Naam" class="text-danger">*</span>
@@ -62,16 +62,16 @@
     <div class="form-group">
         <label asp-for="Categorieën"></label>
         <div>
-        @for (int i = 0; i < Model.Categorieën.Count; i++)
+            @for (int i = 0; i < Model.Categorieën.Count; i++)
             {
-             <input type="hidden" asp-for="Categorieën[i].Id"/>
-             <input type="checkbox" asp-for="Categorieën[i].Gekozen"/>
-             <input type="hidden" asp-for="Categorieën[i].Naam" />
-             <label>@Model.Categorieën[i].Naam</label>
-             <label> </label>
+                <input type="hidden" asp-for="Categorieën[i].Id" />
+                <input type="checkbox" asp-for="Categorieën[i].Gekozen" />
+                <input type="hidden" asp-for="Categorieën[i].Naam" />
+                <label>@Model.Categorieën[i].Naam</label>
+                <label> </label>
             }
         </div>
-           </div>
+    </div>
     <div class="form-group">
         <button type="submit" value="Aanmaken" class="btn btn-primary">Aanmaken</button>
     </div>
