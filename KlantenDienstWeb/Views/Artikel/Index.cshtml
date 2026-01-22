@@ -97,12 +97,12 @@
             <th>Naam</th>
             <th>Beschrijving</th>
             <th>Prijs</th>
-            <th>Momenteel in voorraad</th>
+            <th>In voorraad</th>
             <th>Categorie(ën)</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var artikel in Model.Artikelen)
+        @foreach (var artikel in Model.Artikelen.OrderBy(a => a.Naam))
         {
             <tr>
                 <td>@artikel.EAN</td>
