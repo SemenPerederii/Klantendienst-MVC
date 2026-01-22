@@ -83,7 +83,7 @@ namespace KlantenDienstWeb.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+                ModelState.AddModelError(nameof(model.SelectedHoofdCategorieId), ex.Message);
 
 
                 var categorieen = await _serviceCategorie

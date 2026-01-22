@@ -15,11 +15,12 @@
     </div>
 
     <div class="mb-3">
-        <label>Hoofdcategorie</label>
+        <label>Verplaatsen naar categorie</label>
         <select class="form-control" asp-for="SelectedHoofdCategorieId"
                 asp-items="Model.MogelijkeCategorieen">
-            <option value="">-- Hoofdcategorie --</option>
+            <option value="">-- Categorie --</option>
         </select>
+        <span asp-validation-for="SelectedHoofdCategorieId" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Opslaan</button>
