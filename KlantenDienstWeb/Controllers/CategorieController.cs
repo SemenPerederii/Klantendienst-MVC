@@ -19,5 +19,12 @@ namespace KlantenDienstWeb.Controllers
 
             return View(tree);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Verwijderen(int id)
+        {
+            await _serviceCategorie.DeleteCategorieAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

@@ -22,6 +22,8 @@ public partial class PrulariaDbContext : DbContext
 
     public virtual DbSet<Artikel> Artikelen { get; set; }
 
+    public DbSet<ArtikelCategorie> ArtikelCategorieen { get; set; }
+
     public virtual DbSet<ArtikelLeveranciersInfolijn> Artikelleveranciersinfolijnen { get; set; }
 
     public virtual DbSet<Bestellijn> Bestellijnen { get; set; }
@@ -133,6 +135,21 @@ public partial class PrulariaDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Artikelen_Leveranciers");
         });
+
+        modelBuilder.Entity<ArtikelCategorie>()
+        .HasKey(ac => new { ac.ArtikelId, ac.CategorieId });
+
+        modelBuilder.Entity<ArtikelCategorie>()
+            .HasOne(ac => ac.Artikel)
+            .WithMany(a => a.ArtikelCategorieen)
+            .HasForeignKey(ac => ac.ArtikelId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<ArtikelCategorie>()
+            .HasOne(ac => ac.Categorie)
+            .WithMany(c => c.ArtikelCategorieen)
+            .HasForeignKey(ac => ac.CategorieId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<ArtikelLeveranciersInfolijn>(entity =>
         {

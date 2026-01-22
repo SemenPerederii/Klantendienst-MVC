@@ -48,4 +48,7 @@ public partial class Artikel
     public virtual ICollection<Wishlistitem> Wishlistitems { get; set; } = new List<Wishlistitem>();
 
     public virtual ICollection<Categorie> Categorieën { get; set; } = new List<Categorie>();
+
+    public ICollection<ArtikelCategorie> ArtikelCategorieen { get; set; } = new List<ArtikelCategorie>();
+
 }
