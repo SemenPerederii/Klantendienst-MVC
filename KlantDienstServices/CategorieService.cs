@@ -59,5 +59,51 @@ namespace KlantenDienstServices
                 .ToList();
         }
 
+        public async Task<Categorie> GetByIdAsync(int id)
+        {
+            return await _repositoryCategorie.GetByIdAsync(id);
+        }
+
+        public async Task<IEnumerable<Categorie>> GetMogelijkeCategorieenAsync(int categorieId)
+        {
+            var all = await _repositoryCategorie.GetAll();
+
+            return all
+                .Where(c => c.CategorieId != categorieId);
+        }
+
+        public async Task AddAsSubcategorieAsync(int categorieId, string naam, int? newParentId)
+        {
+            var categorie = await _repositoryCategorie.GetByIdAsync(categorieId);
+
+            if (categorie == null)
+                throw new Exception("Categorie niet gevonden");
+
+            //Naam
+            if (string.IsNullOrWhiteSpace(naam))
+                throw new InvalidOperationException("Naam is verplicht");
+
+            categorie.Naam = naam.Trim();
+
+            //Structure
+            if (newParentId != categorie.HoofdCategorieId)
+            {
+                if (newParentId == categorieId)
+                    throw new InvalidOperationException(
+                        "Categorie kan niet aan zichzelf worden gekoppeld.");
+
+                if (await _repositoryCategorie.HasChildrenAsync(categorieId))
+                    throw new InvalidOperationException(
+                        "Categorie met subcategorieën kan niet worden verplaatst.");
+
+                if (await _repositoryCategorie.HasArtikelenAsync(categorieId))
+                    throw new InvalidOperationException(
+                        "Categorie met artikelen kan niet worden verplaatst.");
+
+                categorie.HoofdCategorieId = newParentId;
+            }
+
+            await _repositoryCategorie.SaveChangesAsync();
+        }
     }
 }
