@@ -57,6 +57,7 @@ namespace KlantenDienstWeb.Controllers
             return View(artikelToevoegViewModel);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Toevoegen(ArtikelToevoegViewModel artikelToevoegViewModel)
         {
             if (artikelToevoegViewModel == null)
@@ -110,6 +111,7 @@ namespace KlantenDienstWeb.Controllers
             return View(viewModel);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Wijzig(ArtikelToevoegViewModel artikelToevoegViewModel)
         {
             if(artikelToevoegViewModel == null)
