@@ -26,6 +26,12 @@ namespace KlantenDienstData.Repositories
             .Include(a => a.Magazijnplaatsen)
             .ToListAsync();
 
+        public async Task<Artikel?> GetArtikelAsync(int id)
+        {
+            //return await _context.Artikelen.FindAsync(id);
+            return await _context.Artikelen.Include(artikel => artikel.Categorieën).Where(artikel => artikel.ArtikelId == id).FirstOrDefaultAsync();
+        }
+
         public async Task<bool> VoegArtikelToeAsync(Artikel artikel)
         {
             await _context.Artikelen.AddAsync(artikel);
@@ -33,15 +39,15 @@ namespace KlantenDienstData.Repositories
             return await _context.Artikelen.ContainsAsync(artikel);
         }
 
-        public async Task<bool> WijzigArtikelAsync(int artikelId, Artikel niewArtikel)
+        public async Task<bool> WijzigArtikelAsync(int artikelId, Artikel nieuwArtikel)
         {
-            Artikel? oud = await _context.Artikelen.FindAsync(artikelId);
+            Artikel? oud = await _context.Artikelen.Where(artikel => artikel.ArtikelId == artikelId).FirstOrDefaultAsync();
             if (oud == null)
                 return false;
-            if (oud.Equals(niewArtikel))
+            if (oud.Equals(nieuwArtikel))
                 return false;
             //aanpassen
-            _context.Artikelen.Entry(oud).CurrentValues.SetValues(niewArtikel);
+            oud = nieuwArtikel;
             await _context.SaveChangesAsync();
             return true;
         }
