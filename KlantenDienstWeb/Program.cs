@@ -4,11 +4,12 @@ using KlantenDienstServices;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using KlantenDienstWeb;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<PrulariaDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("PrulariaComConnection"),
@@ -48,10 +49,14 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.DefaultRequestCulture = new RequestCulture("nl-BE");
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
-
-    // Zorgt dat browser-taal (Accept-Language) mee kan bepalen.
-    options.RequestCultureProviders.Insert(0, new AcceptLanguageHeaderRequestCultureProvider());
 });
+
+builder.Services.AddControllersWithViews((options) =>
+{
+    options.ModelBinderProviders.Insert(0, new CustomBinderProvider());
+})
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+    .AddDataAnnotationsLocalization();
 
 var app = builder.Build();
 
