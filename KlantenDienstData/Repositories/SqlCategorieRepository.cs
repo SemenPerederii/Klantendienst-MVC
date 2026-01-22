@@ -25,7 +25,10 @@ namespace KlantenDienstData.Repositories
 
         public async Task<List<Categorie>> GetAll()
         {
-            return await _context.Categorieen.AsNoTracking().ToListAsync();
+            return await _context.Categorieen
+                .Include(c => c.ArtikelCategorieen)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Categorie> GetByIdAsync(int id)
