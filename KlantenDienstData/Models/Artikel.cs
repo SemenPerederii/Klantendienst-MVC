@@ -35,8 +35,8 @@ public partial class Artikel
 
     [Display(Name ="Aantal Besteld Leverancier")]
     public int AantalBesteldLeverancier { get; set; }
-    [Range(1, 1000, ErrorMessage = "buiten range")]
-    [Display(Name = "Max aantal in magazijn plaats")]
+    [Range(1, 1000, ErrorMessage = "*")]
+    [Display(Name = "Max in magazijnplaats")]
     public int MaxAantalInMagazijnPLaats { get; set; }
 
     public int LeveranciersId { get; set; }
