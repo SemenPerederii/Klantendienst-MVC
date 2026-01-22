@@ -7,17 +7,48 @@ namespace KlantenDienstWeb.Controllers
     public class ArtikelController : Controller
     {
         private readonly ArtikelService _artikelService;
-        public ArtikelController(ArtikelService artikelService)
+        private readonly ICategorieService _categorieService;
+        public ArtikelController(ArtikelService artikelService, ICategorieService categorieService)
         {
             _artikelService = artikelService;
+            _categorieService = categorieService;
         }
-        public async Task<IActionResult> IndexAsync()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
+            var alleCategorieën = await _categorieService.GetAllCategorieAsync();
+
             var artikelVM = new ArtikelViewModel()
             {
                 Artikelen = await _artikelService.GetAllArtikelenAsync(),
+                Categorieën = alleCategorieën.Where(c => c.HoofdCategorieId == null).ToList(),
+                GeselecteerdeCategorieIds = new List<int>()
             };
             return View(artikelVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ZoekenOpFilterAsync(ArtikelViewModel vm)
+        {
+            vm.GeselecteerdeCategorieIds ??= new List<int>();
+
+            var filter = new ArtikelFilterDto
+            {
+                Id = vm.Id,
+                Ean = vm.EAN,
+                Naam = vm.Naam,
+                MinPrijs = vm.MinPrijs,
+                MaxPrijs = vm.MaxPrijs,
+                EnkelInVoorraad = vm.InVoorraad,
+                CategorieIds = vm.GeselecteerdeCategorieIds
+            };
+
+            vm.Artikelen = await _artikelService.ZoekArtikelenOpFilterAsync(filter);
+
+          
+            var alleCats = await _categorieService.GetAllCategorieAsync();
+            vm.Categorieën = alleCats.Where(c => c.HoofdCategorieId == null).ToList();
+
+            return View("Index", vm);
         }
     }
 }

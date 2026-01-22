@@ -2,11 +2,14 @@ using KlantenDienstData.Models;
 using KlantenDienstData.Repositories;
 using KlantenDienstServices;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using KlantenDienstWeb;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<PrulariaDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("PrulariaComConnection"),
@@ -34,6 +37,27 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+// Localization
+var supportedCultures = new[]
+{
+    new CultureInfo("nl-BE"),
+    new CultureInfo("nl-NL")
+};
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("nl-BE");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
+builder.Services.AddControllersWithViews((options) =>
+{
+    options.ModelBinderProviders.Insert(0, new CustomBinderProvider());
+})
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+    .AddDataAnnotationsLocalization();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,6 +72,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
+app.UseRequestLocalization();
 
 app.UseAuthorization();
 

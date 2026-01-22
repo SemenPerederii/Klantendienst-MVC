@@ -5,7 +5,8 @@
 <h1 class="d-flex justify-content-center">@ViewData["Title"]</h1>
 <form asp-action="ZoekenOpFilter" method="post">
 
-    <div class="dropdown mb-4">
+    <div class="dropdown mb-4 " 
+         data-bs-auto-close="false">
 
         <button class="btn btn-primary dropdown-toggle"
                 type="button"
@@ -38,25 +39,14 @@
             <div class="row mb-3">
                 <div class="col">
                     <label class="form-label">Min prijs</label>
-                    <input asp-for="MinPrijs" class="form-control" />
+                    <input asp-for="MinPrijs" class="form-control" type="text" inputmode="decimal" />
                 </div>
                 <div class="col">
                     <label class="form-label">Max prijs</label>
-                    <input asp-for="MaxPrijs" class="form-control" />
+                    <input asp-for="MaxPrijs" class="form-control" type="text" inputmode="decimal"/>
                 </div>
             </div>
 
-            <!-- Gewicht -->
-            <div class="row mb-3">
-                <div class="col">
-                    <label class="form-label">Min gewicht (g)</label>
-                    <input asp-for="MinGewichtInGram" class="form-control" />
-                </div>
-                <div class="col">
-                    <label class="form-label">Max gewicht (g)</label>
-                    <input asp-for="MaxGewichtInGram" class="form-control" />
-                </div>
-            </div>
 
             <!-- In voorraad -->
             <div class="form-check mb-3">
@@ -68,23 +58,25 @@
 
             <!-- Categorieën -->
             <div class="mb-3">
-                <label class="form-label fw-bold">Categorieën</label>
+                <button class="btn btn-outline-secondary w-100 text-start"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#catCollapse"
+                        aria-expanded="false"
+                        aria-controls="catCollapse">
+                    Filter categorieën
+                </button>
 
-                @foreach (var categorie in Model.Categorieën)
-                {
-                    <div class="form-check">
-                        <input class="form-check-input"
-                               type="checkbox"
-                               name="GeselecteerdeCategorieIds"
-                               value="@categorie.CategorieId"
-                               @(Model.GeselecteerdeCategorieIds.Contains(categorie.CategorieId) ? "checked" : "") />
-
-                        <label class="form-check-label">
-                            @categorie.Naam
-                        </label>
+                <div class="collapse mt-2" id="catCollapse">
+                    <div class="border rounded p-2" style="max-height: 420px; overflow:auto;">
+                        @await Html.PartialAsync("_CategorieFilterTree", Model.Categorieën,
+                            new ViewDataDictionary(ViewData) {
+                                ["SelectedLeafIds"] = Model.GeselecteerdeCategorieIds
+                            })
                     </div>
-}
+                </div>
             </div>
+
 
             <div class="d-grid">
                 <button type="submit" class="btn btn-success">
@@ -105,12 +97,12 @@
             <th>Naam</th>
             <th>Beschrijving</th>
             <th>Prijs</th>
-            <th>Momenteel in voorraad</th>
+            <th>In voorraad</th>
             <th>Categorie(ën)</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var artikel in Model.Artikelen)
+        @foreach (var artikel in Model.Artikelen.OrderBy(a => a.Naam))
         {
             <tr>
                 <td>@artikel.EAN</td>
