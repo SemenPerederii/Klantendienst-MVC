@@ -11,9 +11,9 @@ public partial class Categorie
 
     public int? HoofdCategorieId { get; set; }
 
-    public virtual ICollection<Categorie> InversehoofdCategorie { get; set; } = new List<Categorie>();
+    public virtual ICollection<Categorie>? InversehoofdCategorie { get; set; } = new List<Categorie>();
 
     public virtual Categorie? HoofdCategorie { get; set; }
 
-    public virtual ICollection<Artikel> Artikelen { get; set; } = new List<Artikel>();
+    public virtual ICollection<Artikel>? Artikelen { get; set; } = new List<Artikel>();
 }

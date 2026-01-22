@@ -20,26 +20,58 @@ namespace KlantenDienstData.Repositories
         {
             return await _context.Categorieen.ToListAsync();
         }
-        public async Task<Categorie?> AddCategorieAsync(Categorie categorie)
-        {
-            try
-            {
-                _context.Categorieen.Add(categorie);
-                await _context.SaveChangesAsync();
-                return categorie;
-            }
-            catch (Exception ex)
-            {
-                if (ex is InvalidOperationException)
-                    throw;
-                if (ex is DbUpdateException dbEx)
-                    throw new InvalidOperationException("Opslaan van categorie is mislukt.", dbEx);
 
-                throw new InvalidOperationException("Onverwachte fout bij toevoegen van een categorie.", ex);
-            }
+        public async Task<IEnumerable<Categorie>> HoofdcategorieAsync()
+        {
+            return await _context.Categorieen
+                        .Where(c => c.HoofdCategorieId == null)
+                        .ToListAsync();
         }
+
+        public async Task<Categorie?> GetByIdAsync(int id)
+        {
+            return await _context.Categorieen
+                .FirstOrDefaultAsync(c => c.CategorieId == id);
+        }
+
+        public async Task<List<Categorie>> GetByIdsAsync(IEnumerable<int>? ids)
+        {
+            if (ids == null || !ids.Any())
+                return new List<Categorie>();
+
+            return await _context.Categorieen
+                .Where(c => ids.Contains(c.CategorieId))
+                .ToListAsync();
+        }
+
+
+        public async Task<Categorie?> AddCategorieAsync(Categorie categorie, IEnumerable<int>? subCategorieIds)
+        {
+            if (categorie == null)
+                throw new ArgumentNullException(nameof(categorie));
+
+            _context.Categorieen.Add(categorie);
+            await _context.SaveChangesAsync();
+
+            if (subCategorieIds != null && subCategorieIds.Any())
+            {
+                var subCategorieen = await GetByIdsAsync(subCategorieIds);
+
+                foreach (var sub in subCategorieen)
+                {
+                    sub.HoofdCategorieId = categorie.CategorieId;
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
+            return categorie;
+        }
+
         public async Task<bool> CategorieBestaatAlAsync(string naam)
         {
+            if (string.IsNullOrWhiteSpace(naam))
+                return false;
             return await _context.Categorieen.AnyAsync(c => c.Naam.ToLower() == naam.ToLower());
         }
     }

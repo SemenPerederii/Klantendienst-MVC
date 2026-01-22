@@ -11,5 +11,7 @@ namespace KlantenDienstServices
     {
         Task<IEnumerable<Categorie>> GetAllCategorieAsync();
         IEnumerable<Categorie> BuildTree(IEnumerable<Categorie> allCategories);
+        Task<IEnumerable<Categorie>> GetHoofdcategorieenAsync();
+        Task MaakHoofdcategorieAsync(Categorie nieuweCategorie, IEnumerable<int> subCategorieIds);
     }
 }

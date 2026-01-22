@@ -30,13 +30,26 @@ namespace KlantenDienstServices
 
             return lookup[null].ToList();
         }
-        public async Task<Categorie?> AddCategorieAsync(Categorie categorie)
+
+        public async Task<IEnumerable<Categorie>> GetHoofdcategorieenAsync()
         {
-            return await _repositoryCategorie.AddCategorieAsync(categorie);
+            return await _repositoryCategorie.HoofdcategorieAsync();
         }
+
         public async Task<bool> CategorieBestaatAlAsync(string naam)
         {
+            if (string.IsNullOrWhiteSpace(naam))
+                return false;
             return await _repository.CategorieBestaatAlAsync(naam);
+        }
+
+        public async Task MaakHoofdcategorieAsync(Categorie nieuweCategorie, IEnumerable<int>? subCategorieIds)
+        {
+            if (nieuweCategorie == null)
+                throw new ArgumentNullException(nameof(nieuweCategorie));
+
+            await _repositoryCategorie.AddCategorieAsync(nieuweCategorie, subCategorieIds);
+            
         }
     }
 }
