@@ -10,6 +10,7 @@ namespace KlantenDienstWeb.Models
         public decimal? MinPrijs { get; set; }
         public decimal? MaxPrijs { get; set; }
         public bool InVoorraad { get; set; }
+        public Artikel? ArtikelVoorDeactivatie { get; set; }
         public List<int> GeselecteerdeCategorieIds { get; set; } = new List<int>();
         public List<Categorie> Categorieën { get; set; } = new List<Categorie>();
         public List<Artikel> Artikelen { get; set; } = new List<Artikel>();

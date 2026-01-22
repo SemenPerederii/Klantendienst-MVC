@@ -25,6 +25,14 @@ namespace KlantenDienstData.Repositories
             .Include(a => a.Magazijnplaatsen)
             .ToListAsync();
 
+        public Task<Artikel> GetArtikelByIdAsync(int id) =>
+            _context.Artikelen
+            .Include(a => a.Categorieën)
+            .Include(a => a.Bestellijnen)
+            .Include(a => a.Inkomendeleveringslijnen)
+            .Include(a => a.Magazijnplaatsen)
+            .FirstOrDefaultAsync(a => a.ArtikelId == id)!;
+
         public IQueryable<Artikel> GetArtikelQuery()
         {
             return _context.Artikelen

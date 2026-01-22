@@ -22,6 +22,9 @@ namespace KlantenDienstServices
             return await _artikelRepository.GetAllArtikelenAsync();
         }
 
+        public async Task<Artikel> GetArtikelByIdAsync(int id) =>
+            await _artikelRepository.GetArtikelByIdAsync(id);
+
         public async Task<List<Artikel>> ZoekArtikelenOpFilterAsync(ArtikelFilterDto filters)
         {
             IQueryable<Artikel> query = _artikelRepository.GetArtikelQuery();

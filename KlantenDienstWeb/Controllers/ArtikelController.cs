@@ -6,9 +6,9 @@ namespace KlantenDienstWeb.Controllers
 {
     public class ArtikelController : Controller
     {
-        private readonly ArtikelService _artikelService;
+        private readonly IArtikelService _artikelService;
         private readonly ICategorieService _categorieService;
-        public ArtikelController(ArtikelService artikelService, ICategorieService categorieService)
+        public ArtikelController(IArtikelService artikelService, ICategorieService categorieService)
         {
             _artikelService = artikelService;
             _categorieService = categorieService;
@@ -49,6 +49,15 @@ namespace KlantenDienstWeb.Controllers
             vm.Categorieën = alleCats.Where(c => c.HoofdCategorieId == null).ToList();
 
             return View("Index", vm);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ZetArtikelInactief(int id)
+        {
+            var vm = new ArtikelViewModel
+            {
+                ArtikelVoorDeactivatie = await _artikelService.GetArtikelByIdAsync(id)
+            };
+            return View(vm);
         }
     }
 }
