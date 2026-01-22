@@ -110,3 +110,15 @@ body {
     font-size: 1.2rem; 
     font-weight: 600;
 }
+.form-check-input:checked {
+    background-color: #abd7a8;
+    border-color: #abd7a8;
+}
+
+.form-check-input {
+    border-color: #6c757d;
+}
+
+    .form-check-input:focus {
+        box-shadow: 0 0 0 0.2rem rgba(171, 215, 168, 0.4);
+    }
