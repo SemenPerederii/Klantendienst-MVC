@@ -19,7 +19,7 @@ namespace KlantenDienstServices
 
         public bool CheckStatusActief(Artikel artikel)
         {
-            if (artikel.MinimumVoorraad > 0 && artikel.MaximumVoorraad > 0 && artikel.Bestelpeil > 0 && artikel.AantalBesteldLeverancier > 0)
+            if (artikel.MinimumVoorraad > 0 || artikel.MaximumVoorraad > 0 || artikel.Bestelpeil > 0 || artikel.AantalBesteldLeverancier > 0)
             {
                 return true;
             }

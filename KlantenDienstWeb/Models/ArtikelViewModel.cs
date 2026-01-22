@@ -14,5 +14,6 @@ namespace KlantenDienstWeb.Models
         public List<int> GeselecteerdeCategorieIds { get; set; } = new List<int>();
         public List<Categorie> Categorieën { get; set; } = new List<Categorie>();
         public List<Artikel> Artikelen { get; set; } = new List<Artikel>();
+        public List<Artikel> ActieveArtikelen { get; set; } = new List<Artikel>();
     }
 }

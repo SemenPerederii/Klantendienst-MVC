@@ -1,4 +1,5 @@
-﻿using KlantenDienstServices;
+﻿using KlantenDienstData.Models;
+using KlantenDienstServices;
 using KlantenDienstWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,15 +17,25 @@ namespace KlantenDienstWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var artikelVM = new ArtikelViewModel();
             var alleCategorieën = await _categorieService.GetAllCategorieAsync();
             var artikelen = await _artikelService.GetAllArtikelenAsync();
+            var alleActieveArtikelen = new List<Artikel>();
 
-            var artikelVM = new ArtikelViewModel()
+            foreach (var artikel in artikelen)
             {
-                Artikelen = artikelen,
-                Categorieën = alleCategorieën.Where(c => c.HoofdCategorieId == null).ToList(),
-                GeselecteerdeCategorieIds = new List<int>()
-            };
+                if (_artikelService.CheckStatusActief(artikel))
+                {
+                    alleActieveArtikelen.Add(artikel);
+                }
+            }
+
+            artikelVM.Artikelen = artikelen;
+            artikelVM.Categorieën = alleCategorieën.Where(c => c.HoofdCategorieId == null).ToList();
+            artikelVM.GeselecteerdeCategorieIds = new List<int>();
+            artikelVM.ActieveArtikelen = alleActieveArtikelen;
+
+
             return View(artikelVM);
         }
         [HttpPost]
@@ -46,7 +57,7 @@ namespace KlantenDienstWeb.Controllers
 
             vm.Artikelen = await _artikelService.ZoekArtikelenOpFilterAsync(filter);
 
-          
+
             var alleCats = await _categorieService.GetAllCategorieAsync();
             vm.Categorieën = alleCats.Where(c => c.HoofdCategorieId == null).ToList();
 
@@ -58,7 +69,7 @@ namespace KlantenDienstWeb.Controllers
             var artikel = await _artikelService.GetArtikelByIdAsync(id);
             if (!_artikelService.CheckStatusActief(artikel))
             {
-                 return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
             var vm = new ArtikelViewModel
             {
@@ -66,7 +77,7 @@ namespace KlantenDienstWeb.Controllers
             };
             return View(vm);
         }
-        [HttpPost]
+/*        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeactiveerArtikel(ArtikelViewModel vm)
         {
@@ -75,5 +86,6 @@ namespace KlantenDienstWeb.Controllers
                 await _artikelService.ZetArtikelInactiefAsync(vm.ArtikelVoorDeactivatie.ArtikelId);
             }
             return RedirectToAction("Index");
-        }
+        }*/
+    }
 }
