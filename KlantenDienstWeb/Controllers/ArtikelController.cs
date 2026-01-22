@@ -120,11 +120,12 @@ namespace KlantenDienstWeb.Controllers
             Leverancier? leverancier = await _leverancierService.GetLeverancierAsync(artikelToevoegViewModel.Artikel.LeveranciersId);
             if (leverancier != null)
                 artikelToevoegViewModel.Artikel.Leverancier = leverancier;
-
+            //als niet valid, keer terug naar formulier
             if (!this.ModelState.IsValid)
             {
                 return View(nameof(WijzigFormulier), artikelToevoegViewModel);
             }
+            //pas de gekozen categorieën aan
             foreach (var categorie in artikelToevoegViewModel.Categorieën)
             {
                 if (categorie.Gekozen == true)
@@ -134,7 +135,8 @@ namespace KlantenDienstWeb.Controllers
                         artikelToevoegViewModel.Artikel.Categorieën.Add(volledgeCategorie);
                 }
             }
-            //toevoegen
+
+            //save changes
             await _artikelService.WijzigArtikelAsync(artikelToevoegViewModel.Artikel.ArtikelId,artikelToevoegViewModel.Artikel);
             return RedirectToAction(nameof(Index));
         }

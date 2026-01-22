@@ -41,13 +41,13 @@ namespace KlantenDienstData.Repositories
 
         public async Task<bool> WijzigArtikelAsync(int artikelId, Artikel nieuwArtikel)
         {
-            Artikel? oud = await _context.Artikelen.Where(artikel => artikel.ArtikelId == artikelId).FirstOrDefaultAsync();
-            if (oud == null)
+            Artikel? oudArtikel = await _context.Artikelen.Where(artikel => artikel.ArtikelId == artikelId).FirstOrDefaultAsync();
+            if (oudArtikel == null)
                 return false;
-            if (oud.Equals(nieuwArtikel))
+            if (oudArtikel.Equals(nieuwArtikel))
                 return false;
             //aanpassen
-            oud = nieuwArtikel;
+            _context.Entry(oudArtikel).CurrentValues.SetValues(nieuwArtikel);
             await _context.SaveChangesAsync();
             return true;
         }
