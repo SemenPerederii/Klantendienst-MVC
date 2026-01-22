@@ -2,6 +2,8 @@ using KlantenDienstData.Models;
 using KlantenDienstData.Repositories;
 using KlantenDienstServices;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +36,23 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+// Localization
+var supportedCultures = new[]
+{
+    new CultureInfo("nl-BE"),
+    new CultureInfo("nl-NL")
+};
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("nl-BE");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+
+    // Zorgt dat browser-taal (Accept-Language) mee kan bepalen.
+    options.RequestCultureProviders.Insert(0, new AcceptLanguageHeaderRequestCultureProvider());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -47,6 +66,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseSession();
+app.UseRequestLocalization();
 
 app.UseAuthorization();
 
