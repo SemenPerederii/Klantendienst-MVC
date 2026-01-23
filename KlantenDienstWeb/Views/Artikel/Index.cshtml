@@ -123,9 +123,9 @@
                 </td>
                 @if (Model.ActieveArtikelen.Any(a => a.ArtikelId == artikel.ArtikelId))
                 {
-                    <td><a asp-action="ZetArtikelInactief" asp-route-id="@artikel.ArtikelId" >Zet inactief</a></td>
+                    <td><a class="btn btn-outline-dark" asp-action="ZetArtikelInactief" asp-route-id="@artikel.ArtikelId" >Zet inactief</a></td>
                 }
-                <td><a asp-action="WijzigFormulier" asp-route-id="@artikel.ArtikelId">Wijzig</a></td>
+                <td><a class="btn btn-outline-dark" asp-action="WijzigFormulier" asp-route-id="@artikel.ArtikelId">Wijzig</a></td>
             </tr>
         }
     </tbody>
