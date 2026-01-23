@@ -22,6 +22,19 @@ namespace KlantenDienstWeb.Controllers
             return View(tree);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> VerwijderenBevestig(int id)
+        {
+            var categorie =  await _serviceCategorie.GetByIdAsync(id);
+
+            if (categorie == null)
+            {
+                return NotFound();
+            }
+
+            return View(categorie);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Verwijderen(int id)
         {

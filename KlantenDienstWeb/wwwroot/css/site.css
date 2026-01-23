@@ -122,3 +122,18 @@ body {
     .form-check-input:focus {
         box-shadow: 0 0 0 0.2rem rgba(171, 215, 168, 0.4);
     }
+
+.cs-container-verwijderen {
+    display: flex;
+    flex-direction: column;
+    height: 700px;
+    width: 100%;
+    justify-content: center;
+    align-items:center;
+}
+
+.cs-buttons-verwijderen {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
