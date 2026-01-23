@@ -21,7 +21,7 @@ builder.Services.AddDbContext<PrulariaDbContext>(options =>
 
 //Repositories
 builder.Services.AddScoped<IArtikelRepository, SqlArtikelRepository>();
-builder.Services.AddScoped<ArtikelService>();
+builder.Services.AddScoped<IArtikelService,ArtikelService>();
 
 
 builder.Services.AddScoped<ICategorieRepository, CategorieRepository>();

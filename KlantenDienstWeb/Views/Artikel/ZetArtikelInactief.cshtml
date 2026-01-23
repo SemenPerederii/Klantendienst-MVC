@@ -1,0 +1,15 @@
+﻿@model ArtikelViewModel
+@{
+    ViewData["Title"] = "ZetArtikelInactief";
+}
+
+<h2>Artikel @Model.ArtikelVoorDeactivatie.Naam op inactief zetten?</h2>
+
+<form asp-action="DeactiveerArtikel" method="post">
+    <input type="hidden" asp-for="@Model.ArtikelVoorDeactivatie.ArtikelId" />
+ </form>
+    <div>
+        <button type="submit" class="btn btn-danger">Ja, zet artikel inactief</button>
+        <a asp-action="Index" class="btn btn-secondary">Annuleer</a>
+</div>
+

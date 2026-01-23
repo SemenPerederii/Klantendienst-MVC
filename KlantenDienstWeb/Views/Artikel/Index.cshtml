@@ -118,6 +118,11 @@
                         }
                     </ul>
                 </td>
+                @if (Model.ActieveArtikelen.Any(a => a.ArtikelId == artikel.ArtikelId))
+                {
+                    <td><a asp-action="ZetArtikelInactief" asp-route-id="@artikel.ArtikelId" >Zet inactief</a></td>
+                }
+                
             </tr>
         }
     </tbody>

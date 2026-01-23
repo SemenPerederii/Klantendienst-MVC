@@ -17,10 +17,26 @@ namespace KlantenDienstServices
             _artikelRepository = artikelRepository;
         }
 
+        public bool CheckStatusActief(Artikel artikel)
+        {
+            if (artikel.MinimumVoorraad > 0 || artikel.MaximumVoorraad > 0 || artikel.Bestelpeil > 0 || artikel.AantalBesteldLeverancier > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+                
+        }
+
         public async Task<List<Artikel>> GetAllArtikelenAsync()
         {
             return await _artikelRepository.GetAllArtikelenAsync();
         }
+
+        public async Task<Artikel> GetArtikelByIdAsync(int id) =>
+            await _artikelRepository.GetArtikelByIdAsync(id);
 
         public async Task<List<Artikel>> ZoekArtikelenOpFilterAsync(ArtikelFilterDto filters)
         {
