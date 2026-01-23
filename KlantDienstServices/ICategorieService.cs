@@ -10,8 +10,10 @@ namespace KlantenDienstServices
     public interface ICategorieService
     {
         Task<IEnumerable<Categorie>> GetAllCategorieAsync();
+        Task<Categorie?> GetCategorieByIdAsync(int id);
         IEnumerable<Categorie> BuildTree(IEnumerable<Categorie> allCategories);
         Task<IEnumerable<Categorie>> GetHoofdcategorieenAsync();
+        Task<IEnumerable<Categorie>> GetSubcategorieenAsync(int hoofdCategorieId);
         Task MaakHoofdcategorieAsync(Categorie nieuweCategorie, IEnumerable<int> subCategorieIds);
     }
 }

@@ -3,7 +3,7 @@ using KlantenDienstData.Repositories;
 
 namespace KlantenDienstServices
 {
-    public class CategorieService
+    public class CategorieService : ICategorieService
     {
         private readonly ICategorieRepository _repositoryCategorie;
         private readonly CategorieRepository _repository;
@@ -34,6 +34,15 @@ namespace KlantenDienstServices
         public async Task<IEnumerable<Categorie>> GetHoofdcategorieenAsync()
         {
             return await _repositoryCategorie.HoofdcategorieAsync();
+        }
+
+        public async Task<Categorie?> GetCategorieByIdAsync(int id)
+        {
+            return await _repositoryCategorie.GetByIdAsync(id);
+        }
+        public async Task<IEnumerable<Categorie>> GetSubcategorieenAsync(int hoofdCategorieId)
+        {
+            return await _repositoryCategorie.SubcategorieenAsync(hoofdCategorieId);
         }
 
         public async Task<bool> CategorieBestaatAlAsync(string naam)

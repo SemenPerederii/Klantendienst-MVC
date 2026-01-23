@@ -91,6 +91,35 @@ namespace KlantenDienstWeb.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        [HttpGet]
+        public async Task<IActionResult> ToevoegenSubcategorie(int id)
+        {
+            var hoofdCategorie = await _serviceCategorie.GetCategorieByIdAsync(id);
+            if (hoofdCategorie == null) 
+            { 
+                return RedirectToAction(nameof(Index)); 
+            } else
+            {
+                var categorieen = await _serviceCategorie.GetSubcategorieenAsync(id);
+                var subModel = new SubcategorieenChecklistVM
+                {
+                    SubCategorieen = categorieen.Select(c => new SelectListItem
+                    {
+                        Value = c.CategorieId.ToString(),
+                        Text = c.Naam
+                    }).ToList(),
+                    GeselecteerdeSubCategorieIds = new List<int>()
+                };
+                var vm = new NieuweSubcategorieVM
+                {
+                    HoofdCategorieId = id,
+                    HoofdCategorie = hoofdCategorie,
+                    Categorie = new(),
+                    Subcategorieen = subModel
+                };
+                return View(vm);
+            }
+        }
     }
     
 }

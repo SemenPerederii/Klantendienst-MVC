@@ -20,14 +20,6 @@ namespace KlantenDienstData.Repositories
         {
             return await _context.Categorieen.ToListAsync();
         }
-
-        public async Task<IEnumerable<Categorie>> HoofdcategorieAsync()
-        {
-            return await _context.Categorieen
-                        .Where(c => c.HoofdCategorieId == null)
-                        .ToListAsync();
-        }
-
         public async Task<Categorie?> GetByIdAsync(int id)
         {
             return await _context.Categorieen
@@ -44,6 +36,19 @@ namespace KlantenDienstData.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Categorie>> HoofdcategorieAsync()
+        {
+            return await _context.Categorieen
+                        .Where(c => c.HoofdCategorieId == null)
+                        .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Categorie>> SubcategorieenAsync(int hoofdCategorieId)
+        {
+            return await _context.Categorieen
+                        .Where(c => c.HoofdCategorieId == hoofdCategorieId)
+                        .ToListAsync();
+        }
 
         public async Task<Categorie?> AddCategorieAsync(Categorie categorie, IEnumerable<int>? subCategorieIds)
         {

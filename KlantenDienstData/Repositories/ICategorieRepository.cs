@@ -10,6 +10,7 @@ namespace KlantenDienstData.Repositories
         Task<Categorie?> AddCategorieAsync(Categorie categorie, IEnumerable<int> subCategorieIds);
         Task<IEnumerable<Categorie>> HoofdcategorieAsync();
         Task<bool> CategorieBestaatAlAsync(string naam);
+        Task<IEnumerable<Categorie>> SubcategorieenAsync(int hoofdCategorieId);
 
     }
 }
