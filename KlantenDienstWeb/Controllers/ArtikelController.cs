@@ -77,15 +77,6 @@ namespace KlantenDienstWeb.Controllers
             };
             return View(vm);
         }
-/*        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeactiveerArtikel(ArtikelViewModel vm)
-        {
-            if (vm.ArtikelVoorDeactivatie != null)
-            {
-                await _artikelService.ZetArtikelInactiefAsync(vm.ArtikelVoorDeactivatie.ArtikelId);
-            }
-            return RedirectToAction("Index");
-        }*/
+
     }
 }
