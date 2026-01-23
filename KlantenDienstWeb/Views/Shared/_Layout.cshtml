@@ -11,41 +11,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 cs-groen">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Landingspagina"><img class="cs-logo" src="~/images/logo_prularia_transparant.png" alt="Prularia logo"></></a>
-                @if (true)
-                {
-                    <div class="navbar-collapse collapse justify-content-center">
-                        <ul class="container navbar-nav justify-content-around">
-                            <li class="nav-item">
-                                <a class="cs-navlink" asp-area="" asp-controller="Artikel" asp-action="Index">Artikelen</a>
-                            </li>
-                            <li class="nav-item cs-navlink">|</li>
-                            <li class="nav-item">
-                                <a class="cs-navlink" asp-area="" asp-controller="Categorie" asp-action="Index">Categorieën</a>
-                            </li>
-                            <li class="nav-item cs-navlink">|</li>
-                            <li class="nav nav-item">
-                                <a class="cs-navlink" asp-area="" asp-controller="Bestelling" asp-action="Index">Bestellingen</a>
-                            </li>
-                            <li class="nav-item cs-navlink">|</li>
-                            <li class="nav-item">
-                                <a class="cs-navlink" asp-area="" asp-controller="Klant" asp-action="Index">Klantbeheer</a>
-                            </li>
-                            <li class="nav-item cs-navlink">|</li>
-                            <li class="nav-item">
-                                <a class="cs-navlink" asp-area="" asp-controller="Actiecode" asp-action="Index">Actiecodes</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="navbar-nav">
-                        <a class="nav-item btn btn-light btn-lg text-black">Mijn Profiel</a>
-                    </div>
-                }
-            </div>
-        </nav>
-        @await Component.InvokeAsync("Begroeting")
+        @await Component.InvokeAsync("NavbarKnoppen")
     </header>
     <div class="container">
         <main role="main" class="pb-3">
