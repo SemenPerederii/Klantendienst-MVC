@@ -113,7 +113,7 @@ namespace KlantenDienstWeb.Controllers
                 var vm = new NieuweSubcategorieVM
                 {
                     HoofdCategorieId = id,
-                    HoofdCategorie = hoofdCategorie,
+                    Hoofdcategorie = hoofdCategorie,
                     Categorie = new(),
                     Subcategorieen = subModel
                 };
