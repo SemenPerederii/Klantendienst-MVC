@@ -1,0 +1,26 @@
+﻿@using KlantenDienstData.Models
+@model Categorie
+@{
+    ViewData["Title"] = "VerwijderenBevestig";
+}
+
+<div class="cs-container-verwijderen">
+    <h3 class="d-flex justify-content-center">Wil u categorie "@Model.Naam" verwijderen?</h3>
+
+    <div class="d-flex justify-content-center cs-buttons-verwijderen">
+        <form asp-action="Verwijderen"
+              asp-controller="Categorie"
+              asp-route-id="@Model.CategorieId"
+              method="post"
+              style="display:inline">
+
+            <button type="submit" class="btn btn-primary">
+                Verwijderen
+            </button>
+        </form>
+
+        <a asp-action="Index" class="btn btn-secondary">Annuleren</a>
+    </div>
+</div>
+
+

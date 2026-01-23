@@ -26,5 +26,31 @@ namespace KlantenDienstData.Repositories
         {
             return await _context.Categorieen.FindAsync(id);
         }
+
+        public async Task<Categorie> GetByIdAsync(int id)
+        {
+            return await _context.Categorieen.FirstOrDefaultAsync(c => c.CategorieId == id);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> HasChildrenAsync(int id)
+        {
+            return await _context.Categorieen.AnyAsync(c => c.HoofdCategorieId == id);
+        }
+
+        public async Task<bool> HasArtikelenAsync(int id)
+        {
+            return await _context.ArtikelCategorieen.AnyAsync(ac => ac.CategorieId == id);
+        }
+
+        public async Task DeleteAsync(Categorie categorie)
+        {
+            _context.Categorieen.Remove(categorie);
+            await Task.CompletedTask;
+        }
     }
 }

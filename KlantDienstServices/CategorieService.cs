@@ -17,6 +17,29 @@ namespace KlantenDienstServices
             _repositoryCategorie = repository;
         }
 
+        public async Task DeleteCategorieAsync(int id)
+        {
+            var categorie = await _repositoryCategorie.GetByIdAsync(id);
+
+            if (categorie == null)
+                throw new Exception("Categorie niet gevonden");
+
+            var hasChildren = await _repositoryCategorie.HasChildrenAsync(id);
+
+            if (hasChildren)
+                throw new InvalidOperationException(
+                    "Categorie kan niet worden verwijderd omdat zij subcategorieën heeft.");
+
+            var hasArtikelen = await _repositoryCategorie.HasArtikelenAsync(id);
+
+            if (hasArtikelen)
+                throw new InvalidOperationException(
+            "Categorie kan niet worden verwijderd omdat zij wordt gebruikt door artikelen.");
+
+            await _repositoryCategorie.DeleteAsync(categorie);
+            await _repositoryCategorie.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Categorie>> GetAllCategorieAsync()
         {
             return await _repositoryCategorie.GetAll();
@@ -31,9 +54,57 @@ namespace KlantenDienstServices
                 categorie.InversehoofdCategorie = lookup[categorie.CategorieId].ToList();
             }
 
-            return lookup[null].ToList();
+            return allCategories
+                .Where(c => c.HoofdCategorieId == null)
+                .ToList();
         }
 
+        public async Task<Categorie> GetByIdAsync(int id)
+        {
+            return await _repositoryCategorie.GetByIdAsync(id);
+        }
+
+        public async Task<IEnumerable<Categorie>> GetMogelijkeCategorieenAsync(int categorieId)
+        {
+            var all = await _repositoryCategorie.GetAll();
+
+            return all
+                .Where(c => c.CategorieId != categorieId);
+        }
+
+        public async Task AddAsSubcategorieAsync(int categorieId, string naam, int? newParentId)
+        {
+            var categorie = await _repositoryCategorie.GetByIdAsync(categorieId);
+
+            if (categorie == null)
+                throw new Exception("Categorie niet gevonden");
+
+            //Naam
+            if (string.IsNullOrWhiteSpace(naam))
+                throw new InvalidOperationException("Naam is verplicht");
+
+            categorie.Naam = naam.Trim();
+
+            //Structure
+            if (newParentId != categorie.HoofdCategorieId)
+            {
+                if (newParentId == categorieId)
+                    throw new InvalidOperationException(
+                        "Categorie kan niet aan zichzelf worden gekoppeld.");
+
+                if (await _repositoryCategorie.HasChildrenAsync(categorieId))
+                    throw new InvalidOperationException(
+                        "Categorie met subcategorieën kan niet worden verplaatst.");
+
+                if (await _repositoryCategorie.HasArtikelenAsync(categorieId))
+                    throw new InvalidOperationException(
+                        "Categorie met artikelen kan niet worden verplaatst.");
+
+                categorie.HoofdCategorieId = newParentId;
+            }
+
+            await _repositoryCategorie.SaveChangesAsync();
+        }
         public Task<Categorie?> GetCategorieAsync(int id)
         {
             return _repositoryCategorie.GetCategorieAsync(id);

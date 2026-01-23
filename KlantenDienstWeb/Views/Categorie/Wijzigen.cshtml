@@ -1,0 +1,29 @@
+﻿@model CategorieEditViewModel
+@{
+    ViewData["Title"] = "Wijzigen";
+}
+
+<h1 class="d-flex justify-content-center">Wijzig categorie</h1>
+
+<form asp-action="Wijzigen" method="post">
+    <input type="hidden" asp-for="CategorieId" />
+
+    <div class="mb-3">
+        <label>Naam</label>
+        <input class="form-control" asp-for="Naam"/>
+        <span asp-validation-for="Naam" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Verplaatsen naar categorie</label>
+        <select class="form-control" asp-for="SelectedHoofdCategorieId"
+                asp-items="Model.MogelijkeCategorieen">
+            <option value="">-- Categorie --</option>
+        </select>
+        <span asp-validation-for="SelectedHoofdCategorieId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Opslaan</button>
+    <a asp-action="Index" class="btn btn-secondary">Annuleren</a>
+</form>
+
