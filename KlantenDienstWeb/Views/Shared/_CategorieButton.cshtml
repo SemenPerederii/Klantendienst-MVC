@@ -19,14 +19,23 @@
             </a>
 
             <!-- Wijzigen -->
-            <a asp-action="EditCategorie" asp-controller="Categorie" asp-route-id="@Model.CategorieId" class="btn btn-sm cs-btns">
+            <a asp-action="Wijzigen" asp-controller="Categorie" asp-route-id="@Model.CategorieId" class="btn btn-sm cs-btns">
                 Wijzigen <img src="/images/editBtn.png" alt="Wijzigen" class="cs-btnsImg" />
             </a>
 
             <!-- Verwijderen -->
-            <a asp-action="DeleteCategorie" asp-controller="Categorie" asp-route-id="@Model.CategorieId" class="btn btn-sm cs-btns">
-                Verwijderen <img src="/images/deleteBtn.png" alt="Verwijderen" class="cs-btnsImg" />
-            </a>
+            <form asp-action="VerwijderenBevestig"
+                  asp-controller="Categorie"
+                  asp-route-id="@Model.CategorieId"
+                  method="get"
+                  style="display:inline">
+
+                <button type="submit" class="btn btn-sm cs-btns 
+                    @(Model.InversehoofdCategorie.Any() || Model.ArtikelCategorieen.Any() ? "disabled title='Kan niet verwijderd worden omdat er subcategorieën of artikelen zijn.'" : "")">
+                    Verwijderen
+                    <img src="/images/deleteBtn.png" alt="Verwijderen" class="cs-btnsImg" />
+                </button>
+            </form>
         </div>
     </div>
 
