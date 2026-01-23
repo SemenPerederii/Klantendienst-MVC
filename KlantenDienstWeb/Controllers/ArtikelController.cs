@@ -73,7 +73,7 @@ namespace KlantenDienstWeb.Controllers
             }
             var vm = new ArtikelViewModel
             {
-                ArtikelVoorDeactivatie = await _artikelService.GetArtikelByIdAsync(id)
+                ArtikelVoorDeactivatie = artikel
             };
             return View(vm);
         }
