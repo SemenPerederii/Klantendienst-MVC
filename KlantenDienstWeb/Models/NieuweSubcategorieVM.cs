@@ -7,6 +7,6 @@ namespace KlantenDienstWeb.Models
         public int HoofdCategorieId { get; set; }
         public Categorie Hoofdcategorie { get; set; }
         public Categorie Categorie { get; set; }
-        public SubcategorieenChecklistVM? Subcategorieen { get; set; } = null!;
+        public virtual SubcategorieenChecklistVM? Subcategorieen { get; set; } = null!;
     }
 }

@@ -66,11 +66,44 @@ namespace KlantenDienstData.Repositories
                 {
                     sub.HoofdCategorieId = categorie.CategorieId;
                 }
-
                 await _context.SaveChangesAsync();
             }
+            
 
             return categorie;
+        }
+
+        public async Task<Categorie?> AddSubcategorieAsync(Categorie categorie, int hoofdcategorieId, IEnumerable<int>? subCategorieIds)
+        {
+            if (categorie == null)
+                throw new ArgumentNullException(nameof(categorie));
+
+            if (hoofdcategorieId <= 0)
+                throw new InvalidOperationException("Hoofdcategorie is verplicht.");
+
+            var parentExists = await _context.Categorieen
+                .AnyAsync(c => c.CategorieId == hoofdcategorieId);
+
+            if (!parentExists)
+                throw new InvalidOperationException("Hoofdcategorie bestaat niet.");
+
+            categorie.HoofdCategorieId = hoofdcategorieId;
+
+            _context.Categorieen.Add(categorie);
+
+            await _context.SaveChangesAsync();
+
+            if (subCategorieIds?.Any() == true)
+            {
+                var subCategorieen = await GetByIdsAsync(subCategorieIds);
+
+                foreach (var sub in subCategorieen)
+                {
+                    sub.HoofdCategorieId = categorie.CategorieId;
+                }
+                await _context.SaveChangesAsync();
+            }
+            return categorie;     
         }
 
         public async Task<bool> CategorieBestaatAlAsync(string naam)

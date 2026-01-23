@@ -1,4 +1,5 @@
-﻿using KlantenDienstServices;
+﻿using KlantenDienstData.Models;
+using KlantenDienstServices;
 using KlantenDienstWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -119,6 +120,51 @@ namespace KlantenDienstWeb.Controllers
                 };
                 return View(vm);
             }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ToevoegenSubcategorie(NieuweSubcategorieVM vm)
+        {
+            if (vm == null)
+                return View("Error");
+
+            var selectedSubCategorieIds = vm.Subcategorieen?.GeselecteerdeSubCategorieIds;
+
+            if (!ModelState.IsValid)
+            {
+                var categorieen = await _serviceCategorie.GetSubcategorieenAsync(vm.HoofdCategorieId);
+                if (vm.Subcategorieen == null)
+                    vm.Subcategorieen = new SubcategorieenChecklistVM();
+
+                vm.Subcategorieen.SubCategorieen = categorieen.Select(c => new SelectListItem
+                {
+                    Value = c.CategorieId.ToString(),
+                    Text = c.Naam
+                }).ToList();
+
+                return View(vm);
+            }
+
+            if (await _serviceCategorie.CategorieBestaatAlAsync(vm.Categorie.Naam))
+            {
+                ModelState.AddModelError("", "Categorie bestaat al.");
+
+                var categorieen = await _serviceCategorie.GetSubcategorieenAsync(vm.HoofdCategorieId);
+                if (vm.Subcategorieen == null)
+                    vm.Subcategorieen = new SubcategorieenChecklistVM();
+
+                vm.Subcategorieen.SubCategorieen = categorieen.Select(c => new SelectListItem
+                {
+                    Value = c.CategorieId.ToString(),
+                    Text = c.Naam
+                }).ToList();
+
+                return View(vm);
+            }
+
+            await _serviceCategorie.MaakSubcategorieAsync(vm.HoofdCategorieId, vm.Categorie, selectedSubCategorieIds);
+
+            return RedirectToAction(nameof(Index));
         }
     }
     

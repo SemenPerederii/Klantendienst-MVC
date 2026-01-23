@@ -60,5 +60,12 @@ namespace KlantenDienstServices
             await _repositoryCategorie.AddCategorieAsync(nieuweCategorie, subCategorieIds);
             
         }
+
+        public async Task MaakSubcategorieAsync(int hoofdCategorieId, Categorie nieuweSubcategorie, IEnumerable<int>? subCategorieIds)
+        {
+            if (nieuweSubcategorie == null)
+                throw new ArgumentNullException(nameof(nieuweSubcategorie));
+            await _repositoryCategorie.AddSubcategorieAsync(nieuweSubcategorie, hoofdCategorieId, subCategorieIds);
+        }
     }
 }

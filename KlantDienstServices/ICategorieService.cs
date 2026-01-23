@@ -15,5 +15,6 @@ namespace KlantenDienstServices
         Task<IEnumerable<Categorie>> GetHoofdcategorieenAsync();
         Task<IEnumerable<Categorie>> GetSubcategorieenAsync(int hoofdCategorieId);
         Task MaakHoofdcategorieAsync(Categorie nieuweCategorie, IEnumerable<int> subCategorieIds);
+        Task MaakSubcategorieAsync(int hoofdCategorieId, Categorie nieuweSubcategorie, IEnumerable<int>? subCategorieIds);
     }
 }

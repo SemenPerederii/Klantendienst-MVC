@@ -12,7 +12,8 @@
         <span asp-validation-for="Categorie.Naam" class="text-danger"></span>
     </div>
 
-    <input asp-for="Hoofdcategorie.Naam" class="form-control" disabled />
+    <input type="hidden" asp-for="HoofdCategorieId" />
+    <input asp-for="Hoofdcategorie.Naam" class="form-control" readonly />
 
     <div class="form-group mb-3">
         <label>Subcategorieën</label>
