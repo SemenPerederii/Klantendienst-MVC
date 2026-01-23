@@ -24,5 +24,13 @@ namespace KlantenDienstData.Repositories
             .Include(a => a.Inkomendeleveringslijnen)
             .Include(a => a.Magazijnplaatsen)
             .ToListAsync();
+
+        public IQueryable<Artikel> GetArtikelQuery()
+        {
+            return _context.Artikelen
+                .AsNoTracking()
+                .Include(a => a.Categorieën); 
+        }
+
     }
 }

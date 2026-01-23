@@ -1,0 +1,50 @@
+﻿@using KlantenDienstData.Models
+@model IEnumerable<Categorie>
+
+@{
+    var selected = ViewData["SelectedLeafIds"] as IEnumerable<int> ?? Enumerable.Empty<int>();
+}
+
+<ul class="list-unstyled mb-0">
+    @foreach (var categorie in Model)
+    {
+        var hasChildren = categorie.InversehoofdCategorie != null && categorie.InversehoofdCategorie.Any();
+        var collapseId = $"cat_{categorie.CategorieId}";
+
+        <li class="mb-1">
+            @if (hasChildren)
+            {
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button"
+                            class="btn btn-sm btn-link p-0 text-decoration-none cat-toggle"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#@collapseId"
+                            aria-expanded="false"
+                            aria-controls="@collapseId">
+                        ▸
+                    </button>
+
+                    <span class="fw-semibold">@categorie.Naam</span>
+                </div>
+
+                <div id="@collapseId" class="collapse ms-3 mt-1">
+                    @await Html.PartialAsync("_CategorieFilterTree", categorie.InversehoofdCategorie, ViewData)
+                </div>
+            }
+            else
+            {
+                <div class="form-check ms-4">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           name="GeselecteerdeCategorieIds"
+                           value="@categorie.CategorieId"
+                           @(selected.Contains(categorie.CategorieId) ? "checked" : "") />
+
+                    <label class="form-check-label">
+                        @categorie.Naam
+                    </label>
+                </div>
+            }
+        </li>
+    }
+</ul>

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace KlantenDienstServices
 {
-    public interface ICategorieService
+    public interface IArtikelService
     {
-        Task<IEnumerable<Categorie>> GetAllCategorieAsync();
-        IEnumerable<Categorie> BuildTree(IEnumerable<Categorie> allCategories);
+        Task<List<Artikel>> GetAllArtikelenAsync();
+        Task<List<Artikel>> ZoekArtikelenOpFilterAsync(ArtikelFilterDto filters);
     }
 }

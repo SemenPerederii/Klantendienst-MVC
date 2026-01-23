@@ -11,23 +11,38 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 cs-groen">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">KlantenDienstWeb</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Landingspagina"><img class="cs-logo" src="~/images/logo_prularia_transparant.png" alt="Prularia logo"></></a>
+                @if (true)
+                {
+                    <div class="navbar-collapse collapse justify-content-center">
+                        <ul class="container navbar-nav justify-content-around">
+                            <li class="nav-item">
+                                <a class="cs-navlink" asp-area="" asp-controller="Artikel" asp-action="Index">Artikelen</a>
+                            </li>
+                            <li class="nav-item cs-navlink">|</li>
+                            <li class="nav-item">
+                                <a class="cs-navlink" asp-area="" asp-controller="Categorie" asp-action="Index">Categorieën</a>
+                            </li>
+                            <li class="nav-item cs-navlink">|</li>
+                            <li class="nav nav-item">
+                                <a class="cs-navlink" asp-area="" asp-controller="Bestelling" asp-action="Index">Bestellingen</a>
+                            </li>
+                            <li class="nav-item cs-navlink">|</li>
+                            <li class="nav-item">
+                                <a class="cs-navlink" asp-area="" asp-controller="Klant" asp-action="Index">Klantbeheer</a>
+                            </li>
+                            <li class="nav-item cs-navlink">|</li>
+                            <li class="nav-item">
+                                <a class="cs-navlink" asp-area="" asp-controller="Actiecode" asp-action="Index">Actiecodes</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="navbar-nav">
+                        <a class="nav-item btn btn-light btn-lg text-black">Mijn Profiel</a>
+                    </div>
+                }
             </div>
         </nav>
         @await Component.InvokeAsync("Begroeting")
@@ -40,7 +55,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2026 - KlantenDienstWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2026 - Pluraria - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
