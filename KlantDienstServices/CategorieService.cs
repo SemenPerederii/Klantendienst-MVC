@@ -34,5 +34,9 @@ namespace KlantenDienstServices
             return lookup[null].ToList();
         }
 
+        public Task<Categorie?> GetCategorieAsync(int id)
+        {
+            return _repositoryCategorie.GetCategorieAsync(id);
+        }
     }
 }

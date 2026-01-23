@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace KlantenDienstData.Repositories
 {
-    public interface ICategorieRepository
+    public interface ILeverancierRepository
     {
-        Task<List<Categorie>> GetAll();
-        Task<Categorie?> GetCategorieAsync(int id);
+        Task<Leverancier?> GetLeverancierAsync(int id);
+
     }
 }

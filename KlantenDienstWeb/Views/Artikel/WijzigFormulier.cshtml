@@ -1,0 +1,126 @@
+﻿@model ArtikelToevoegViewModel
+@{
+    ViewData["Title"] = "Artikel Wijzigen";
+}
+<div class="d-flex align-items-center position-relative m-3">
+    <h1 class="position-absolute start-50 translate-middle-x">
+        Artikel Wijzigen
+    </h1>
+    <p class="ms-auto mb-0">
+        EAN: @Model.Artikel.EAN
+    </p>
+</div>
+<form asp-action="Wijzig" class="form-control container" method="post" novalidate>
+    <input asp-for="Artikel.EAN" class="form-control" hidden />
+    <input asp-for="Artikel.ArtikelId" hidden/>
+    <div class="d-grid" style="grid-template-columns: 2fr 1fr; grid-template-rows: auto auto;">
+        <div style="grid-row: span 2;">
+            <div class="row">
+                <div class="form-group col-sm">
+                    <label asp-for="Artikel.Naam"></label>
+                    <span asp-validation-for="Artikel.Naam" class="text-danger">*</span>
+                    <input required asp-for="Artikel.Naam" class="form-control" />
+                </div>
+                <div class="form-group col-sm">
+                    <label asp-for="Artikel.Beschrijving"></label>
+                    <span asp-validation-for="Artikel.Beschrijving" class="text-danger">*</span>
+                    <input required asp-for="Artikel.Beschrijving" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm">
+                    <label asp-for="Artikel.Prijs"></label>
+                    <span asp-validation-for="Artikel.Prijs" class="text-danger"></span>
+                    <input asp-for="Artikel.Prijs" class="form-control" type="number" step=".01" />
+                </div>
+                <div class="form-group col-sm">
+                    <label asp-for="Artikel.GewichtInGram"></label>
+                    <span asp-validation-for="Artikel.GewichtInGram" class="text-danger"></span>
+                    <input asp-for="Artikel.GewichtInGram" class="form-control" />
+                </div>
+                <div class="form-group col-sm">
+                    <label asp-for="Artikel.Levertijd"></label>
+                    <span asp-validation-for="Artikel.Levertijd" class="text-danger"></span>
+                    <input asp-for="Artikel.Levertijd" class="form-control" value="1" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm">
+                    <label asp-for="Artikel.Bestelpeil"></label>
+                    <span asp-validation-for="Artikel.Bestelpeil" class="text-danger"></span>
+                    <input asp-for="Artikel.Bestelpeil" class="form-control" />
+                </div>
+                <div class="form-group col-sm">
+                    <label asp-for="Artikel.MaxAantalInMagazijnPLaats"></label>
+                    <span asp-validation-for="Artikel.MaxAantalInMagazijnPLaats" class="text-danger"></span>
+                    <input asp-for="Artikel.MaxAantalInMagazijnPLaats" class="form-control" />
+                </div>
+                <div class="form-group col-sm">
+                    <label asp-for="Artikel.LeveranciersId"></label>
+                    <span asp-validation-for="Artikel.LeveranciersId" class="text-danger"></span>
+                    <input asp-for="Artikel.LeveranciersId" class="form-control" value="1" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm">
+                    <label asp-for="Artikel.MinimumVoorraad"></label>
+                    <span asp-validation-for="Artikel.MinimumVoorraad" class="text-danger"></span>
+                    <input asp-for="Artikel.MinimumVoorraad" value="10" class="form-control" />
+                </div>
+                <div class="form-group col-sm">
+                    <label asp-for="Artikel.MaximumVoorraad"></label>
+                    <span asp-validation-for="Artikel.MaximumVoorraad" class="text-danger"></span>
+                    <input asp-for="Artikel.MaximumVoorraad" value="100" class="form-control" />
+                </div>
+
+                <div class="form-group col-sm">
+                    <label asp-for="Artikel.Voorraad"></label>
+                    <span asp-validation-for="Artikel.Voorraad" class="text-danger"></span>
+                    <input asp-for="Artikel.Voorraad" value="10" class="form-control" />
+                </div>
+            </div>
+
+        </div>
+        <div style="grid-row:span 1;" class="text-center ms-4">
+            <div class="dropdown">
+                <label asp-for="Categorieën"></label>
+                <div class="form-group">
+
+                    <button class="btn btn-primary dropdown-toggle"
+                            data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside">
+                        Selecteer Categorieën
+                    </button>
+
+                    <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto;">
+
+                        @for (int i = 0; i < Model.Categorieën.Count; i++)
+                        {
+                            <li>
+                                <label class="dropdown-item d-flex align-items-center gap-2">
+
+                                    <input type="hidden" asp-for="Categorieën[i].Id" />
+                                    <input type="checkbox" class="form-check-input m-0" asp-for="Categorieën[i].Gekozen" />
+                                    <input type="hidden" asp-for="Categorieën[i].Naam" />
+                                    @Model.Categorieën[i].Naam
+                                </label>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="form-group col-sm">
+            <button type="submit" value="Wijzigen" class="btn btn-primary">Wijzigen</button>
+        </div>
+    </div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

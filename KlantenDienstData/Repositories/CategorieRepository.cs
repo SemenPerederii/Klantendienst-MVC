@@ -21,5 +21,10 @@ namespace KlantenDienstData.Repositories
             return await _context.Categorieen
                 .Include(c => c.InversehoofdCategorie).ToListAsync();
         }
+
+        public async Task<Categorie?> GetCategorieAsync(int id)
+        {
+            return await _context.Categorieen.FindAsync(id);
+        }
     }
 }

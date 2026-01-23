@@ -9,6 +9,9 @@ namespace KlantenDienstServices
 {
     public interface ICategorieService
     {
+        Task<List<Categorie>> GetAllCategorieAsync();
+        List<Categorie> BuildTree(List<Categorie> allCategories);
+        Task<Categorie?> GetCategorieAsync(int id);
         Task<IEnumerable<Categorie>> GetAllCategorieAsync();
         IEnumerable<Categorie> BuildTree(IEnumerable<Categorie> allCategories);
     }

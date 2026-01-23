@@ -12,5 +12,8 @@ namespace KlantenDienstData.Repositories
     {
        Task<List<Artikel>> GetAllArtikelenAsync();
         IQueryable<Artikel> GetArtikelQuery();
+       Task<bool> VoegArtikelToeAsync(Artikel artikel);
+        Task<bool> WijzigArtikelAsync(int artikelId, Artikel niewArtikel);
+        Task<Artikel?> GetArtikelAsync(int id);
     }
 }

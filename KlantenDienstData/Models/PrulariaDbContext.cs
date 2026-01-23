@@ -128,7 +128,7 @@ public partial class PrulariaDbContext : DbContext
             entity.Property(e => e.Naam).HasMaxLength(45);
             entity.Property(e => e.Prijs).HasPrecision(18, 5);
 
-            entity.HasOne(d => d.Leveranciers).WithMany(p => p.Artikelen)
+            entity.HasOne(d => d.Leverancier).WithMany(p => p.Artikelen)
                 .HasForeignKey(d => d.LeveranciersId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Artikelen_Leveranciers");

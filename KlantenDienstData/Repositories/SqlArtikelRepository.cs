@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,6 +25,79 @@ namespace KlantenDienstData.Repositories
             .Include(a => a.Inkomendeleveringslijnen)
             .Include(a => a.Magazijnplaatsen)
             .ToListAsync();
+
+        public async Task<Artikel?> GetArtikelAsync(int id)
+        {
+            //return await _context.Artikelen.FindAsync(id);
+            return await _context.Artikelen.Include(artikel => artikel.Categorieën).Where(artikel => artikel.ArtikelId == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> VoegArtikelToeAsync(Artikel artikel)
+        {
+            await _context.Artikelen.AddAsync(artikel);
+            await _context.SaveChangesAsync();
+            return await _context.Artikelen.ContainsAsync(artikel);
+        }
+
+        public async Task<bool> WijzigArtikelAsync(int artikelId, Artikel nieuwArtikel)
+        {
+            Artikel? oudArtikel = await _context.Artikelen.Where(artikel => artikel.ArtikelId == artikelId).Include(artikel=>artikel.Categorieën).FirstOrDefaultAsync();
+            if (oudArtikel == null)
+                return false;
+            if (oudArtikel.Equals(nieuwArtikel))
+                return false;
+
+            
+
+            //pas categorieën aan
+            if (nieuwArtikel.Categorieën != null)
+            {
+                var gewildeIds = nieuwArtikel.Categorieën
+                    .Select(c => c.CategorieId)
+                    .Where(id => id != 0)
+                    .ToList();
+
+                var oudeCategorieën = oudArtikel.Categorieën.ToList();
+
+                //verwijder niet meer gewilde categorieën
+                foreach (var teVerwijderen in oudeCategorieën
+                    .Where(
+                    categorie => 
+                    !gewildeIds.Contains(categorie.CategorieId)))
+                    oudArtikel.Categorieën.Remove(teVerwijderen);
+
+                //toe tevoegen categorien
+                var momenteleIds = oudeCategorieën.Select(categorie => categorie.CategorieId);
+                var nogToeTeVoegenIds = gewildeIds.Except(momenteleIds);
+
+                if (nogToeTeVoegenIds.Any())
+                {
+                    var toeTeVoegenCategorieën = 
+                        await _context.Set<Categorie>()
+                        .Where(categorie => 
+                        nogToeTeVoegenIds.Contains(categorie.CategorieId))
+                        .ToListAsync();
+
+                    foreach (var categorie in toeTeVoegenCategorieën)
+                    {
+                        //geen duplicaten
+                        if (!oudArtikel.Categorieën.Any(c => c.CategorieId == categorie.CategorieId))
+                            oudArtikel.Categorieën.Add(categorie);
+                    }
+
+                }
+            }
+            else
+            {
+                oudArtikel.Categorieën.Clear();
+            }
+
+            //toepassen
+            _context.Entry(oudArtikel).CurrentValues.SetValues(nieuwArtikel);
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
         public IQueryable<Artikel> GetArtikelQuery()
         {
