@@ -187,7 +187,7 @@ namespace KlantenDienstWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> ZetArtikelInactief(int id)
         {
-            var artikel = await _artikelService.GetArtikelByIdAsync(id);
+            var artikel = await _artikelService.GetArtikelAsync(id);
             if (!_artikelService.CheckStatusActief(artikel))
             {
                 return RedirectToAction("Index");

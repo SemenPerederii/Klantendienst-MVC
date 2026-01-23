@@ -11,7 +11,6 @@ namespace KlantenDienstServices
     {
         bool CheckStatusActief(Artikel artikel);
         Task<List<Artikel>> GetAllArtikelenAsync();
-        Task<Artikel> GetArtikelByIdAsync(int id);
         Task<List<Artikel>> ZoekArtikelenOpFilterAsync(ArtikelFilterDto filters);
         Task<bool> VoegArtikelToeAsync(Artikel artikel);
         Task<bool> WijzigArtikelAsync(int artikelId, Artikel nieuwArtikel);

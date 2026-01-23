@@ -36,7 +36,7 @@ namespace KlantenDienstServices
         }
 
         public async Task<Artikel> GetArtikelByIdAsync(int id) =>
-            await _artikelRepository.GetArtikelByIdAsync(id);
+            await _artikelRepository.GetArtikelAsync(id);
 
         public async Task<List<Artikel>> ZoekArtikelenOpFilterAsync(ArtikelFilterDto filters)
         {
