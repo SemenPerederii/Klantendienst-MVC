@@ -8,26 +8,38 @@ namespace KlantenDienstWeb.Controllers
 {
     public class ArtikelController : Controller
     {
-        private readonly ArtikelService _artikelService;
-        private readonly LeverancierService _leverancierService;
+        private readonly IArtikelService _artikelService;
         private readonly ICategorieService _categorieService;
-        public ArtikelController(ArtikelService artikelService, LeverancierService leverancierService, ICategorieService categorieService)
+        private readonly LeverancierService _leverancierService;
+        public ArtikelController(IArtikelService artikelService, ICategorieService categorieService, LeverancierService leverancierService)
         {
             _artikelService = artikelService;
             _leverancierService = leverancierService;
             _categorieService = categorieService;
+            _leverancierService = leverancierService;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var artikelVM = new ArtikelViewModel();
             var alleCategorieën = await _categorieService.GetAllCategorieAsync();
+            var artikelen = await _artikelService.GetAllArtikelenAsync();
+            var alleActieveArtikelen = new List<Artikel>();
 
-            var artikelVM = new ArtikelViewModel()
+            foreach (var artikel in artikelen)
             {
-                Artikelen = await _artikelService.GetAllArtikelenAsync(),
-                Categorieën = alleCategorieën.Where(c => c.HoofdCategorieId == null).ToList(),
-                GeselecteerdeCategorieIds = new List<int>()
-            };
+                if (_artikelService.CheckStatusActief(artikel))
+                {
+                    alleActieveArtikelen.Add(artikel);
+                }
+            }
+
+            artikelVM.Artikelen = artikelen;
+            artikelVM.Categorieën = alleCategorieën.Where(c => c.HoofdCategorieId == null).ToList();
+            artikelVM.GeselecteerdeCategorieIds = new List<int>();
+            artikelVM.ActieveArtikelen = alleActieveArtikelen;
+
+
             return View(artikelVM);
         }
         [HttpGet]
@@ -148,6 +160,7 @@ namespace KlantenDienstWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ZoekenOpFilterAsync(ArtikelViewModel vm)
         {
             vm.GeselecteerdeCategorieIds ??= new List<int>();
@@ -165,11 +178,26 @@ namespace KlantenDienstWeb.Controllers
 
             vm.Artikelen = await _artikelService.ZoekArtikelenOpFilterAsync(filter);
 
-          
+
             var alleCats = await _categorieService.GetAllCategorieAsync();
             vm.Categorieën = alleCats.Where(c => c.HoofdCategorieId == null).ToList();
 
             return View("Index", vm);
         }
+        [HttpGet]
+        public async Task<IActionResult> ZetArtikelInactief(int id)
+        {
+            var artikel = await _artikelService.GetArtikelByIdAsync(id);
+            if (!_artikelService.CheckStatusActief(artikel))
+            {
+                return RedirectToAction("Index");
+            }
+            var vm = new ArtikelViewModel
+            {
+                ArtikelVoorDeactivatie = artikel
+            };
+            return View(vm);
+        }
+
     }
 }
