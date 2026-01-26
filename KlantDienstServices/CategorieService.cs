@@ -99,6 +99,7 @@ namespace KlantenDienstServices
 
                 categorie.HoofdCategorieId = newParentId;
             }
+        }
 
         public async Task<IEnumerable<Categorie>> GetHoofdcategorieenAsync()
         {
@@ -135,7 +136,6 @@ namespace KlantenDienstServices
             if (nieuweSubcategorie == null)
                 throw new ArgumentNullException(nameof(nieuweSubcategorie));
             await _repositoryCategorie.AddSubcategorieAsync(nieuweSubcategorie, hoofdCategorieId, subCategorieIds);
-        }
             await _repositoryCategorie.SaveChangesAsync();
         }
         public Task<Categorie?> GetCategorieAsync(int id)
