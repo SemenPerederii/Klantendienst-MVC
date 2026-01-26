@@ -16,11 +16,23 @@
 
     <div class="mb-3">
         <label>Verplaatsen naar categorie</label>
-        <select class="form-control" asp-for="SelectedHoofdCategorieId"
-                asp-items="Model.MogelijkeCategorieen"
-                disabled="@(Model.HoofdCategorieId.HasValue)">
-            <option value="">-- Categorie --</option>
-        </select>
+        @if (Model.HoofdCategorieId.HasValue || Model.InversehoofdCategorie.Any())
+        {
+            <select class="form-control"
+                    asp-for="SelectedHoofdCategorieId"
+                    asp-items="Model.MogelijkeCategorieen"
+                    disabled>
+                <option value="">-- Categorie --</option>
+            </select>
+        }
+        else
+        {
+            <select class="form-control"
+                    asp-for="SelectedHoofdCategorieId"
+                    asp-items="Model.MogelijkeCategorieen">
+                <option value="">-- Categorie --</option>
+            </select>
+        }
         <span asp-validation-for="SelectedHoofdCategorieId" class="text-danger"></span>
     </div>
 

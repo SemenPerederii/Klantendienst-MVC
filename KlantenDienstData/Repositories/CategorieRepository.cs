@@ -32,7 +32,10 @@ namespace KlantenDienstData.Repositories
 
         public async Task<Categorie> GetByIdAsync(int id)
         {
-            return await _context.Categorieen.FirstOrDefaultAsync(c => c.CategorieId == id);
+            return await _context.Categorieen
+                .Include(c => c.InversehoofdCategorie)
+                .Include(c => c.ArtikelCategorieen)
+                .FirstOrDefaultAsync(c => c.CategorieId == id);
         }
 
         public async Task SaveChangesAsync()

@@ -61,7 +61,8 @@ namespace KlantenDienstWeb.Controllers
                     Value = c.CategorieId.ToString(),
                     Text = c.Naam
                 }).ToList(),
-                HoofdCategorieId = categorie.HoofdCategorieId
+                HoofdCategorieId = categorie.HoofdCategorieId,
+                InversehoofdCategorie = categorie.InversehoofdCategorie
             };
 
             return View(vm);
