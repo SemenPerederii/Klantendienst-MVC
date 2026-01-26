@@ -1,0 +1,44 @@
+﻿@using KlantenDienstWeb.Models
+@model NieuweSubcategorieVM
+
+<h1>Subcategorie Toevoegen</h1>
+<br />
+
+<form asp-action="ToevoegenSubcategorie" asp-controller="Categorie" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group mb-3">
+        <label asp-for="Categorie.Naam"></label>
+        <input asp-for="Categorie.Naam" class="form-control" />
+        <span asp-validation-for="Categorie.Naam" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="HoofdCategorieId" />
+    <input asp-for="Hoofdcategorie.Naam" class="form-control" readonly />
+
+    <div class="form-group mb-3">
+        <label>Subcategorieën</label>
+
+        <div class="row">
+
+            @foreach (var sub in Model.Subcategorieen.SubCategorieen)
+            {
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="form-check">
+
+                        <input class="form-check-input"
+                               type="checkbox"
+                               name="Subcategorieen.GeselecteerdeSubCategorieIds[]"
+                               value="@sub.Value"
+                               @(Model.Subcategorieen.GeselecteerdeSubCategorieIds?.Contains(int.Parse(sub.Value)) == true ? "checked" : "") />
+
+                        <label class="form-check-label">
+                            @sub.Text
+                        </label>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Toevoegen</button>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+</form>

@@ -1,20 +1,17 @@
 ﻿using KlantenDienstData.Models;
 using KlantenDienstData.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KlantenDienstServices
 {
     public class CategorieService : ICategorieService
     {
         private readonly ICategorieRepository _repositoryCategorie;
+        private readonly CategorieRepository _repository;
 
-        public CategorieService(ICategorieRepository repository)
+        public CategorieService(ICategorieRepository repository, CategorieRepository repo)
         {
             _repositoryCategorie = repository;
+            _repository = repo;
         }
 
         public async Task DeleteCategorieAsync(int id)
@@ -103,6 +100,42 @@ namespace KlantenDienstServices
                 categorie.HoofdCategorieId = newParentId;
             }
 
+        public async Task<IEnumerable<Categorie>> GetHoofdcategorieenAsync()
+        {
+            return await _repositoryCategorie.HoofdcategorieAsync();
+        }
+
+        public async Task<Categorie?> GetCategorieByIdAsync(int id)
+        {
+            return await _repositoryCategorie.GetByIdAsync(id);
+        }
+        public async Task<IEnumerable<Categorie>> GetSubcategorieenAsync(int hoofdCategorieId)
+        {
+            return await _repositoryCategorie.SubcategorieenAsync(hoofdCategorieId);
+        }
+
+        public async Task<bool> CategorieBestaatAlAsync(string naam)
+        {
+            if (string.IsNullOrWhiteSpace(naam))
+                return false;
+            return await _repository.CategorieBestaatAlAsync(naam);
+        }
+
+        public async Task MaakHoofdcategorieAsync(Categorie nieuweCategorie, IEnumerable<int>? subCategorieIds)
+        {
+            if (nieuweCategorie == null)
+                throw new ArgumentNullException(nameof(nieuweCategorie));
+
+            await _repositoryCategorie.AddCategorieAsync(nieuweCategorie, subCategorieIds);
+            
+        }
+
+        public async Task MaakSubcategorieAsync(int hoofdCategorieId, Categorie nieuweSubcategorie, IEnumerable<int>? subCategorieIds)
+        {
+            if (nieuweSubcategorie == null)
+                throw new ArgumentNullException(nameof(nieuweSubcategorie));
+            await _repositoryCategorie.AddSubcategorieAsync(nieuweSubcategorie, hoofdCategorieId, subCategorieIds);
+        }
             await _repositoryCategorie.SaveChangesAsync();
         }
         public Task<Categorie?> GetCategorieAsync(int id)

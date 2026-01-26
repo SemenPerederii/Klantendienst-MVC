@@ -11,7 +11,12 @@ namespace KlantenDienstServices
     {
         Task<Categorie?> GetCategorieAsync(int id);
         Task<IEnumerable<Categorie>> GetAllCategorieAsync();
+        Task<Categorie?> GetCategorieByIdAsync(int id);
         IEnumerable<Categorie> BuildTree(IEnumerable<Categorie> allCategories);
+        Task<IEnumerable<Categorie>> GetHoofdcategorieenAsync();
+        Task<IEnumerable<Categorie>> GetSubcategorieenAsync(int hoofdCategorieId);
+        Task MaakHoofdcategorieAsync(Categorie nieuweCategorie, IEnumerable<int> subCategorieIds);
+        Task MaakSubcategorieAsync(int hoofdCategorieId, Categorie nieuweSubcategorie, IEnumerable<int>? subCategorieIds);
         Task DeleteCategorieAsync(int id);
         Task<IEnumerable<Categorie>> GetMogelijkeCategorieenAsync(int categorieId);
         Task AddAsSubcategorieAsync(int categorieId, string naam, int? newParentId);

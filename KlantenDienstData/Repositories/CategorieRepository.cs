@@ -55,5 +55,97 @@ namespace KlantenDienstData.Repositories
             _context.Categorieen.Remove(categorie);
             await Task.CompletedTask;
         }
+        public async Task<Categorie?> GetByIdAsync(int id)
+        {
+            return await _context.Categorieen
+                .FirstOrDefaultAsync(c => c.CategorieId == id);
+        }
+
+        public async Task<List<Categorie>> GetByIdsAsync(IEnumerable<int>? ids)
+        {
+            if (ids == null || !ids.Any())
+                return new List<Categorie>();
+
+            return await _context.Categorieen
+                .Where(c => ids.Contains(c.CategorieId))
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Categorie>> HoofdcategorieAsync()
+        {
+            return await _context.Categorieen
+                        .Where(c => c.HoofdCategorieId == null)
+                        .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Categorie>> SubcategorieenAsync(int hoofdCategorieId)
+        {
+            return await _context.Categorieen
+                        .Where(c => c.HoofdCategorieId == hoofdCategorieId)
+                        .ToListAsync();
+        }
+
+        public async Task<Categorie?> AddCategorieAsync(Categorie categorie, IEnumerable<int>? subCategorieIds)
+        {
+            if (categorie == null)
+                throw new ArgumentNullException(nameof(categorie));
+
+            _context.Categorieen.Add(categorie);
+            await _context.SaveChangesAsync();
+
+            if (subCategorieIds != null && subCategorieIds.Any())
+            {
+                var subCategorieen = await GetByIdsAsync(subCategorieIds);
+
+                foreach (var sub in subCategorieen)
+                {
+                    sub.HoofdCategorieId = categorie.CategorieId;
+                }
+                await _context.SaveChangesAsync();
+            }
+            
+
+            return categorie;
+        }
+
+        public async Task<Categorie?> AddSubcategorieAsync(Categorie categorie, int hoofdcategorieId, IEnumerable<int>? subCategorieIds)
+        {
+            if (categorie == null)
+                throw new ArgumentNullException(nameof(categorie));
+
+            if (hoofdcategorieId <= 0)
+                throw new InvalidOperationException("Hoofdcategorie is verplicht.");
+
+            var parentExists = await _context.Categorieen
+                .AnyAsync(c => c.CategorieId == hoofdcategorieId);
+
+            if (!parentExists)
+                throw new InvalidOperationException("Hoofdcategorie bestaat niet.");
+
+            categorie.HoofdCategorieId = hoofdcategorieId;
+
+            _context.Categorieen.Add(categorie);
+
+            await _context.SaveChangesAsync();
+
+            if (subCategorieIds?.Any() == true)
+            {
+                var subCategorieen = await GetByIdsAsync(subCategorieIds);
+
+                foreach (var sub in subCategorieen)
+                {
+                    sub.HoofdCategorieId = categorie.CategorieId;
+                }
+                await _context.SaveChangesAsync();
+            }
+            return categorie;     
+        }
+
+        public async Task<bool> CategorieBestaatAlAsync(string naam)
+        {
+            if (string.IsNullOrWhiteSpace(naam))
+                return false;
+            return await _context.Categorieen.AnyAsync(c => c.Naam.ToLower() == naam.ToLower());
+        }
     }
 }
