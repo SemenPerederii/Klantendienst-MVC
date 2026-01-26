@@ -60,7 +60,8 @@ namespace KlantenDienstWeb.Controllers
                 {
                     Value = c.CategorieId.ToString(),
                     Text = c.Naam
-                }).ToList()
+                }).ToList(),
+                HoofdCategorieId = categorie.HoofdCategorieId
             };
 
             return View(vm);

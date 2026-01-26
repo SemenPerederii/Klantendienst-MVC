@@ -11,5 +11,7 @@ namespace KlantenDienstWeb.Models
         public string? Naam { get; set; }
         public int? SelectedHoofdCategorieId { get; set; }
         public List<SelectListItem> MogelijkeCategorieen { get; set; } = new();
+        public int? HoofdCategorieId { get; set; }
+
     }
 }
