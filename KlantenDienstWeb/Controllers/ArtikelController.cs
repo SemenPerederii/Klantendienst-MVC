@@ -170,6 +170,7 @@ namespace KlantenDienstWeb.Controllers
                 Id = vm.Id,
                 Ean = vm.EAN,
                 Naam = vm.Naam,
+                Beschrijving = vm.Beschrijving,
                 MinPrijs = vm.MinPrijs,
                 MaxPrijs = vm.MaxPrijs,
                 EnkelInVoorraad = vm.InVoorraad,
@@ -197,6 +198,10 @@ namespace KlantenDienstWeb.Controllers
                 ArtikelVoorDeactivatie = artikel
             };
             return View(vm);
+        }
+        public IActionResult ResetFilters()
+        {
+            return View("Index");
         }
 
     }
