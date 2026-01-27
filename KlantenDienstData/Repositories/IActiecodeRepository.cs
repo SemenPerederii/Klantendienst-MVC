@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KlantenDienstData.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,7 @@ namespace KlantenDienstData.Repositories
 {
     public interface IActiecodeRepository
     {
+        Task<List<Actiecode>> GetAllAsync();
+        Task<Actiecode?> GetByIdAsync(int id);
     }
 }

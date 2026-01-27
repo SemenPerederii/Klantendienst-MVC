@@ -1,4 +1,5 @@
-﻿using KlantenDienstData.Repositories;
+﻿using KlantenDienstData.Models;
+using KlantenDienstData.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,15 @@ namespace KlantenDienstServices
         {
             _repositoryActiecode = repository;
             _repository = repo;
+        }
+
+        public async Task<List<Actiecode>> GetAllActiecodesAsync()
+        {
+            return await _repositoryActiecode.GetAllAsync();
+        }
+        public async Task<Actiecode?> GetActiecodeByIdAsync(int id)
+        {
+            return await _repositoryActiecode.GetByIdAsync(id);
         }
     }
 }
