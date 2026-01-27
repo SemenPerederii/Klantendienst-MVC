@@ -5,7 +5,7 @@
 <br />
 
 <form asp-action="ToevoegenSubcategorie" asp-controller="Categorie" method="post">
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
     <div class="form-group mb-3">
         <label asp-for="Categorie.Naam"></label>
         <input asp-for="Categorie.Naam" class="form-control" />
@@ -14,31 +14,35 @@
 
     <input type="hidden" asp-for="HoofdCategorieId" />
     <input asp-for="Hoofdcategorie.Naam" class="form-control" readonly />
+    <br />
+    @if (Model.Subcategorieen?.SubCategorieen != null && Model.Subcategorieen.SubCategorieen.Any())
+    {
+        <div class="form-group mb-3">
+            <label>Subcategorieën</label>
 
-    <div class="form-group mb-3">
-        <label>Subcategorieën</label>
+            <div class="row">
 
-        <div class="row">
+                @foreach (var sub in Model.Subcategorieen.SubCategorieen)
+                {
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="form-check">
 
-            @foreach (var sub in Model.Subcategorieen.SubCategorieen)
-            {
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="Subcategorieen.GeselecteerdeSubCategorieIds[]"
+                                   value="@sub.Value"
+                                   @(Model.Subcategorieen.GeselecteerdeSubCategorieIds?.Contains(int.Parse(sub.Value)) == true ? "checked" : "") />
 
-                        <input class="form-check-input"
-                               type="checkbox"
-                               name="Subcategorieen.GeselecteerdeSubCategorieIds[]"
-                               value="@sub.Value"
-                               @(Model.Subcategorieen.GeselecteerdeSubCategorieIds?.Contains(int.Parse(sub.Value)) == true ? "checked" : "") />
-
-                        <label class="form-check-label">
-                            @sub.Text
-                        </label>
+                            <label class="form-check-label">
+                                @sub.Text
+                            </label>
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
-    </div>
+    }
+    <br />
     <button type="submit" class="btn btn-primary">Toevoegen</button>
     <a asp-action="Index" asp-controller="Categorie" class="btn btn-secondary">Annuleren</a>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
