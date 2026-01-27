@@ -5,41 +5,55 @@
 
 <h1 class="d-flex justify-content-center">Artikelen van categorie "@ViewBag.Naam"</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>EAN-Code</th>
-            <th>Naam</th>
-            <th>Beschrijving</th>
-            <th>Prijs</th>
-            <th>In voorraad</th>
-            <th>Categorie(ën)</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var artikel in Model)
-        {
+@if (Model != null && Model.Any())
+{
+    <div class="d-flex gap-2 mb-4">
+        <a class="btn btn-primary" asp-controller="Categorie" asp-action="Index">Categorieën bekijken</a>
+        <a href="javascript:history.back()" class="btn btn-secondary">Terug</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@artikel.EAN</td>
-                <td>@artikel.Naam</td>
-                <td>@artikel.Beschrijving</td>
-                <td>@artikel.Prijs.ToString("€ #,##0.00")</td>
-                <td>@artikel.Voorraad</td>
-                <td>
-                    <ul>
-                        @foreach (var categorie in artikel.Categorieën)
-                        {
-                            <li>
-                                <a asp-controller="Artikel"
-                                   asp-action="ArtikelVanCategorie"
-                                   asp-route-categorieId="@categorie.CategorieId">@categorie.Naam</a>
-                            </li>
-                        }
-                    </ul>
-                </td>
-                <td><a class="btn btn-outline-dark" asp-action="WijzigFormulier" asp-route-id="@artikel.ArtikelId">Wijzig</a></td>
+                <th>EAN-Code</th>
+                <th>Naam</th>
+                <th>Beschrijving</th>
+                <th>Prijs</th>
+                <th>In voorraad</th>
+                <th>Categorie(ën)</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var artikel in Model)
+            {
+                <tr>
+                    <td>@artikel.EAN</td>
+                    <td>@artikel.Naam</td>
+                    <td>@artikel.Beschrijving</td>
+                    <td>@artikel.Prijs.ToString("€ #,##0.00")</td>
+                    <td>@artikel.Voorraad</td>
+                    <td>
+                        <ul>
+                            @foreach (var categorie in artikel.Categorieën)
+                            {
+                                <li>
+                                    <a asp-controller="Artikel"
+                                       asp-action="ArtikelVanCategorie"
+                                       asp-route-categorieId="@categorie.CategorieId">@categorie.Naam</a>
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                    <td><a class="btn btn-outline-dark" asp-action="WijzigFormulier" asp-route-id="@artikel.ArtikelId">Wijzig</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="d-flex flex-column justify-content-center align-items-center mt-4">
+        <p>In deze categorie zijn er geen artikelen</p>
+        <a href="javascript:history.back()" class="btn btn-secondary">Terug</a>
+    </div>  
+}
 

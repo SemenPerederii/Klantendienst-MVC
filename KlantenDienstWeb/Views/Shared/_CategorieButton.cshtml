@@ -4,7 +4,7 @@
 <div class="cs-categorieenBlock">
 
     <div class="cs-categorieBlock">
-        <a asp-action="ArtikelsPerCategorie" asp-controller="Artikel" asp-route-id="@Model.CategorieId" class="btn btn-sm cs-categorieNaam">@Model.Naam</a>
+        <a asp-action="ArtikelVanCategorie" asp-controller="Artikel" asp-route-categorieId="@Model.CategorieId" class="btn btn-sm cs-categorieNaam">@Model.Naam</a>
 
         <div class="cs-editDeleteAddBtns">
             @if (Model.InversehoofdCategorie.Any())
