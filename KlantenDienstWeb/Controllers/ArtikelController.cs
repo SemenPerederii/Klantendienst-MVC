@@ -2,6 +2,7 @@
 using KlantenDienstServices;
 using KlantenDienstWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 
 namespace KlantenDienstWeb.Controllers
 {
@@ -18,13 +19,13 @@ namespace KlantenDienstWeb.Controllers
             _leverancierService = leverancierService;
         }
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ArtikelSorteerOpties sorteerOpties = ArtikelSorteerOpties.Naam,
+            SorteerRichting sorteerRichting = SorteerRichting.Asc)
         {
             var artikelVM = new ArtikelViewModel();
             var alleCategorieën = await _categorieService.GetAllCategorieAsync();
-            var artikelen = await _artikelService.GetAllArtikelenAsync();
+            var artikelen = await _artikelService.GetAllArtikelenAsync(sorteerOpties, sorteerRichting);
             var alleActieveArtikelen = new List<Artikel>();
-
             foreach (var artikel in artikelen)
             {
                 if (_artikelService.CheckStatusActief(artikel))
@@ -32,76 +33,77 @@ namespace KlantenDienstWeb.Controllers
                     alleActieveArtikelen.Add(artikel);
                 }
             }
-
             artikelVM.Artikelen = artikelen;
-            artikelVM.Categorieën = alleCategorieën.Where(c => c.HoofdCategorieId == null).ToList();
+            artikelVM.Categorieën = alleCategorieën
+                .Where(c => c.HoofdCategorieId == null)
+                .ToList();
             artikelVM.GeselecteerdeCategorieIds = new List<int>();
             artikelVM.ActieveArtikelen = alleActieveArtikelen;
-
-
+            artikelVM.SorteerOpties = sorteerOpties;
+            artikelVM.SorteerRichting = sorteerRichting;
             return View(artikelVM);
         }
         [HttpGet]
-        public async Task<IActionResult> ToevoegFormulier()
-        {
-            ArtikelToevoegViewModel artikelToevoegViewModel = new ArtikelToevoegViewModel();
-            var categorieën = await _categorieService.GetAllCategorieAsync();
-            artikelToevoegViewModel.Categorieën = new List<SimpeleCategorie>();
-            foreach (var categorie in categorieën)
-            {
-                artikelToevoegViewModel.Categorieën.Add(new SimpeleCategorie
-                {
-                    Id = categorie.CategorieId,
-                    Naam = categorie.Naam,
-                    Gekozen = false
-                });
-            }
-            //EAN ZETTEN
-            List<Artikel> artikelen = await _artikelService.GetAllArtikelenAsync();
+        //public async Task<IActionResult> ToevoegFormulier()
+        //{
+        //    ArtikelToevoegViewModel artikelToevoegViewModel = new ArtikelToevoegViewModel();
+        //    var categorieën = await _categorieService.GetAllCategorieAsync();
+        //    artikelToevoegViewModel.Categorieën = new List<SimpeleCategorie>();
+        //    foreach (var categorie in categorieën)
+        //    {
+        //        artikelToevoegViewModel.Categorieën.Add(new SimpeleCategorie
+        //        {
+        //            Id = categorie.CategorieId,
+        //            Naam = categorie.Naam,
+        //            Gekozen = false
+        //        });
+        //    }
+        //    //EAN ZETTEN
+        //    List<Artikel> artikelen = await _artikelService.GetAllArtikelenAsync();
 
-            var EANstring = artikelen.Last().EAN;
-            long EANNummer;
-            if (long.TryParse(EANstring, out EANNummer))
-            {
-                EANNummer++;
-            }
-            Artikel leegArtikel = new Artikel
-            {
-                EAN = EANNummer.ToString()
-            };
-            artikelToevoegViewModel.Artikel = leegArtikel;
-            return View(artikelToevoegViewModel);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Toevoegen(ArtikelToevoegViewModel artikelToevoegViewModel)
-        {
-            if (artikelToevoegViewModel == null)
-            {
-                return RedirectToAction(nameof(ToevoegFormulier));
-            }
-            //leverancier toekennen
-            Leverancier? leverancier = await _leverancierService.GetLeverancierAsync(artikelToevoegViewModel.Artikel.LeveranciersId);
-            if (leverancier != null)
-                artikelToevoegViewModel.Artikel.Leverancier = leverancier;
+        //    var EANstring = artikelen.Last().EAN;
+        //    long EANNummer;
+        //    if (long.TryParse(EANstring, out EANNummer))
+        //    {
+        //        EANNummer++;
+        //    }
+        //    Artikel leegArtikel = new Artikel
+        //    {
+        //        EAN = EANNummer.ToString()
+        //    };
+        //    artikelToevoegViewModel.Artikel = leegArtikel;
+        //    return View(artikelToevoegViewModel);
+        //}
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Toevoegen(ArtikelToevoegViewModel artikelToevoegViewModel)
+        //{
+        //    if (artikelToevoegViewModel == null)
+        //    {
+        //        return RedirectToAction(nameof(ToevoegFormulier));
+        //    }
+        //    //leverancier toekennen
+        //    Leverancier? leverancier = await _leverancierService.GetLeverancierAsync(artikelToevoegViewModel.Artikel.LeveranciersId);
+        //    if (leverancier != null)
+        //        artikelToevoegViewModel.Artikel.Leverancier = leverancier;
 
-            if (!this.ModelState.IsValid)
-            {
-                return View(nameof(ToevoegFormulier), artikelToevoegViewModel);
-            }
-            foreach (var categorie in artikelToevoegViewModel.Categorieën)
-            {
-                if (categorie.Gekozen == true)
-                {
-                    Categorie? volledgeCategorie = await _categorieService.GetCategorieAsync(categorie.Id);
-                    if (volledgeCategorie != null)
-                        artikelToevoegViewModel.Artikel.Categorieën.Add(volledgeCategorie);
-                }
-            }
-            //toevoegen
-            await _artikelService.VoegArtikelToeAsync(artikelToevoegViewModel.Artikel);
-            return RedirectToAction(nameof(Index));
-        }
+        //    if (!this.ModelState.IsValid)
+        //    {
+        //        return View(nameof(ToevoegFormulier), artikelToevoegViewModel);
+        //    }
+        //    foreach (var categorie in artikelToevoegViewModel.Categorieën)
+        //    {
+        //        if (categorie.Gekozen == true)
+        //        {
+        //            Categorie? volledgeCategorie = await _categorieService.GetCategorieAsync(categorie.Id);
+        //            if (volledgeCategorie != null)
+        //                artikelToevoegViewModel.Artikel.Categorieën.Add(volledgeCategorie);
+        //        }
+        //    }
+        //    //toevoegen
+        //    await _artikelService.VoegArtikelToeAsync(artikelToevoegViewModel.Artikel);
+        //    return RedirectToAction(nameof(Index));
+        //}
         [HttpGet]
         public async Task<IActionResult> WijzigFormulier(int id)
         {

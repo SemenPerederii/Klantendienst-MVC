@@ -96,16 +96,36 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>EAN-Code</th>
-            <th>Naam</th>
-            <th>Beschrijving</th>
-            <th>Prijs</th>
-            <th>In voorraad</th>
+            <th>
+                <a asp-action="Index" asp-route-sorteerOpties="EAN"
+                asp-route-sorteerRichting="@(Model.SorteerOpties == ArtikelSorteerOpties.EAN && Model.SorteerRichting == SorteerRichting.Asc ? "Desc" : "Asc")">EAN
+                @(Model.SorteerOpties == ArtikelSorteerOpties.EAN ? (Model.SorteerRichting == SorteerRichting.Asc ? "▲" : "▼") : "")</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sorteerOpties="Naam"
+                asp-route-sorteerRichting="@(Model.SorteerOpties == ArtikelSorteerOpties.Naam && Model.SorteerRichting == SorteerRichting.Asc ? "Desc" : "Asc")">Naam
+                @(Model.SorteerOpties == ArtikelSorteerOpties.Naam ? (Model.SorteerRichting == SorteerRichting.Asc ? "▲" : "▼") : "")</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sorteerOpties="Beschrijving"
+                asp-route-sorteerRichting="@(Model.SorteerOpties == ArtikelSorteerOpties.Beschrijving && Model.SorteerRichting == SorteerRichting.Asc ? "Desc" : "Asc")">Beschrijving
+                @(Model.SorteerOpties == ArtikelSorteerOpties.Beschrijving ? (Model.SorteerRichting == SorteerRichting.Asc ? "▲" : "▼") : "")</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sorteerOpties="Prijs"
+                asp-route-sorteerRichting="@(Model.SorteerOpties == ArtikelSorteerOpties.Prijs && Model.SorteerRichting == SorteerRichting.Asc ? "Desc" : "Asc")">Prijs
+                @(Model.SorteerOpties == ArtikelSorteerOpties.Prijs ? (Model.SorteerRichting == SorteerRichting.Asc ? "▲" : "▼") : "")</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sorteerOpties="Voorraad"
+                asp-route-sorteerRichting="@(Model.SorteerOpties == ArtikelSorteerOpties.Voorraad && Model.SorteerRichting == SorteerRichting.Asc ? "Desc" : "Asc")">In voorraad
+                @(Model.SorteerOpties == ArtikelSorteerOpties.Voorraad ? (Model.SorteerRichting == SorteerRichting.Asc ? "▲" : "▼") : "")</a>
+            </th>
             <th>Categorie(ën)</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var artikel in Model.Artikelen.OrderBy(a => a.Naam))
+        @foreach (var artikel in Model.Artikelen)
         {
             <tr>
                 <td>@artikel.EAN</td>
