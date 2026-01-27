@@ -2,7 +2,6 @@
 using KlantenDienstServices;
 using KlantenDienstWeb.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 
 namespace KlantenDienstWeb.Controllers
 {
