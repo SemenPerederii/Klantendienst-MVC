@@ -25,8 +25,8 @@ namespace KlantenDienstData.Repositories
             .Include(a => a.Magazijnplaatsen)
             .ToListAsync();
 
-        public Task<Artikel> GetArtikelByIdAsync(int id) =>
-            _context.Artikelen
+        public async Task<Artikel> GetArtikelByIdAsync(int id) =>
+           await _context.Artikelen
             .Include(a => a.Categorieën)
             .Include(a => a.Bestellijnen)
             .Include(a => a.Inkomendeleveringslijnen)
@@ -40,5 +40,10 @@ namespace KlantenDienstData.Repositories
                 .Include(a => a.Categorieën); 
         }
 
+        public async Task UpdateArtikelAsync(Artikel artikel)
+        {
+             _context.Artikelen.Update(artikel);
+            await _context.SaveChangesAsync();
+        }
     }
 }
