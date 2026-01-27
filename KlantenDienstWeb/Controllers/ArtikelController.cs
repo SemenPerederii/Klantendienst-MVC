@@ -84,7 +84,7 @@ namespace KlantenDienstWeb.Controllers
             {
                 return NotFound();
             }
-            await _artikelService.DeactiveerArtikelAsync(artikel);
+            await _artikelService.DeactiveerArtikelAsync(artikelId);
             return RedirectToAction("Index");
         }
 

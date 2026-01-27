@@ -30,14 +30,10 @@ namespace KlantenDienstServices
                 
         }
 
-        public async Task DeactiveerArtikelAsync(Artikel artikel)
+        public async Task DeactiveerArtikelAsync(int artikelId)
         {
-           
-            artikel.MinimumVoorraad = 0;
-            artikel.MaximumVoorraad = 0;
-            artikel.Bestelpeil = 0;
-            artikel.AantalBesteldLeverancier = 0;
-            await _artikelRepository.UpdateArtikelAsync(artikel);
+
+            await _artikelRepository.DeactiveerArtikelAsync(artikelId);
         }
 
         public async Task<List<Artikel>> GetAllArtikelenAsync()

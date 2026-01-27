@@ -10,7 +10,7 @@ namespace KlantenDienstServices
     public interface IArtikelService
     {
         bool CheckStatusActief(Artikel artikel);
-        Task DeactiveerArtikelAsync(Artikel artikel);
+        Task DeactiveerArtikelAsync(int artikelId);
         Task<List<Artikel>> GetAllArtikelenAsync();
         Task<Artikel> GetArtikelByIdAsync(int id);
         Task<List<Artikel>> ZoekArtikelenOpFilterAsync(ArtikelFilterDto filters);
