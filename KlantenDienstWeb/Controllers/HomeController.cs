@@ -1,5 +1,6 @@
 using KlantenDienstData.Models;
 using KlantenDienstServices;
+using KlantenDienstServices.DTO_s;
 using KlantenDienstWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -32,13 +33,27 @@ namespace KlantenDienstWeb.Controllers
             }
             try
             {
-                var account = await _accountService.Login(loginViewModel.Emailadres, loginViewModel.Paswoord);
-                if (!IsGeldigAccount(account))
+                var loginInfo = new LogInInfoDTO
                 {
+                    Paswoord = loginViewModel.Paswoord,
+                    Emailadres = loginViewModel.Emailadres
+                };
+                loginInfo.GevondenAccount = await _accountService.Login(loginInfo);
+
+                if (!IsGeldigAccount(loginInfo.GevondenAccount))
+                {
+                    if (loginInfo.ErrorMessage != null)
+                    {
+                        loginViewModel.ErrorMessage = loginInfo.ErrorMessage;
+                    }
+                    else
+                    {
+                       loginViewModel.ErrorMessage = "Onbekende gebruiker, probeer opnieuw";
+                    }
                     return LoginMislukt(loginViewModel);
                 }
-                var personeelslid = await _accountService.GetPersoneelslidById(account!.PersoneelslidAccountId);
-                HttpContext.Session.SetInt32("PersoneelslidId", account.PersoneelslidAccountId);
+                var personeelslid = await _accountService.GetPersoneelslidById(loginInfo.GevondenAccount!.PersoneelslidAccountId);
+                HttpContext.Session.SetInt32("PersoneelslidId", personeelslid.PersoneelslidAccountId);
                 HttpContext.Session.SetString("Voornaam", personeelslid?.Voornaam ?? string.Empty);
                 HttpContext.Session.SetString("Familienaam", personeelslid?.Familienaam ?? string.Empty);
                 return RedirectToAction(nameof(Landingspagina));
@@ -63,7 +78,7 @@ namespace KlantenDienstWeb.Controllers
 
         private IActionResult LoginMislukt(LoginViewModel model)
         {
-            ModelState.AddModelError(string.Empty, "Onbekende gebruiker, probeer opnieuw");
+            ModelState.AddModelError(string.Empty, model.ErrorMessage);
             return View(nameof(Index), model);
         }
 
