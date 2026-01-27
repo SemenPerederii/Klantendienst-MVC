@@ -16,5 +16,7 @@ namespace KlantenDienstWeb.Models
         public List<Categorie> Categorieën { get; set; } = new List<Categorie>();
         public List<Artikel> Artikelen { get; set; } = new List<Artikel>();
         public List<Artikel> ActieveArtikelen { get; set; } = new List<Artikel>();
+        public ArtikelSorteerOpties SorteerOpties { get; set; } = ArtikelSorteerOpties.Naam;
+        public SorteerRichting SorteerRichting { get; set; } = SorteerRichting.Asc;
     }
 }

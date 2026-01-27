@@ -30,9 +30,29 @@ namespace KlantenDienstServices
                 
         }
 
-        public async Task<List<Artikel>> GetAllArtikelenAsync()
+        public async Task<List<Artikel>> GetAllArtikelenAsync(ArtikelSorteerOpties sorteerOpties, SorteerRichting sorteerRichting)
         {
-            return await _artikelRepository.GetAllArtikelenAsync();
+            IQueryable<Artikel> query = _artikelRepository.GetArtikelQuery();
+            query = (sorteerOpties, sorteerRichting) switch
+            {
+                (ArtikelSorteerOpties.EAN, SorteerRichting.Asc) => query.OrderBy(a => a.EAN),
+                (ArtikelSorteerOpties.EAN, SorteerRichting.Desc) => query.OrderByDescending(a => a.EAN),
+
+                (ArtikelSorteerOpties.Naam, SorteerRichting.Asc) => query.OrderBy(a => a.Naam),
+                (ArtikelSorteerOpties.Naam, SorteerRichting.Desc) => query.OrderByDescending(a => a.Naam),
+
+                (ArtikelSorteerOpties.Beschrijving, SorteerRichting.Asc) => query.OrderBy(a => a.Beschrijving),
+                (ArtikelSorteerOpties.Beschrijving, SorteerRichting.Desc) => query.OrderByDescending(a => a.Beschrijving),
+
+                (ArtikelSorteerOpties.Prijs, SorteerRichting.Asc) => query.OrderBy(a => a.Prijs),
+                (ArtikelSorteerOpties.Prijs, SorteerRichting.Desc) => query.OrderByDescending(a => a.Prijs),
+
+                (ArtikelSorteerOpties.Voorraad, SorteerRichting.Asc) => query.OrderBy(a => a.Voorraad),
+                (ArtikelSorteerOpties.Voorraad, SorteerRichting.Desc) => query.OrderByDescending(a => a.Voorraad),
+
+                _ => query.OrderBy(a => a.Naam),
+            };
+            return await query.ToListAsync();
         }
 
         public async Task<Artikel> GetArtikelByIdAsync(int id) =>
