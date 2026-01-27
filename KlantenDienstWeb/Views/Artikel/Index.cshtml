@@ -18,13 +18,15 @@
             </button>
 
             <div class="dropdown-menu p-4" style="min-width: 420px;">
-
+                
                 <!-- ID -->
                 <div class="mb-3">
-                    <label class="form-label">Id</label>
+                    <div class="d-flex justify-content-between align-items-center form-label">
+                        <label class="form-label mb-0">Id</label>
+                        <a asp-action="Index" title="Reset Filters"><img src="~/images/deleteBtn.png" class="cs-btnsImg" alt="Reset Filters"/></a>
+                    </div>
                     <input asp-for="Id" class="form-control" />
                 </div>
-
                 <!-- EAN -->
                 <div class="mb-3">
                     <label class="form-label">EAN</label>
@@ -36,6 +38,13 @@
                     <label class="form-label">Naam</label>
                     <input asp-for="Naam" class="form-control" />
                 </div>
+
+                <!-- Beschrijving -->
+                <div class="mb-3">
+                    <label class="form-label">Beschrijving</label>
+                    <input asp-for="Beschrijving" class="form-control" />
+                </div>
+
 
                 <!-- Prijs -->
                 <div class="row mb-3">

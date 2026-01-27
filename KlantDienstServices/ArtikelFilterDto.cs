@@ -11,6 +11,7 @@ namespace KlantenDienstServices
         public int? Id { get; set; }
         public string? Ean { get; set; }
         public string? Naam { get; set; }
+        public string? Beschrijving { get; set; }
 
         public decimal? MinPrijs { get; set; }
         public decimal? MaxPrijs { get; set; }

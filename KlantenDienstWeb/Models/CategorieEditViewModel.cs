@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using KlantenDienstData.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace KlantenDienstWeb.Models
@@ -11,5 +12,8 @@ namespace KlantenDienstWeb.Models
         public string? Naam { get; set; }
         public int? SelectedHoofdCategorieId { get; set; }
         public List<SelectListItem> MogelijkeCategorieen { get; set; } = new();
+        public int? HoofdCategorieId { get; set; }
+        public virtual ICollection<Categorie> InversehoofdCategorie { get; set; } = new List<Categorie>();
+
     }
 }

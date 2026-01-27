@@ -30,6 +30,14 @@ namespace KlantenDienstData.Repositories
             return await _context.Categorieen.FindAsync(id);
         }
 
+        public async Task<Categorie?> GetByIdAsync(int id)
+        {
+            return await _context.Categorieen
+                .Include(c => c.InversehoofdCategorie)
+                .Include(c => c.ArtikelCategorieen)
+                .FirstOrDefaultAsync(c => c.CategorieId == id);
+        }
+
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
@@ -49,11 +57,6 @@ namespace KlantenDienstData.Repositories
         {
             _context.Categorieen.Remove(categorie);
             await Task.CompletedTask;
-        }
-        public async Task<Categorie?> GetByIdAsync(int id)
-        {
-            return await _context.Categorieen
-                .FirstOrDefaultAsync(c => c.CategorieId == id);
         }
 
         public async Task<List<Categorie>> GetByIdsAsync(IEnumerable<int>? ids)

@@ -93,12 +93,9 @@ namespace KlantenDienstServices
                     throw new InvalidOperationException(
                         "Categorie met subcategorieën kan niet worden verplaatst.");
 
-                if (await _repositoryCategorie.HasArtikelenAsync(categorieId))
-                    throw new InvalidOperationException(
-                        "Categorie met artikelen kan niet worden verplaatst.");
-
                 categorie.HoofdCategorieId = newParentId;
             }
+            await _repositoryCategorie.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Categorie>> GetHoofdcategorieenAsync()
