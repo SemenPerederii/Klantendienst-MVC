@@ -5,7 +5,6 @@ namespace KlantenDienstData.Repositories
     public interface ICategorieRepository
     {
         Task<List<Categorie>> GetAll();
-        Task<Categorie> GetByIdAsync(int id);
         Task DeleteAsync(Categorie categorie);
         Task SaveChangesAsync();
         Task<bool> HasChildrenAsync(int id);

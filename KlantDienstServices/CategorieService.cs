@@ -56,7 +56,7 @@ namespace KlantenDienstServices
                 .ToList();
         }
 
-        public async Task<Categorie> GetByIdAsync(int id)
+        public async Task<Categorie?> GetByIdAsync(int id)
         {
             return await _repositoryCategorie.GetByIdAsync(id);
         }
@@ -99,6 +99,7 @@ namespace KlantenDienstServices
 
                 categorie.HoofdCategorieId = newParentId;
             }
+        }
 
         public async Task<IEnumerable<Categorie>> GetHoofdcategorieenAsync()
         {
@@ -109,6 +110,7 @@ namespace KlantenDienstServices
         {
             return await _repositoryCategorie.GetByIdAsync(id);
         }
+
         public async Task<IEnumerable<Categorie>> GetSubcategorieenAsync(int hoofdCategorieId)
         {
             return await _repositoryCategorie.SubcategorieenAsync(hoofdCategorieId);
@@ -136,8 +138,7 @@ namespace KlantenDienstServices
                 throw new ArgumentNullException(nameof(nieuweSubcategorie));
             await _repositoryCategorie.AddSubcategorieAsync(nieuweSubcategorie, hoofdCategorieId, subCategorieIds);
         }
-            await _repositoryCategorie.SaveChangesAsync();
-        }
+            
         public Task<Categorie?> GetCategorieAsync(int id)
         {
             return _repositoryCategorie.GetCategorieAsync(id);

@@ -16,7 +16,6 @@ public partial class Categorie
     public virtual Categorie? HoofdCategorie { get; set; }
 
     public virtual ICollection<Artikel>? Artikelen { get; set; } = new List<Artikel>();
-    public virtual ICollection<Artikel> Artikelen { get; set; } = new List<Artikel>();
 
     public ICollection<ArtikelCategorie> ArtikelCategorieen { get; set; } = new List<ArtikelCategorie>();
 }

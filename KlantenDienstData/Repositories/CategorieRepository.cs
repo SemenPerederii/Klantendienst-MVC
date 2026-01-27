@@ -30,11 +30,6 @@ namespace KlantenDienstData.Repositories
             return await _context.Categorieen.FindAsync(id);
         }
 
-        public async Task<Categorie> GetByIdAsync(int id)
-        {
-            return await _context.Categorieen.FirstOrDefaultAsync(c => c.CategorieId == id);
-        }
-
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
