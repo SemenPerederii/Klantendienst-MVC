@@ -24,6 +24,10 @@ public class AccountService
         {
             return null;
         }
+        if(!personeelslid.Personeelsleden.Any(p => p.SecurityGroepen.Any(s => s.SecurityGroepId == 2)))
+        {
+            return null;
+        }
         return personeelslid;
     }
     private bool VerifyPaswoord(string paswoord, string paswoordHash)
