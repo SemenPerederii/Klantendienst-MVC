@@ -1,7 +1,45 @@
-﻿
+﻿@model IEnumerable<Artikel>
 @{
     ViewData["Title"] = "ArtikelVanCategorie";
 }
 
-<h1>Artikelen van categorie @ViewBag.Naam</h1>
+<h1 class="d-flex justify-content-center">Artikelen van categorie "@ViewBag.Naam"</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>EAN-Code</th>
+            <th>Naam</th>
+            <th>Beschrijving</th>
+            <th>Prijs</th>
+            <th>In voorraad</th>
+            <th>Categorie(ën)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var artikel in Model)
+        {
+            <tr>
+                <td>@artikel.EAN</td>
+                <td>@artikel.Naam</td>
+                <td>@artikel.Beschrijving</td>
+                <td>@artikel.Prijs.ToString("€ #,##0.00")</td>
+                <td>@artikel.Voorraad</td>
+                <td>
+                    <ul>
+                        @foreach (var categorie in artikel.Categorieën)
+                        {
+                            <li>
+                                <a asp-controller="Artikel"
+                                   asp-action="ArtikelVanCategorie"
+                                   asp-route-categorieId="@categorie.CategorieId">@categorie.Naam</a>
+                            </li>
+                        }
+                    </ul>
+                </td>
+                <td><a class="btn btn-outline-dark" asp-action="WijzigFormulier" asp-route-id="@artikel.ArtikelId">Wijzig</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
 
