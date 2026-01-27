@@ -12,6 +12,7 @@ namespace KlantenDienstServices
         Task<Categorie?> GetCategorieAsync(int id);
         Task<IEnumerable<Categorie>> GetAllCategorieAsync();
         Task<Categorie?> GetCategorieByIdAsync(int id);
+        Task<bool> CategorieBestaatAlAsync(string naam);
         IEnumerable<Categorie> BuildTree(IEnumerable<Categorie> allCategories);
         Task<IEnumerable<Categorie>> GetHoofdcategorieenAsync();
         Task<IEnumerable<Categorie>> GetSubcategorieenAsync(int hoofdCategorieId);
