@@ -9,7 +9,7 @@ namespace KlantenDienstData.Repositories
 {
     public interface IActiecodeRepository
     {
-        Task<List<Actiecode>> GetAllAsync();
+        Task<IEnumerable<Actiecode>> GetAllAsync();
         Task<Actiecode?> GetByIdAsync(int id);
     }
 }

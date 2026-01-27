@@ -17,7 +17,7 @@ namespace KlantenDienstData.Repositories
             _context = context;
         }
 
-        public async Task<List<Actiecode>> GetAllAsync()
+        public async Task<IEnumerable<Actiecode>> GetAllAsync()
         {
             return await _context.Actiecodes.ToListAsync();
         }

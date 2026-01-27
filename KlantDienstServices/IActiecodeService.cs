@@ -9,7 +9,7 @@ namespace KlantenDienstServices
 {
     public interface IActiecodeService
     {
-        Task<List<Actiecode>> GetAllActiecodesAsync();
+        Task<IEnumerable<Actiecode>> GetAllActiecodesAsync();
         Task<Actiecode?> GetActiecodeByIdAsync(int id);
     }
 }

@@ -17,7 +17,7 @@ namespace KlantenDienstServices
             _repositoryActiecode = repository;
         }
 
-        public async Task<List<Actiecode>> GetAllActiecodesAsync()
+        public async Task<IEnumerable<Actiecode>> GetAllActiecodesAsync()
         {
             return await _repositoryActiecode.GetAllAsync();
         }
