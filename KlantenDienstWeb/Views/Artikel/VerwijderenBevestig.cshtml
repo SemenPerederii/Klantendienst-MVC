@@ -10,16 +10,18 @@
     <div class="d-flex justify-content-center cs-buttons-verwijderen">
         <form asp-action="Verwijderen"
               asp-controller="Artikel"
-              asp-route-id="@Model.ArtikelId"
               method="post"
               style="display:inline">
+
+            <input type="hidden" name="id" value="@Model.ArtikelId" />
+            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
 
             <button type="submit" class="btn btn-primary">
                 Verwijderen
             </button>
         </form>
 
-        <a asp-action="Index" class="btn btn-secondary">Annuleren</a>
+        <a href="javascript:history.back()" class="btn btn-secondary">Annuleren</a>
     </div>
 </div>
 
