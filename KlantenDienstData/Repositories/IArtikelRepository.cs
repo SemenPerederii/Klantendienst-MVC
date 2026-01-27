@@ -16,5 +16,6 @@ namespace KlantenDienstData.Repositories
         Task<bool> WijzigArtikelAsync(int artikelId, Artikel niewArtikel);
         Task<Artikel?> GetArtikelAsync(int id);
         Task<IEnumerable<Artikel>> GetArtikelenByCategorieAsync(int categorieId);
+        Task SaveChangesAsync();
     }
 }

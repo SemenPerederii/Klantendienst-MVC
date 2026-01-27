@@ -76,5 +76,13 @@ namespace KlantenDienstServices
         {
             return await _artikelRepository.GetArtikelenByCategorieAsync(categorieId);
         }
+
+        public async Task VerwijderenUitCategorieAsync(int id)
+        {
+            var artikel = await _artikelRepository.GetArtikelAsync(id);
+            artikel.Categorieën = null;
+
+            await _artikelRepository.SaveChangesAsync();
+        }
     }
 }

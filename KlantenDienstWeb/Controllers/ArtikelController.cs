@@ -227,5 +227,25 @@ namespace KlantenDienstWeb.Controllers
             return View(artikelenVanCategorie);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> VerwijderenBevestig (int id)
+        {
+            var artikel = await _artikelService.GetArtikelAsync(id);
+
+            if (artikel == null)
+            {
+                return NotFound();
+            }
+
+            return View(artikel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Verwijderen(int id)
+        {
+            await _artikelService.VerwijderenUitCategorieAsync(id);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

@@ -116,5 +116,10 @@ namespace KlantenDienstData.Repositories
             .Where(a => a.Categorieën.Any(c => c.CategorieId == categorieId))
             .ToListAsync();
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }
