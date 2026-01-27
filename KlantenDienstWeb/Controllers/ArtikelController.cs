@@ -199,5 +199,20 @@ namespace KlantenDienstWeb.Controllers
             return View(vm);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ArtikelVanCategorie (int categorieId)
+        {
+            var categorie = await _categorieService.GetByIdAsync(categorieId);
+            if (categorie == null)
+            {
+                return NotFound(); 
+            }
+            ViewBag.Naam = categorie.Naam;
+
+            var artikelenVanCategorie = await _artikelService.GetArtikelenByCategorieAsync(categorieId);
+
+            return View(artikelenVanCategorie);
+        }
+
     }
 }

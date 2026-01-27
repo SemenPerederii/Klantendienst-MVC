@@ -69,5 +69,10 @@ namespace KlantenDienstServices
         public async Task<bool> VoegArtikelToeAsync(Artikel artikel) => await _artikelRepository.VoegArtikelToeAsync(artikel);
         public async Task<bool> WijzigArtikelAsync(int artikelId, Artikel nieuwArtikel) => await _artikelRepository.WijzigArtikelAsync(artikelId, nieuwArtikel);
         public async Task<Artikel?> GetArtikelAsync(int id)=>await _artikelRepository.GetArtikelAsync(id);
+
+        public async Task<IEnumerable<Artikel>> GetArtikelenByCategorieAsync(int categorieId)
+        {
+            return await _artikelRepository.GetArtikelenByCategorieAsync(categorieId);
+        }
     }
 }

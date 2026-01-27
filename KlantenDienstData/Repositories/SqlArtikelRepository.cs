@@ -106,5 +106,15 @@ namespace KlantenDienstData.Repositories
                 .Include(a => a.Categorieën); 
         }
 
+        public async Task<IEnumerable<Artikel>> GetArtikelenByCategorieAsync(int categorieId)
+        {
+            return await _context.Artikelen
+            .Include(a => a.Categorieën)
+            .Include(a => a.Bestellijnen)
+            .Include(a => a.Inkomendeleveringslijnen)
+            .Include(a => a.Magazijnplaatsen)
+            .Where(a => a.Categorieën.Any(c => c.CategorieId == categorieId))
+            .ToListAsync();
+        }
     }
 }
