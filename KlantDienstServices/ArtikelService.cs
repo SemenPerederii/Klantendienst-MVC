@@ -54,6 +54,7 @@ namespace KlantenDienstServices
             };
             return await query.ToListAsync();
         }
+        public async Task<List<Artikel>> GetAllArtikelenAsync() => await _artikelRepository.GetAllArtikelenAsync();
 
         public async Task<Artikel> GetArtikelByIdAsync(int id) =>
             await _artikelRepository.GetArtikelAsync(id);
