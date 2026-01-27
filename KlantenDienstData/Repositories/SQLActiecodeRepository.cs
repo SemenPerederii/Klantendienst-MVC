@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace KlantenDienstData.Repositories
 {
-    public class ActiecodeRepository : IActiecodeRepository
+    public class SQLActiecodeRepository : IActiecodeRepository
     {
         private readonly PrulariaDbContext _context;
 
-        public ActiecodeRepository(PrulariaDbContext context)
+        public SQLActiecodeRepository(PrulariaDbContext context)
         {
             _context = context;
         }

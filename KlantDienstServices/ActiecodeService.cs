@@ -11,12 +11,10 @@ namespace KlantenDienstServices
     public class ActiecodeService : IActiecodeService
     {
         private readonly IActiecodeRepository _repositoryActiecode;
-        private readonly ActiecodeRepository _repository;
 
-        public ActiecodeService(IActiecodeRepository repository, ActiecodeRepository repo)
+        public ActiecodeService(IActiecodeRepository repository)
         {
             _repositoryActiecode = repository;
-            _repository = repo;
         }
 
         public async Task<List<Actiecode>> GetAllActiecodesAsync()

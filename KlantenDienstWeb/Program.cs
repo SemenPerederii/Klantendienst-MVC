@@ -35,7 +35,7 @@ builder.Services.AddScoped<IPersoneelslidRepository, PersoneelslidRepository>();
 builder.Services.AddScoped<LeverancierService>();
 builder.Services.AddScoped<ILeverancierRepository, SQLLeverancierRepository>();
 
-builder.Services.AddScoped<IActiecodeRepository, ActiecodeRepository>();
+builder.Services.AddScoped<IActiecodeRepository, SQLActiecodeRepository>();
 builder.Services.AddScoped<IActiecodeService, ActiecodeService>();
 
 builder.Services.AddSession(options =>
