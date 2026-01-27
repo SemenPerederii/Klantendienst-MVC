@@ -11,9 +11,9 @@ namespace KlantenDienstWeb.Controllers
 {
     public class CategorieController : Controller
     {
-        private readonly CategorieService _serviceCategorie;
+        private readonly ICategorieService _serviceCategorie;
 
-        public CategorieController(CategorieService serviceCategorie)
+        public CategorieController(ICategorieService serviceCategorie)
         {
             _serviceCategorie = serviceCategorie;
         }

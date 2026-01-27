@@ -27,7 +27,7 @@ builder.Services.AddScoped<IArtikelService,ArtikelService>();
 // Program.cs
 builder.Services.AddScoped<ICategorieRepository, CategorieRepository>();
 builder.Services.AddScoped<CategorieRepository>();
-builder.Services.AddScoped<CategorieService>();
+builder.Services.AddScoped<ICategorieService, CategorieService>();
 
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<IPersoneelslidRepository, PersoneelslidRepository>();
