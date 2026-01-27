@@ -95,6 +95,7 @@ namespace KlantenDienstServices
 
                 categorie.HoofdCategorieId = newParentId;
             }
+            await _repositoryCategorie.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Categorie>> GetHoofdcategorieenAsync()
