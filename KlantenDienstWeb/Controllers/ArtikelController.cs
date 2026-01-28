@@ -1,4 +1,5 @@
 ﻿using KlantenDienstData.Models;
+using KlantenDienstData.Repositories;
 using KlantenDienstServices;
 using KlantenDienstWeb.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -202,11 +203,20 @@ namespace KlantenDienstWeb.Controllers
             {
                 return RedirectToAction("Index");
             }
-            var vm = new ArtikelViewModel
+
+            return View(artikel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeactiveerArtikel(int artikelId)
+        {
+            var artikel = await _artikelService.GetArtikelByIdAsync(artikelId);
+            if (artikel == null)
             {
-                ArtikelVoorDeactivatie = artikel
-            };
-            return View(vm);
+                return NotFound();
+            }
+            await _artikelService.DeactiveerArtikelAsync(artikelId);
+            return RedirectToAction("Index");
         }
         public IActionResult ResetFilters()
         {
