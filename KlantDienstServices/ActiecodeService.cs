@@ -25,5 +25,7 @@ namespace KlantenDienstServices
         {
             return await _repositoryActiecode.GetByIdAsync(id);
         }
+        public async Task WijzigActieCode(int id, Actiecode nieuweActiecode)=>await _repositoryActiecode.WijzigActieCode(id,nieuweActiecode);
+        public async Task Toevoegen(Actiecode actiecode)=> await _repositoryActiecode.Toevoegen(actiecode);
     }
 }

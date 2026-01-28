@@ -26,5 +26,21 @@ namespace KlantenDienstData.Repositories
         {
             return await _context.Actiecodes.FindAsync(id);
         }
+
+        public async Task Toevoegen(Actiecode actiecode)
+        {
+            await _context.Actiecodes.AddAsync(actiecode);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task WijzigActieCode(int id, Actiecode nieuweActiecode)
+        {
+            Actiecode? oud = await _context.Actiecodes.FindAsync(id);
+            if(oud != null)
+            {
+                _context.Entry(oud).CurrentValues.SetValues(nieuweActiecode);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
