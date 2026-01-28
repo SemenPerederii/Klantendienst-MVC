@@ -1,20 +1,29 @@
 ﻿using KlantenDienstServices;
 using KlantenDienstWeb.Models;
+using KlantenDienstWeb.Security;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KlantenDienstWeb.Controllers
 {
-    public class AccountController : Controller
+    public sealed class AccountController : Controller
     {
         private readonly AccountService _accountService;
-        public AccountController(AccountService accountService)
+        private readonly SecurityManager _securityManager;
+
+        //private AccountService AccountService => _accountService;
+        //private SecurityManager SecurityManager => _securityManager;
+
+        public AccountController(AccountService accountService, SecurityManager securityManager)
         {
             _accountService = accountService;
+            _securityManager = securityManager;
         }
+
         public IActionResult Index()
         {
             return View();
         }
+
         [HttpGet]
         public async Task<IActionResult> WijzigWachtwoord()
         {
@@ -29,6 +38,7 @@ namespace KlantenDienstWeb.Controllers
             };
             return View(accountVM);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> WachtwoordWijzigenDoorvoeren(PaswoordWijzigenVM model)
@@ -37,11 +47,20 @@ namespace KlantenDienstWeb.Controllers
             {
                 return View("WijzigWachtwoord", model);
             }
-                
+
             return View();
 
             // echte logica hier
         }
-
+        public async Task<IActionResult> Logout()
+        {
+            await _securityManager.SignOut(this.HttpContext);
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
+        public IActionResult AccessDenied()
+        {
+            return View(nameof(AccessDenied));
+        }
     }
 }

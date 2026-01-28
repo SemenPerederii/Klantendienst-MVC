@@ -2,6 +2,7 @@ using KlantenDienstData.Models;
 using KlantenDienstServices;
 using KlantenDienstServices.DTO_s;
 using KlantenDienstWeb.Models;
+using KlantenDienstWeb.Security;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -11,11 +12,13 @@ namespace KlantenDienstWeb.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly AccountService _accountService;
+        private readonly SecurityManager _securityManager;
 
-        public HomeController(ILogger<HomeController> logger, AccountService accountService)
+        public HomeController(ILogger<HomeController> logger, AccountService accountService, SecurityManager securityManager)
         {
             _logger = logger;
             _accountService = accountService;
+            _securityManager = securityManager;
         }
 
         public IActionResult Index()
@@ -56,6 +59,7 @@ namespace KlantenDienstWeb.Controllers
                 HttpContext.Session.SetInt32("PersoneelslidId", personeelslid.PersoneelslidAccountId);
                 HttpContext.Session.SetString("Voornaam", personeelslid?.Voornaam ?? string.Empty);
                 HttpContext.Session.SetString("Familienaam", personeelslid?.Familienaam ?? string.Empty);
+                await _securityManager.SignIn(this.HttpContext, personeelslid, loginViewModel.IsCookiePersistent);
                 return RedirectToAction(nameof(Landingspagina));
             }
             catch (Exception ex)
@@ -64,7 +68,6 @@ namespace KlantenDienstWeb.Controllers
                 ModelState.AddModelError(string.Empty, "Er is een fout opgetreden. Probeer het later opnieuw.");
                 return View(nameof(Index), loginViewModel);
             }
-            // await SecurityManager.SignIn(HttpContext, account);
         }
 
         private bool IsGeldigAccount(PersoneelslidAccount? account)
