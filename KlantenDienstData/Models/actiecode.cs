@@ -8,6 +8,7 @@ public partial class Actiecode
 {
     public int ActiecodeId { get; set; }
 
+    [Required(ErrorMessage ="Naam is een Verplicht veld")]
     public string Naam { get; set; } = null!;
 
     [DataType(DataType.Date)]

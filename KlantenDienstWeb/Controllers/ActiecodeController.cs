@@ -18,10 +18,13 @@ namespace KlantenDienstWeb.Controllers
             var actiecodes = await _serviceActiecode.GetAllActiecodesAsync();
             return View(actiecodes);
         }
+        [HttpGet]
         public async Task<IActionResult> ToevoegFormulier()
         {
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Toevoegen(Actiecode actiecode)
         {
             if (!this.ModelState.IsValid)
@@ -29,6 +32,7 @@ namespace KlantenDienstWeb.Controllers
             await _serviceActiecode.Toevoegen(actiecode);
             return RedirectToAction(nameof(Index));
         }
+        [HttpGet]
         public async Task<IActionResult> WijzigFormulier(int id)
         {
             Actiecode? code = await _serviceActiecode.GetActiecodeByIdAsync(id);
@@ -36,6 +40,8 @@ namespace KlantenDienstWeb.Controllers
                 return RedirectToAction(nameof(Index));
             return View(code);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Wijzigen(Actiecode actiecode)
         {
             if (!this.ModelState.IsValid)
