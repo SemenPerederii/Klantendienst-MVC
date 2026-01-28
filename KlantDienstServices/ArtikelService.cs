@@ -56,6 +56,7 @@ namespace KlantenDienstServices
             };
             return await query.ToListAsync();
         }
+        public async Task<List<Artikel>> GetAllArtikelenAsync() => await _artikelRepository.GetAllArtikelenAsync();
 
         public async Task<Artikel> GetArtikelByIdAsync(int id) =>
             await _artikelRepository.GetArtikelAsync(id);
@@ -72,6 +73,8 @@ namespace KlantenDienstServices
 
             if (!string.IsNullOrWhiteSpace(filters.Naam))
                 query = query.Where(a => a.Naam.Contains(filters.Naam));
+            if (!string.IsNullOrEmpty(filters.Beschrijving))
+                query = query.Where(a => a.Beschrijving.Contains(filters.Beschrijving));
 
             if (filters.MinPrijs.HasValue)
                 query = query.Where(a => a.Prijs >= filters.MinPrijs.Value);

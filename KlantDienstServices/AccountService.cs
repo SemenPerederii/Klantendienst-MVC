@@ -1,5 +1,6 @@
 ﻿using KlantenDienstData.Models;
 using KlantenDienstData.Repositories;
+using KlantenDienstServices.DTO_s;
 
 namespace KlantenDienstServices;
 public class AccountService
@@ -9,19 +10,24 @@ public class AccountService
     {
         _repository = repository;
     }
-    public async Task<PersoneelslidAccount?> Login(string email, string paswoord)
+    public async Task<PersoneelslidAccount?> Login(LogInInfoDTO logInInfo)
     {
-        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(paswoord))
+        if (string.IsNullOrWhiteSpace(logInInfo.Emailadres) || string.IsNullOrWhiteSpace(logInInfo.Paswoord))
         {
             return null;
         }
-        var personeelslid = await _repository.FindByEmailAsync(email);
+        var personeelslid = await _repository.FindByEmailAsync(logInInfo.Emailadres);
         if (personeelslid == null)
         {
             return null;
         }
-        if (!VerifyPaswoord(paswoord, personeelslid.Paswoord))
+        if (!VerifyPaswoord(logInInfo.Paswoord, personeelslid.Paswoord))
         {
+            return null;
+        }
+        if(!personeelslid.Personeelsleden.Any(p => p.SecurityGroepen.Any(s => s.SecurityGroepId == 2)))
+        {
+            logInInfo.ErrorMessage = "Geen toegang tot klantenservice.";
             return null;
         }
         return personeelslid;

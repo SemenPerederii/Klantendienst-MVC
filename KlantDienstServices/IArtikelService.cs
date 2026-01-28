@@ -10,7 +10,8 @@ namespace KlantenDienstServices
     public interface IArtikelService
     {
         bool CheckStatusActief(Artikel artikel);
-        Task<List<Artikel>> GetAllArtikelenAsync(ArtikelSorteerOpties? sorteerOpties = null, SorteerRichting? sorteerRichting = null);
+        Task<List<Artikel>> GetAllArtikelenAsync(ArtikelSorteerOpties sorteerOpties, SorteerRichting sorteerRichting);
+        Task<List<Artikel>> GetAllArtikelenAsync();
         Task<List<Artikel>> ZoekArtikelenOpFilterAsync(ArtikelFilterDto filters);
         Task<bool> VoegArtikelToeAsync(Artikel artikel);
         Task<bool> WijzigArtikelAsync(int artikelId, Artikel nieuwArtikel);

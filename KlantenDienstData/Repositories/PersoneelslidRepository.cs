@@ -16,6 +16,7 @@ public class PersoneelslidRepository : IPersoneelslidRepository
     public async Task<PersoneelslidAccount?> FindByEmailAsync(string email) =>
         await _context.PersoneelslidAccounts
         .Include(pa => pa.Personeelsleden)
+            .ThenInclude(p => p.SecurityGroepen)
         .FirstOrDefaultAsync(pa => pa.Emailadres == email);
 
     public async Task<Personeelslid?> FindPersoneelslidByIdAsync(int personeelslidId)

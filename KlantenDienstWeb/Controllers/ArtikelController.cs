@@ -170,6 +170,7 @@ namespace KlantenDienstWeb.Controllers
                 Id = vm.Id,
                 Ean = vm.EAN,
                 Naam = vm.Naam,
+                Beschrijving = vm.Beschrijving,
                 MinPrijs = vm.MinPrijs,
                 MaxPrijs = vm.MaxPrijs,
                 EnkelInVoorraad = vm.InVoorraad,
@@ -181,6 +182,14 @@ namespace KlantenDienstWeb.Controllers
 
             var alleCats = await _categorieService.GetAllCategorieAsync();
             vm.Categorieën = alleCats.Where(c => c.HoofdCategorieId == null).ToList();
+
+            foreach (var artikel in vm.Artikelen)
+            {
+                if (_artikelService.CheckStatusActief(artikel))
+                {
+                    vm.ActieveArtikelen.Add(artikel);
+                }
+            }
 
             return View("Index", vm);
         }
@@ -197,6 +206,10 @@ namespace KlantenDienstWeb.Controllers
                 ArtikelVoorDeactivatie = artikel
             };
             return View(vm);
+        }
+        public IActionResult ResetFilters()
+        {
+            return View("Index");
         }
 
     }

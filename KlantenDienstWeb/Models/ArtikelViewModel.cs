@@ -7,6 +7,7 @@ namespace KlantenDienstWeb.Models
         public int? Id { get; set; }
         public string? EAN { get; set; } = string.Empty;
         public string? Naam { get; set; } = string.Empty;
+        public string? Beschrijving { get; set; } = string.Empty;
         public decimal? MinPrijs { get; set; }
         public decimal? MaxPrijs { get; set; }
         public bool InVoorraad { get; set; }
