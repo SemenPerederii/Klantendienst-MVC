@@ -139,6 +139,6 @@ namespace KlantenDienstServices
         public Task<Categorie?> GetCategorieAsync(int id)
         {
             return _repositoryCategorie.GetCategorieAsync(id);
-        }
+        }      
     }
 }

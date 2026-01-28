@@ -1,11 +1,5 @@
 ﻿using KlantenDienstData.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KlantenDienstData.Repositories
 {
@@ -18,13 +12,33 @@ namespace KlantenDienstData.Repositories
             _context = context;
         }
 
-        public async Task<List<Artikel>> GetAllArtikelenAsync() =>
-            await _context.Artikelen
-            .Include(a => a.Categorieën)
-            .Include(a => a.Bestellijnen)
-            .Include(a => a.Inkomendeleveringslijnen)
-            .Include(a => a.Magazijnplaatsen)
-            .ToListAsync();
+        public async Task<List<Artikel>> GetAllArtikelenAsync(ArtikelSorteerOpties? sorteerOpties = null, SorteerRichting? sorteerRichting = null)
+        {
+            var sortOptie = sorteerOpties ?? ArtikelSorteerOpties.Naam;
+            var richting = sorteerRichting ?? SorteerRichting.Asc;
+            IQueryable<Artikel> query = _context.Artikelen
+                .Include(a => a.Categorieën)
+                .Include(a => a.Bestellijnen)
+                .Include(a => a.Inkomendeleveringslijnen)
+                .Include(a => a.Magazijnplaatsen);
+            query = sortOptie switch
+            {
+                ArtikelSorteerOpties.Naam => richting == SorteerRichting.Asc
+                    ? query.OrderBy(a => a.Naam)
+                    : query.OrderByDescending(a => a.Naam),
+
+                ArtikelSorteerOpties.Prijs => richting == SorteerRichting.Asc
+                    ? query.OrderBy(a => a.Prijs)
+                    : query.OrderByDescending(a => a.Prijs),
+
+                ArtikelSorteerOpties.Voorraad => richting == SorteerRichting.Asc
+                    ? query.OrderBy(a => a.Voorraad)
+                    : query.OrderByDescending(a => a.Voorraad),
+
+                _ => query.OrderBy(a => a.Naam)
+            };
+            return await query.ToListAsync();
+        }
 
         public async Task<Artikel?> GetArtikelAsync(int id)
         {
@@ -106,5 +120,36 @@ namespace KlantenDienstData.Repositories
                 .Include(a => a.Categorieën); 
         }
 
+        public async Task DeactiveerArtikelAsync(int artikelId)
+        {
+            var artikel = await GetArtikelAsync(artikelId);
+
+            if (artikel == null)
+            {
+                return;
+            }
+
+            artikel.MinimumVoorraad = 0;
+            artikel.MaximumVoorraad = 0;
+            artikel.Bestelpeil = 0;
+            artikel.AantalBesteldLeverancier = 0;
+
+            await _context.SaveChangesAsync();
+        }
+        public async Task<IEnumerable<Artikel>> GetArtikelenByCategorieAsync(int categorieId)
+        {
+            return await _context.Artikelen
+            .Include(a => a.Categorieën)
+            .Include(a => a.Bestellijnen)
+            .Include(a => a.Inkomendeleveringslijnen)
+            .Include(a => a.Magazijnplaatsen)
+            .Where(a => a.Categorieën.Any(c => c.CategorieId == categorieId))
+            .ToListAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

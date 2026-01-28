@@ -1,8 +1,8 @@
 ﻿using KlantenDienstData.Models;
+using KlantenDienstData.Repositories;
 using KlantenDienstServices;
 using KlantenDienstWeb.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 
 namespace KlantenDienstWeb.Controllers
 {
@@ -19,8 +19,7 @@ namespace KlantenDienstWeb.Controllers
             _leverancierService = leverancierService;
         }
         [HttpGet]
-        public async Task<IActionResult> Index(ArtikelSorteerOpties sorteerOpties = ArtikelSorteerOpties.Naam,
-            SorteerRichting sorteerRichting = SorteerRichting.Asc)
+        public async Task<IActionResult> Index(ArtikelSorteerOpties sorteerOpties, SorteerRichting sorteerRichting)
         {
             var artikelVM = new ArtikelViewModel();
             var alleCategorieën = await _categorieService.GetAllCategorieAsync();
@@ -202,16 +201,63 @@ namespace KlantenDienstWeb.Controllers
             {
                 return RedirectToAction("Index");
             }
-            var vm = new ArtikelViewModel
+
+            return View(artikel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeactiveerArtikel(int artikelId)
+        {
+            var artikel = await _artikelService.GetArtikelAsync(artikelId);
+            if (artikel == null)
             {
-                ArtikelVoorDeactivatie = artikel
-            };
-            return View(vm);
+                return NotFound();
+            }
+            await _artikelService.DeactiveerArtikelAsync(artikelId);
+            return RedirectToAction("Index");
         }
         public IActionResult ResetFilters()
         {
             return View("Index");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ArtikelVanCategorie (int categorieId)
+        {
+            var categorie = await _categorieService.GetByIdAsync(categorieId);
+            if (categorie == null)
+            {
+                return NotFound(); 
+            }
+            ViewBag.Naam = categorie.Naam;
+
+            var artikelenVanCategorie = await _artikelService.GetArtikelenByCategorieAsync(categorieId);
+
+            return View(artikelenVanCategorie);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> VerwijderenBevestig(int id)
+        {
+            var artikel = await _artikelService.GetArtikelAsync(id);
+            if (artikel == null)
+                return NotFound();
+
+            ViewBag.ReturnUrl = Request.Headers["Referer"].ToString();
+
+            return View(artikel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Verwijderen(int id, string returnUrl)
+        {
+            await _artikelService.VerwijderenUitCategorieAsync(id);
+
+            if (!string.IsNullOrEmpty(returnUrl))
+                return Redirect(returnUrl);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

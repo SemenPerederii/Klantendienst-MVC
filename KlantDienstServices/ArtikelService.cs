@@ -1,11 +1,6 @@
 ﻿using KlantenDienstData.Models;
 using KlantenDienstData.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KlantenDienstServices
 {
@@ -30,10 +25,17 @@ namespace KlantenDienstServices
                 
         }
 
+        public async Task DeactiveerArtikelAsync(int artikelId)
+        {
+
+            await _artikelRepository.DeactiveerArtikelAsync(artikelId);
+        }
         public async Task<List<Artikel>> GetAllArtikelenAsync(ArtikelSorteerOpties sorteerOpties, SorteerRichting sorteerRichting)
         {
+            var sortOptie = sorteerOpties;
+            var richting = sorteerRichting;
             IQueryable<Artikel> query = _artikelRepository.GetArtikelQuery();
-            query = (sorteerOpties, sorteerRichting) switch
+            query = (sortOptie, richting) switch
             {
                 (ArtikelSorteerOpties.EAN, SorteerRichting.Asc) => query.OrderBy(a => a.EAN),
                 (ArtikelSorteerOpties.EAN, SorteerRichting.Desc) => query.OrderByDescending(a => a.EAN),
@@ -92,5 +94,18 @@ namespace KlantenDienstServices
         public async Task<bool> VoegArtikelToeAsync(Artikel artikel) => await _artikelRepository.VoegArtikelToeAsync(artikel);
         public async Task<bool> WijzigArtikelAsync(int artikelId, Artikel nieuwArtikel) => await _artikelRepository.WijzigArtikelAsync(artikelId, nieuwArtikel);
         public async Task<Artikel?> GetArtikelAsync(int id)=>await _artikelRepository.GetArtikelAsync(id);
+
+        public async Task<IEnumerable<Artikel>> GetArtikelenByCategorieAsync(int categorieId)
+        {
+            return await _artikelRepository.GetArtikelenByCategorieAsync(categorieId);
+        }
+
+        public async Task VerwijderenUitCategorieAsync(int id)
+        {
+            var artikel = await _artikelRepository.GetArtikelAsync(id);
+            artikel.Categorieën = null;
+
+            await _artikelRepository.SaveChangesAsync();
+        }
     }
 }
