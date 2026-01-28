@@ -26,20 +26,20 @@
                 </div>
 
                 <div class="d-grid">
-                    <a asp-action="Index" title="Wissen Filters">
+                    <a asp-action="Index" title="Wissen Filters" class="btn btn-secondary">
+                        Wis Filters
                         <img src="~/images/deleteBtn.png" class="cs-btnsImg" alt="Wissen Filters" />
-                        Wissen Filters
                     </a>
                 </div>
 
-                <label class="form-label">Filter</label>
+                <label class="form-label">Filter:</label>
                 <select name="filter"
                         class="form-select"
                         onchange="toggleDate(this.value)">
                     <option value="">Kies filter</option>
-                    <option value="ActiefNu">Actief nu</option>
-                    <option value="NietActiefNu">Niet actief nu</option>
-                    <option value="ExacteDatum">Exacte datum</option>
+                    <option value="ActiefNu">Nu actief</option>
+                    <option value="NietActiefNu">Niet actief</option>
+                    <option value="ExacteDatum">Op datum</option>
                 </select>
 
                 <div class="dropdown-menu col-md-4" id="datumContainer" style="display:none">
