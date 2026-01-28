@@ -27,12 +27,12 @@ namespace KlantenDienstData.Repositories
         public async Task<Klant?> GetKlantAsync(int id)
         {
             return await _context.Klanten
-                .Include(klant => klant.Rechtspersonen).ThenInclude(rp => rp.Contactpersonen)
-                .Include(klant => klant.Natuurlijkepersonen)
-                .Include(klant => klant.FacturatieAdres)
-                .Include(klant => klant.LeveringsAdres)
-                .Include(klant => klant.Bestellingen)
-                .ThenInclude(bestelling => bestelling.Bestellijnen)
+                .Include(klant => klant.Rechtspersonen).ThenInclude(rp => rp.Contactpersonen).ThenInclude(rp=>rp.GebruikersAccount)
+                .Include(klant => klant.Natuurlijkepersonen).ThenInclude(np=>np.GebruikersAccount)
+                .Include(klant => klant.FacturatieAdres).ThenInclude(a=>a.Plaats)
+                .Include(klant => klant.LeveringsAdres).ThenInclude(a => a.Plaats)
+                .Include(klant => klant.Bestellingen).ThenInclude(best=>best.Bestellijnen)
+                .Include(klant=>klant.Uitgaandeleveringen).ThenInclude(ul=>ul.UitgaandeLeveringsStatus)
                 .FirstOrDefaultAsync(klant => klant.KlantId == id);
                 
         }
