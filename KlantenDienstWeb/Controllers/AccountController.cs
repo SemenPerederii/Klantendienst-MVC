@@ -47,16 +47,14 @@ namespace KlantenDienstWeb.Controllers
 
                 return View("WijzigWachtwoord", model);
             }
-
-
-            var wijzigingsInfo = new PaswoordWijzigingsDto
+            if(!BCrypt.Net.BCrypt.Verify(model.NieuwPaswoord, account!.PersoneelslidAccount.Paswoord))
             {
-                Emailadres = model.Emailadres,
-                HuidigPaswoord = model.HuidigPaswoord,
-                NieuwPaswoord = model.NieuwPaswoord,
-            };
+                ModelState.AddModelError(nameof(model.NieuwPaswoord), "Nieuw paswoord mag niet hetzelfde zijn als het huidige paswoord.");
+                return View("WijzigWachtwoord", model);
+            }
 
-            await _accountService.WijzigPaswoord(wijzigingsInfo);
+
+            await _accountService.WijzigPaswoord();
                 
             return View();
 
