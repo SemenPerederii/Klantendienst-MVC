@@ -40,4 +40,9 @@ public class AccountService
     {
         return await _repository.FindPersoneelslidByIdAsync(personeelslidId);
     }
+
+    public async Task WijzigPaswoord(PaswoordWijzigingsDto wijzigingsInfo)
+    {
+        throw new NotImplementedException();
+    }
 }

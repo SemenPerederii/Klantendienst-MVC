@@ -1,6 +1,8 @@
 ﻿using KlantenDienstServices;
+using KlantenDienstServices.DTO_s;
 using KlantenDienstWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using BCrypt.Net;
 
 namespace KlantenDienstWeb.Controllers
 {
@@ -18,13 +20,12 @@ namespace KlantenDienstWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> WijzigWachtwoord()
         {
-            var sessionVariabel = HttpContext.Session.GetInt32("PersoneelslidId");
+            var id = HttpContext.Session.GetInt32("PersoneelslidId");
 
-            var account = await _accountService.GetPersoneelslidById(sessionVariabel!.Value);
+            var account = await _accountService.GetPersoneelslidById(id!.Value);
 
             var accountVM = new PaswoordWijzigenVM
             {
-                Account = account!,
                 Emailadres = account!.PersoneelslidAccount.Emailadres
             };
             return View(accountVM);
@@ -37,6 +38,25 @@ namespace KlantenDienstWeb.Controllers
             {
                 return View("WijzigWachtwoord", model);
             }
+            var id = HttpContext.Session.GetInt32("PersoneelslidId");
+            var account = await _accountService.GetPersoneelslidById(id!.Value);
+
+            if (!BCrypt.Net.BCrypt.Verify(model.HuidigPaswoord, account!.PersoneelslidAccount.Paswoord))
+            {
+                ModelState.AddModelError(nameof(model.HuidigPaswoord), "Huidig paswoord is onjuist.");
+
+                return View("WijzigWachtwoord", model);
+            }
+
+
+            var wijzigingsInfo = new PaswoordWijzigingsDto
+            {
+                Emailadres = model.Emailadres,
+                HuidigPaswoord = model.HuidigPaswoord,
+                NieuwPaswoord = model.NieuwPaswoord,
+            };
+
+            await _accountService.WijzigPaswoord(wijzigingsInfo);
                 
             return View();
 
