@@ -25,4 +25,14 @@ public class PersoneelslidRepository : IPersoneelslidRepository
             .Include(p => p.PersoneelslidAccount)
             .FirstOrDefaultAsync(p => p.PersoneelslidId == personeelslidId);
     }
+
+    public async Task UpdatePaswoordAsync(int id, string nieuwHashPaswoord)
+    {
+        var personeelslidAccount = _context.PersoneelslidAccounts.FirstOrDefault(pa => pa.PersoneelslidAccountId == id);
+        if (personeelslidAccount != null)
+        {
+           personeelslidAccount.Paswoord = nieuwHashPaswoord;
+           await _context.SaveChangesAsync();
+        }
+    }
 }

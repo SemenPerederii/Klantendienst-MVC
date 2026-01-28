@@ -1,7 +1,9 @@
 ﻿using KlantenDienstServices;
+using KlantenDienstServices.DTO_s;
 using KlantenDienstWeb.Models;
 using KlantenDienstWeb.Security;
 using Microsoft.AspNetCore.Mvc;
+using BCrypt.Net;
 
 namespace KlantenDienstWeb.Controllers
 {
@@ -9,9 +11,6 @@ namespace KlantenDienstWeb.Controllers
     {
         private readonly AccountService _accountService;
         private readonly SecurityManager _securityManager;
-
-        //private AccountService AccountService => _accountService;
-        //private SecurityManager SecurityManager => _securityManager;
 
         public AccountController(AccountService accountService, SecurityManager securityManager)
         {
@@ -27,13 +26,12 @@ namespace KlantenDienstWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> WijzigWachtwoord()
         {
-            var sessionVariabel = HttpContext.Session.GetInt32("PersoneelslidId");
+            var id = HttpContext.Session.GetInt32("PersoneelslidId");
 
-            var account = await _accountService.GetPersoneelslidById(sessionVariabel!.Value);
+            var account = await _accountService.GetPersoneelslidById(id!.Value);
 
             var accountVM = new PaswoordWijzigenVM
             {
-                Account = account!,
                 Emailadres = account!.PersoneelslidAccount.Emailadres
             };
             return View(accountVM);
@@ -47,10 +45,30 @@ namespace KlantenDienstWeb.Controllers
             {
                 return View("WijzigWachtwoord", model);
             }
+            var id = HttpContext.Session.GetInt32("PersoneelslidId");
+            var account = await _accountService.GetPersoneelslidById(id!.Value);
 
-            return View();
+            if (!BCrypt.Net.BCrypt.Verify(model.HuidigPaswoord, account!.PersoneelslidAccount.Paswoord))
+            {
+                ModelState.AddModelError(nameof(model.HuidigPaswoord), "Huidig paswoord is onjuist.");
 
-            // echte logica hier
+                return View("WijzigWachtwoord", model);
+            }
+            if(BCrypt.Net.BCrypt.Verify(model.NieuwPaswoord, account!.PersoneelslidAccount.Paswoord))
+            {
+                ModelState.AddModelError(nameof(model.NieuwPaswoord), "Nieuw paswoord mag niet hetzelfde zijn als het huidige paswoord.");
+                return View("WijzigWachtwoord", model);
+            }
+
+            return View("BevestigWachtwoordWijziging", model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> WachtwoordWijzigenBevestigen(PaswoordWijzigenVM model)
+        {
+            var id = HttpContext.Session.GetInt32("PersoneelslidId");
+            await _accountService.WijzigPaswoord(id!.Value, model.NieuwPaswoord);
+            return RedirectToAction("Landingspagina", "Home");
         }
         public async Task<IActionResult> Logout()
         {
