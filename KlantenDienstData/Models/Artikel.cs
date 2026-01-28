@@ -17,25 +17,25 @@ public partial class Artikel
     [DisplayFormat(DataFormatString = "{0:0.00}", ApplyFormatInEditMode =true)]
     [Range(0, 1000000, ErrorMessage = "buiten range")]
     public decimal Prijs { get; set; }
-    [Range(0, 1000, ErrorMessage = "buiten range")]
+    [Range(0, 10000000, ErrorMessage = "buiten range")]
     [Display(Name = "Gewicht in gram")]
     public int GewichtInGram { get; set; }
-    [Range(0, 1000, ErrorMessage = "buiten range")]
+    [Range(0, 1000000, ErrorMessage = "buiten range")]
     public int Bestelpeil { get; set; }
 
     public int Voorraad { get; set; }
-    [Range(1, 1000, ErrorMessage = "buiten range")]
+    [Range(0, 1000000, ErrorMessage = "buiten range")]
     [Display(Name = "Minimum vorraad")]
     public int MinimumVoorraad { get; set; }
-    [Range(1, 1000, ErrorMessage = "buiten range")]
+    [Range(1, 1000000, ErrorMessage = "buiten range")]
     [Display(Name = "Maximum vorraad")]
     public int MaximumVoorraad { get; set; }
-    [Range(1, 1000, ErrorMessage = "buiten range")]
+    [Range(1, 1000000, ErrorMessage = "buiten range")]
     public int Levertijd { get; set; }
 
     [Display(Name ="Aantal Besteld Leverancier")]
     public int AantalBesteldLeverancier { get; set; }
-    [Range(1, 1000, ErrorMessage = "*")]
+    [Range(1, 1000000, ErrorMessage = "*")]
     [Display(Name = "Max in magazijnplaats")]
     public int MaxAantalInMagazijnPLaats { get; set; }
 

@@ -41,7 +41,7 @@
                 <div class="form-group col-sm">
                     <label asp-for="Artikel.Levertijd"></label>
                     <span asp-validation-for="Artikel.Levertijd" class="text-danger"></span>
-                    <input asp-for="Artikel.Levertijd" class="form-control" value="1" />
+                    <input asp-for="Artikel.Levertijd" class="form-control" />
                 </div>
             </div>
             <div class="row">
@@ -58,28 +58,13 @@
                 <div class="form-group col-sm">
                     <label asp-for="Artikel.LeveranciersId"></label>
                     <span asp-validation-for="Artikel.LeveranciersId" class="text-danger"></span>
-                    <input asp-for="Artikel.LeveranciersId" class="form-control" value="1" />
+                    <input asp-for="Artikel.LeveranciersId" class="form-control" />
                 </div>
             </div>
-            <div class="row">
-                <div class="form-group col-sm">
-                    <label asp-for="Artikel.MinimumVoorraad"></label>
-                    <span asp-validation-for="Artikel.MinimumVoorraad" class="text-danger"></span>
-                    <input asp-for="Artikel.MinimumVoorraad" value="10" class="form-control" disabled/>
-                </div>
-                <div class="form-group col-sm">
-                    <label asp-for="Artikel.MaximumVoorraad"></label>
-                    <span asp-validation-for="Artikel.MaximumVoorraad" class="text-danger"></span>
-                    <input asp-for="Artikel.MaximumVoorraad" value="100" class="form-control" disabled/>
-                </div>
-
-                <div class="form-group col-sm">
-                    <label asp-for="Artikel.Voorraad"></label>
-                    <span asp-validation-for="Artikel.Voorraad" class="text-danger"></span>
-                    <input asp-for="Artikel.Voorraad" value="10" class="form-control" disabled/>
-                </div>
-            </div>
-
+            <input asp-for="Artikel.MinimumVoorraad" hidden />
+            <input asp-for="Artikel.MaximumVoorraad" hidden />
+            <input asp-for="Artikel.Voorraad" hidden />
+           
         </div>
         <div style="grid-row:span 1;" class="text-center ms-4">
             <div class="dropdown">
