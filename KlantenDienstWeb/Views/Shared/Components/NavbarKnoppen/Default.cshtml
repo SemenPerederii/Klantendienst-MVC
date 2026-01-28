@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Landingspagina"><img class="cs-logo" src="~/images/logo_prularia_transparant.png" alt="Prularia logo"></></a>
             <div class="navbar-collapse collapse justify-content-center">
-                <ul class="container navbar-nav justify-content-around">
+                <ul class="navbar-nav justify-content-center gap-2">
                     <li class="nav-item">
                         <a class="cs-navlink" asp-area="" asp-controller="Artikel" asp-action="Index">Artikelen</a>
                     </li>
@@ -24,9 +24,50 @@
                     </li>
                 </ul>
             </div>
-            <div class="navbar-nav">
-                <a class="nav-item btn btn-light btn-lg text-black">Mijn Profiel</a>
+        <div class="navbar-nav">
+
+            <div class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle btn btn-light btn-lg text-black"
+                   href="#"
+                   id="profielDropdown"
+                   role="button"
+                   data-bs-toggle="dropdown"
+                   aria-expanded="false">
+
+                    Settings
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profielDropdown">
+
+                    <li>
+                        <a class="dropdown-item" asp-controller="Account" asp-action="WijzigWachtwoord">
+                            Wijzigen wachtwoord
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" asp-controller="Account" asp-action="WijzigGegevens">
+                            Gegevens wijzigen
+                        </a>
+                    </li>
+
+                    <li><hr class="dropdown-divider"></li>
+
+                    <li>
+                        <a class="dropdown-item text-danger"
+                           asp-controller="Account"
+                           asp-action="Logout">
+                            Uitloggen
+                        </a>
+                    </li>
+
+                </ul>
+
             </div>
+
+        </div>
+
     </div>
 </nav>
 @await Component.InvokeAsync("Begroeting")
