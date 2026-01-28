@@ -29,5 +29,19 @@ namespace KlantenDienstWeb.Controllers
             };
             return View(accountVM);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> WachtwoordWijzigenDoorvoeren(PaswoordWijzigenVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("WijzigWachtwoord", model);
+            }
+                
+            return View();
+
+            // echte logica hier
+        }
+
     }
 }
