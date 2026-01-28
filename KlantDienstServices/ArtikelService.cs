@@ -1,11 +1,6 @@
 ﻿using KlantenDienstData.Models;
 using KlantenDienstData.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KlantenDienstServices
 {
@@ -37,8 +32,10 @@ namespace KlantenDienstServices
         }
         public async Task<List<Artikel>> GetAllArtikelenAsync(ArtikelSorteerOpties sorteerOpties, SorteerRichting sorteerRichting)
         {
+            var sortOptie = sorteerOpties;
+            var richting = sorteerRichting;
             IQueryable<Artikel> query = _artikelRepository.GetArtikelQuery();
-            query = (sorteerOpties, sorteerRichting) switch
+            query = (sortOptie, richting) switch
             {
                 (ArtikelSorteerOpties.EAN, SorteerRichting.Asc) => query.OrderBy(a => a.EAN),
                 (ArtikelSorteerOpties.EAN, SorteerRichting.Desc) => query.OrderByDescending(a => a.EAN),

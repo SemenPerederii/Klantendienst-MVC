@@ -3,7 +3,6 @@ using KlantenDienstData.Repositories;
 using KlantenDienstServices;
 using KlantenDienstWeb.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 
 namespace KlantenDienstWeb.Controllers
 {
@@ -20,8 +19,7 @@ namespace KlantenDienstWeb.Controllers
             _leverancierService = leverancierService;
         }
         [HttpGet]
-        public async Task<IActionResult> Index(ArtikelSorteerOpties sorteerOpties = ArtikelSorteerOpties.Naam,
-            SorteerRichting sorteerRichting = SorteerRichting.Asc)
+        public async Task<IActionResult> Index(ArtikelSorteerOpties sorteerOpties, SorteerRichting sorteerRichting)
         {
             var artikelVM = new ArtikelViewModel();
             var alleCategorieën = await _categorieService.GetAllCategorieAsync();
