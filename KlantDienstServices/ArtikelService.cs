@@ -30,10 +30,10 @@ namespace KlantenDienstServices
                 
         }
 
-        public async Task<List<Artikel>> GetAllArtikelenAsync(ArtikelSorteerOpties? sorteerOpties = null, SorteerRichting? sorteerRichting = null)
+        public async Task<List<Artikel>> GetAllArtikelenAsync(ArtikelSorteerOpties sorteerOpties, SorteerRichting sorteerRichting)
         {
-            var sortOptie = sorteerOpties ?? ArtikelSorteerOpties.Naam;
-            var richting = sorteerRichting ?? SorteerRichting.Asc;
+            var sortOptie = sorteerOpties;
+            var richting = sorteerRichting;
             IQueryable<Artikel> query = _artikelRepository.GetArtikelQuery();
             query = (sortOptie, richting) switch
             {

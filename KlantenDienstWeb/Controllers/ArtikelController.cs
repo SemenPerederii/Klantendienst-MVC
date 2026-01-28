@@ -19,7 +19,7 @@ namespace KlantenDienstWeb.Controllers
             _leverancierService = leverancierService;
         }
         [HttpGet]
-        public async Task<IActionResult> Index(ArtikelSorteerOpties? sorteerOpties = null, SorteerRichting? sorteerRichting = null)
+        public async Task<IActionResult> Index(ArtikelSorteerOpties sorteerOpties, SorteerRichting sorteerRichting)
         {
             var artikelVM = new ArtikelViewModel();
             var alleCategorieën = await _categorieService.GetAllCategorieAsync();
@@ -38,8 +38,8 @@ namespace KlantenDienstWeb.Controllers
                 .ToList();
             artikelVM.GeselecteerdeCategorieIds = new List<int>();
             artikelVM.ActieveArtikelen = alleActieveArtikelen;
-            artikelVM.SorteerOpties = sorteerOpties ?? ArtikelSorteerOpties.Naam;
-            artikelVM.SorteerRichting = sorteerRichting ?? SorteerRichting.Asc;
+            artikelVM.SorteerOpties = sorteerOpties;
+            artikelVM.SorteerRichting = sorteerRichting;
             return View(artikelVM);
         }
         [HttpGet]

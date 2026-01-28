@@ -105,30 +105,34 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                <a asp-action="Index" asp-route-sorteerOpties="EAN"
-                asp-route-sorteerRichting="@(Model.SorteerOpties == ArtikelSorteerOpties.EAN && Model.SorteerRichting == SorteerRichting.Asc ? "Desc" : "Asc")">EAN
-                @(Model.SorteerOpties == ArtikelSorteerOpties.EAN ? (Model.SorteerRichting == SorteerRichting.Asc ? "▲" : "▼") : "")</a>
+            <th class="text-nowrap">EAN
+                <a asp-action="Index" asp-route-sorteerOpties="EAN" asp-route-sorteerRichting="Asc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ArtikelSorteerOpties.EAN && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
+                <a asp-action="Index" asp-route-sorteerOpties="EAN" asp-route-sorteerRichting="Desc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ArtikelSorteerOpties.EAN && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
             </th>
-            <th>
-                <a asp-action="Index" asp-route-sorteerOpties="Naam"
-                asp-route-sorteerRichting="@(Model.SorteerOpties == ArtikelSorteerOpties.Naam && Model.SorteerRichting == SorteerRichting.Asc ? "Desc" : "Asc")">Naam
-                @(Model.SorteerOpties == ArtikelSorteerOpties.Naam ? (Model.SorteerRichting == SorteerRichting.Asc ? "▲" : "▼") : "")</a>
+            <th class="text-nowrap">Naam
+                <a asp-action="Index" asp-route-sorteerOpties="Naam" asp-route-sorteerRichting="Asc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ArtikelSorteerOpties.Naam && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
+                <a asp-action="Index" asp-route-sorteerOpties="Naam" asp-route-sorteerRichting="Desc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ArtikelSorteerOpties.Naam && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
+            <th class="text-nowrap">Beschrijving
+                <a asp-action="Index" asp-route-sorteerOpties="Beschrijving" asp-route-sorteerRichting="Asc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ArtikelSorteerOpties.Beschrijving && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
+                <a asp-action="Index" asp-route-sorteerOpties="Beschrijving" asp-route-sorteerRichting="Desc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ArtikelSorteerOpties.Beschrijving && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
             </th>
-            <th>
-                <a asp-action="Index" asp-route-sorteerOpties="Beschrijving"
-                asp-route-sorteerRichting="@(Model.SorteerOpties == ArtikelSorteerOpties.Beschrijving && Model.SorteerRichting == SorteerRichting.Asc ? "Desc" : "Asc")">Beschrijving
-                @(Model.SorteerOpties == ArtikelSorteerOpties.Beschrijving ? (Model.SorteerRichting == SorteerRichting.Asc ? "▲" : "▼") : "")</a>
+            <th class="text-nowrap">Prijs
+                <a asp-action="Index" asp-route-sorteerOpties="Prijs" asp-route-sorteerRichting="Asc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ArtikelSorteerOpties.Prijs && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
+                <a asp-action="Index" asp-route-sorteerOpties="Prijs" asp-route-sorteerRichting="Desc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ArtikelSorteerOpties.Prijs && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
             </th>
-            <th>
-                <a asp-action="Index" asp-route-sorteerOpties="Prijs"
-                asp-route-sorteerRichting="@(Model.SorteerOpties == ArtikelSorteerOpties.Prijs && Model.SorteerRichting == SorteerRichting.Asc ? "Desc" : "Asc")">Prijs
-                @(Model.SorteerOpties == ArtikelSorteerOpties.Prijs ? (Model.SorteerRichting == SorteerRichting.Asc ? "▲" : "▼") : "")</a>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sorteerOpties="Voorraad"
-                asp-route-sorteerRichting="@(Model.SorteerOpties == ArtikelSorteerOpties.Voorraad && Model.SorteerRichting == SorteerRichting.Asc ? "Desc" : "Asc")">In voorraad
-                @(Model.SorteerOpties == ArtikelSorteerOpties.Voorraad ? (Model.SorteerRichting == SorteerRichting.Asc ? "▲" : "▼") : "")</a>
+            <th class="text-nowrap">In voorraad
+                <a asp-action="Index" asp-route-sorteerOpties="Voorraad" asp-route-sorteerRichting="Asc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ArtikelSorteerOpties.Voorraad && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
+                <a asp-action="Index" asp-route-sorteerOpties="Voorraad" asp-route-sorteerRichting="Desc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ArtikelSorteerOpties.Voorraad && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
             </th>
             <th>Categorie(ën)</th>
         </tr>
@@ -159,4 +163,3 @@
         }
     </tbody>
 </table>
-
