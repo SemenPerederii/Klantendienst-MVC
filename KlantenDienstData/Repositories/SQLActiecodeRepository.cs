@@ -26,5 +26,19 @@ namespace KlantenDienstData.Repositories
         {
             return await _context.Actiecodes.FindAsync(id);
         }
+
+        public async Task<List<Actiecode>> GetActiefOpDatumAsync(DateOnly datum)
+        {
+            return await _context.Actiecodes
+                .Where(a => a.GeldigVanDatum <= datum && a.GeldigTotDatum >= datum)
+                .ToListAsync();
+        }
+
+        public async Task<List<Actiecode>> GetNietActiefOpDatumAsync(DateOnly datum)
+        {
+            return await _context.Actiecodes
+                .Where(a => a.GeldigTotDatum < datum || a.GeldigVanDatum > datum)
+                .ToListAsync();
+        }
     }
 }

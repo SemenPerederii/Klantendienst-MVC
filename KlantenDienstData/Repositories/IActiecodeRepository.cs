@@ -11,5 +11,7 @@ namespace KlantenDienstData.Repositories
     {
         Task<IEnumerable<Actiecode>> GetAllAsync();
         Task<Actiecode?> GetByIdAsync(int id);
+        Task<List<Actiecode>> GetActiefOpDatumAsync(DateOnly datum);
+        Task<List<Actiecode>> GetNietActiefOpDatumAsync(DateOnly datum);
     }
 }

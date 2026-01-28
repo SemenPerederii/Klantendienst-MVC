@@ -7,6 +7,54 @@
 
 <a asp-action="ToevoegenActiecode" asp-controller="Actiecode" class="btn btn-sm btn-primary mb-2">Actiecode Toevoegen</a>
 
+<div class="d-flex gap-2 mb-4">
+    <form asp-action="Filter" method="get">
+        <div class="dropdown"
+             data-bs-auto-close="false">
+            <button class="btn btn-primary dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                Zoekfilters
+            </button>
+
+            <div class="dropdown-menu col-md-4">
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success">
+                        Zoeken
+                    </button>
+                </div>
+
+                <div class="d-grid">
+                    <a asp-action="Index" title="Wissen Filters">
+                        <img src="~/images/deleteBtn.png" class="cs-btnsImg" alt="Wissen Filters" />
+                        Wissen Filters
+                    </a>
+                </div>
+
+                <label class="form-label">Filter</label>
+                <select name="filter"
+                        class="form-select"
+                        onchange="toggleDate(this.value)">
+                    <option value="">Kies filter</option>
+                    <option value="ActiefNu">Actief nu</option>
+                    <option value="NietActiefNu">Niet actief nu</option>
+                    <option value="ExacteDatum">Exacte datum</option>
+                </select>
+
+                <div class="dropdown-menu col-md-4" id="datumContainer" style="display:none">
+                    <label class="form-label">Datum</label>
+                    <input type="date" name="datum" class="form-control" />
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+
 <table class="table table-striped">
     <thead>
         <tr>
@@ -31,3 +79,9 @@
     }
     </tbody>
 </table>
+
+<script>
+    function toggleDate(value) {
+        document.getElementById("datumContainer").style.display = value === "ExacteDatum" ? "block" : "none";
+    }
+</script>
