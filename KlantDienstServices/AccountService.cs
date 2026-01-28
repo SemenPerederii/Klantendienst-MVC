@@ -41,8 +41,6 @@ public class AccountService
         return await _repository.FindPersoneelslidByIdAsync(personeelslidId);
     }
 
-    public async Task WijzigPaswoord(PaswoordWijzigingsDto wijzigingsInfo)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task WijzigPaswoord(int id, string nieuwPaswoord) =>
+       await _repository.UpdatePaswoordAsync(id, BCrypt.Net.BCrypt.HashPassword(nieuwPaswoord));
 }

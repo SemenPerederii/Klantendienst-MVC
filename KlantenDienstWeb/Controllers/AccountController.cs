@@ -47,18 +47,17 @@ namespace KlantenDienstWeb.Controllers
 
                 return View("WijzigWachtwoord", model);
             }
-            if(!BCrypt.Net.BCrypt.Verify(model.NieuwPaswoord, account!.PersoneelslidAccount.Paswoord))
+            if(BCrypt.Net.BCrypt.Verify(model.NieuwPaswoord, account!.PersoneelslidAccount.Paswoord))
             {
                 ModelState.AddModelError(nameof(model.NieuwPaswoord), "Nieuw paswoord mag niet hetzelfde zijn als het huidige paswoord.");
                 return View("WijzigWachtwoord", model);
             }
 
 
-            await _accountService.WijzigPaswoord();
+            await _accountService.WijzigPaswoord(id.Value, model.NieuwPaswoord);
                 
             return View();
 
-            // echte logica hier
         }
 
     }
