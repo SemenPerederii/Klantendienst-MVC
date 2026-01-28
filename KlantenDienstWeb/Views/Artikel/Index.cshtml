@@ -153,13 +153,14 @@
                 <td>
                 @if (Model.ActieveArtikelen.Any(a => a.ArtikelId == artikel.ArtikelId))
                 {
-                    <a asp-action="ZetArtikelInactief" asp-route-id="@artikel.ArtikelId" >Zet inactief</a>
+                    <a class="btn btn-outline-dark" asp-action="ZetArtikelInactief" asp-route-id="@artikel.ArtikelId" >Zet inactief</a>
                 } 
                 else
                 {
-                    <p>Inactief artikel</p>
-                    <td><a class="btn btn-outline-dark" asp-action="ZetArtikelInactief" asp-route-id="@artikel.ArtikelId" >Zet inactief</a></td>
+                    <p class="text-secondary text-center">Inactief</p>
+                    
                 }
+                </td>
                 <td><a class="btn btn-outline-dark" asp-action="WijzigFormulier" asp-route-id="@artikel.ArtikelId">Wijzig</a></td>
             </tr>
         }

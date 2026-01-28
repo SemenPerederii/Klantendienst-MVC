@@ -210,7 +210,7 @@ namespace KlantenDienstWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeactiveerArtikel(int artikelId)
         {
-            var artikel = await _artikelService.GetArtikelByIdAsync(artikelId);
+            var artikel = await _artikelService.GetArtikelAsync(artikelId);
             if (artikel == null)
             {
                 return NotFound();

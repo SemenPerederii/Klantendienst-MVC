@@ -108,7 +108,7 @@ namespace KlantenDienstData.Repositories
 
         public async Task DeactiveerArtikelAsync(int artikelId)
         {
-            var artikel = await GetArtikelByIdAsync(artikelId);
+            var artikel = await GetArtikelAsync(artikelId);
 
             if (artikel == null)
             {
