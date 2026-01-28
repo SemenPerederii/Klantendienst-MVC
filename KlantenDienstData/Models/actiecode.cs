@@ -13,11 +13,13 @@ public partial class Actiecode
 
     [DataType(DataType.Date)]
     [Display(Name = "Geldig van")]
+    [Required(ErrorMessage = "Geldig Van is een Verplicht veld")]
     [CustomValidation(typeof(Actiecode), nameof(GeldigVanDatumValidatie))]
     public DateOnly GeldigVanDatum { get; set; }
 
     [DataType(DataType.Date)]
     [Display(Name = "Geldig tot")]
+    [Required(ErrorMessage = "Geldig tot is een Verplicht veld")]
     [CustomValidation(typeof(Actiecode), nameof(GeldigTotDatumValidatie))]
     public DateOnly GeldigTotDatum { get; set; }
 
