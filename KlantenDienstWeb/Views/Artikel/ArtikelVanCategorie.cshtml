@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Artikel>
+@{
+    ViewData["Title"] = "ArtikelVanCategorie";
+}
+
+<h1 class="d-flex justify-content-center">Artikelen van categorie "@ViewBag.Naam"</h1>
+
+@if (Model != null && Model.Any())
+{
+    <div class="d-flex gap-2 mb-4">
+        <a class="btn btn-secondary" asp-controller="Categorie" asp-action="Index">Categorieën bekijken</a>
+        <a asp-action="Index" asp-controller="Artikel" class="btn btn-secondary">Alle artikelen</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>EAN-Code</th>
+                <th>Naam</th>
+                <th>Beschrijving</th>
+                <th>Prijs</th>
+                <th>In voorraad</th>
+                <th>Categorie(ën)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var artikel in Model)
+            {
+                <tr>
+                    <td>@artikel.EAN</td>
+                    <td>@artikel.Naam</td>
+                    <td>@artikel.Beschrijving</td>
+                    <td>@artikel.Prijs.ToString("€ #,##0.00")</td>
+                    <td>@artikel.Voorraad</td>
+                    <td>
+                        <ul>
+                            @foreach (var categorie in artikel.Categorieën)
+                            {
+                                <li>
+                                    <a asp-controller="Artikel"
+                                       asp-action="ArtikelVanCategorie"
+                                       asp-route-categorieId="@categorie.CategorieId">@categorie.Naam</a>
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                    <td><a class="btn btn-outline-dark" asp-action="WijzigFormulier" asp-route-id="@artikel.ArtikelId">Wijzig</a></td>
+                    <td>
+                        <form asp-action="VerwijderenBevestig"
+                              asp-controller="Artikel"
+                              asp-route-id="@artikel.ArtikelId"
+                              method="get"
+                              style="display:inline">
+
+                            <button type="submit" class="btn btn-outline-dark">
+                                Verwijderen uit categorie
+                                <img src="/images/deleteBtn.png" alt="Verwijderen" class="cs-btnsImg" />
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="d-flex flex-column justify-content-center align-items-center mt-4">
+        <p>In deze categorie zijn er geen artikelen</p>
+        <a href="javascript:history.back()" class="btn btn-secondary">Terug</a>
+    </div>  
+}
+

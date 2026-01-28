@@ -136,5 +136,20 @@ namespace KlantenDienstData.Repositories
 
             await _context.SaveChangesAsync();
         }
+        public async Task<IEnumerable<Artikel>> GetArtikelenByCategorieAsync(int categorieId)
+        {
+            return await _context.Artikelen
+            .Include(a => a.Categorieën)
+            .Include(a => a.Bestellijnen)
+            .Include(a => a.Inkomendeleveringslijnen)
+            .Include(a => a.Magazijnplaatsen)
+            .Where(a => a.Categorieën.Any(c => c.CategorieId == categorieId))
+            .ToListAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

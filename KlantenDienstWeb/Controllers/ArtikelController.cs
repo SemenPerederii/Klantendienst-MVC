@@ -221,5 +221,43 @@ namespace KlantenDienstWeb.Controllers
             return View("Index");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ArtikelVanCategorie (int categorieId)
+        {
+            var categorie = await _categorieService.GetByIdAsync(categorieId);
+            if (categorie == null)
+            {
+                return NotFound(); 
+            }
+            ViewBag.Naam = categorie.Naam;
+
+            var artikelenVanCategorie = await _artikelService.GetArtikelenByCategorieAsync(categorieId);
+
+            return View(artikelenVanCategorie);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> VerwijderenBevestig(int id)
+        {
+            var artikel = await _artikelService.GetArtikelAsync(id);
+            if (artikel == null)
+                return NotFound();
+
+            ViewBag.ReturnUrl = Request.Headers["Referer"].ToString();
+
+            return View(artikel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Verwijderen(int id, string returnUrl)
+        {
+            await _artikelService.VerwijderenUitCategorieAsync(id);
+
+            if (!string.IsNullOrEmpty(returnUrl))
+                return Redirect(returnUrl);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

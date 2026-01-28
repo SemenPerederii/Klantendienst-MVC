@@ -17,5 +17,7 @@ namespace KlantenDienstServices
         Task<bool> VoegArtikelToeAsync(Artikel artikel);
         Task<bool> WijzigArtikelAsync(int artikelId, Artikel nieuwArtikel);
         Task<Artikel?> GetArtikelAsync(int id);
+        Task<IEnumerable<Artikel>> GetArtikelenByCategorieAsync(int categorieId);
+        Task VerwijderenUitCategorieAsync(int id);
     }
 }

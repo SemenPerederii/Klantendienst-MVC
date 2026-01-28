@@ -150,7 +150,10 @@
                     <ul>
                         @foreach (var categorie in artikel.Categorieën)
                         {
-                            <li><a href="#">@categorie.Naam</a></li>
+                            <li><a asp-controller="Artikel" 
+                                asp-action="ArtikelVanCategorie" 
+                                asp-route-categorieId="@categorie.CategorieId"
+                            >@categorie.Naam</a></li>
                         }
                     </ul>
                 </td>
