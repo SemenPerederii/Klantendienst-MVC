@@ -31,5 +31,7 @@ namespace KlantenDienstServices
                     : "Bedrijf"
             });
         }
+
+        public Task<Klant?> GetKlantAsync(int id) => _repositoryKlant.GetKlantAsync(id);
     }
 }

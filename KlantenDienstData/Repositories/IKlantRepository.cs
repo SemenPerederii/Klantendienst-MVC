@@ -10,5 +10,6 @@ namespace KlantenDienstData.Repositories
     public interface IKlantRepository
     {
         Task<IEnumerable<Klant>> GetAllKlantenAsync();
+        Task<Klant?> GetKlantAsync(int id);
     }
 }

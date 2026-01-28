@@ -23,5 +23,18 @@ namespace KlantenDienstData.Repositories
                 .AsNoTracking()
                 .ToListAsync();
         }
+
+        public async Task<Klant?> GetKlantAsync(int id)
+        {
+            return await _context.Klanten
+                .Include(klant => klant.Rechtspersonen).ThenInclude(rp => rp.Contactpersonen)
+                .Include(klant => klant.Natuurlijkepersonen)
+                .Include(klant => klant.FacturatieAdres)
+                .Include(klant => klant.LeveringsAdres)
+                .Include(klant => klant.Bestellingen)
+                .ThenInclude(bestelling => bestelling.Bestellijnen)
+                .FirstOrDefaultAsync(klant => klant.KlantId == id);
+                
+        }
     }
 }
