@@ -40,6 +40,9 @@ builder.Services.AddScoped<ILeverancierRepository, SQLLeverancierRepository>();
 builder.Services.AddScoped<IActiecodeRepository, SQLActiecodeRepository>();
 builder.Services.AddScoped<IActiecodeService, ActiecodeService>();
 
+builder.Services.AddScoped<IKlantRepository, SQLKlantRepository>();
+builder.Services.AddScoped<IKlantService, KlantService>();
+
 builder.Services.AddTransient<SecurityManager>();
 
 builder.Services.AddSession(options =>
