@@ -1,0 +1,13 @@
+﻿@model PaswoordWijzigenVM
+
+<h3>Weet u zeker dat u het wachtwoord wilt aanpassen?</h3>
+
+<form asp-action="WachtwoordWijzigenBevestigen" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="NieuwPaswoord" />
+    <input type="hidden" asp-for="HuidigPaswoord" />
+    <input type="hidden" asp-for="Emailadres" />
+    <br />
+    <button type="submit" class="btn btn-primary">Ja</button>
+    <a asp-controller="Home" asp-action="Landingspagina" class="btn btn-secondary">Nee</a>
+</form>

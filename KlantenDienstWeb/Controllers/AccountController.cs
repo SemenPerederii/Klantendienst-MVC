@@ -53,12 +53,15 @@ namespace KlantenDienstWeb.Controllers
                 return View("WijzigWachtwoord", model);
             }
 
-
-            await _accountService.WijzigPaswoord(id.Value, model.NieuwPaswoord);
-                
-            return View();
-
+            return View("BevestigWachtwoordWijziging", model);
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> WachtwoordWijzigenBevestigen(PaswoordWijzigenVM model)
+        {
+            var id = HttpContext.Session.GetInt32("PersoneelslidId");
+            await _accountService.WijzigPaswoord(id!.Value, model.NieuwPaswoord);
+            return RedirectToAction("Landingspagina", "Home");
+        }
     }
 }
