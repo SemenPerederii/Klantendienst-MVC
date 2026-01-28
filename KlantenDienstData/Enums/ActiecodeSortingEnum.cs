@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace KlantenDienstData.Enums
 {
-    public enum ActiecodeStatus
+    public enum ActiecodeSorteerOpties
     {
-        Geen,
-        Actief,
-        NietActief,
-        ExacteDatum
+        Naam,
+        GeldigVanDatum,
+        GeldigTotDatum,
     }
 }

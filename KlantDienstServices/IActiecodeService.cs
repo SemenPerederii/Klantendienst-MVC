@@ -1,5 +1,5 @@
-﻿using KlantenDienstData.Models;
-using KlantenDienstServices.Enums;
+﻿using KlantenDienstData.Enums;
+using KlantenDienstData.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +11,9 @@ namespace KlantenDienstServices
     public interface IActiecodeService
     {
         Task<IEnumerable<Actiecode>> GetAllActiecodesAsync();
+        Task<IEnumerable<Actiecode>> GetAllActiecodesAsync(ActiecodeStatus filter,
+                            DateOnly? datum, ActiecodeSorteerOpties sorteerOpties, SorteerRichting sorteerRichting);
         Task<Actiecode?> GetActiecodeByIdAsync(int id);
-        Task<IEnumerable<Actiecode>> GetActieveVandaagAsync(DateOnly vandaag);
-        Task<IEnumerable<Actiecode>> GetNietActieveVandaagAsync(DateOnly vandaag);
-        Task<IEnumerable<Actiecode>> GetActiefOpDatumAsync(DateOnly datum);
-        ActiecodeStatus GetStatus(Actiecode actie, DateOnly datum);
+
     }
 }

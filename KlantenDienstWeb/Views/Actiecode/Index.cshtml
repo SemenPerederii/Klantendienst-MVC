@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Actiecode>
+﻿@using KlantenDienstData.Enums
+@model ActiecodeVM
 @{
     ViewData["Title"] = "Actiecodes";
 }
@@ -8,7 +9,7 @@
 <a asp-action="ToevoegenActiecode" asp-controller="Actiecode" class="btn btn-sm btn-primary mb-2">Actiecode Toevoegen</a>
 
 <div class="d-flex gap-2 mb-4">
-    <form asp-action="Filter" method="get">
+    <form asp-action="Index" method="get">
         <div class="dropdown"
              data-bs-auto-close="false">
             <button class="btn btn-primary dropdown-toggle"
@@ -20,52 +21,90 @@
 
             <div class="dropdown-menu col-md-4">
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-success">
-                        Zoeken
-                    </button>
-                </div>
-
-                <div class="d-grid">
                     <a asp-action="Index" title="Wissen Filters" class="btn btn-secondary">
                         Wis Filters
                         <img src="~/images/deleteBtn.png" class="cs-btnsImg" alt="Wissen Filters" />
                     </a>
                 </div>
-
                 <label class="form-label">Filter:</label>
-                <select name="filter"
-                        class="form-select"
-                        onchange="toggleDate(this.value)">
-                    <option value="">Kies filter</option>
-                    <option value="ActiefNu">Nu actief</option>
-                    <option value="NietActiefNu">Niet actief</option>
-                    <option value="ExacteDatum">Op datum</option>
+
+                <select name="filter" class="form-select" onchange="toggleDate(this.value)">
+                    <option value="Geen" selected="@(Model.HuidigeFilter == ActiecodeStatus.Geen)">Kies filter</option>
+                    <option value="Actief" selected="@(Model.HuidigeFilter == ActiecodeStatus.Actief)">Nu actief</option>
+                    <option value="NietActief" selected="@(Model.HuidigeFilter == ActiecodeStatus.NietActief)">Niet actief</option>
+                    <option value="ExacteDatum" selected="@(Model.HuidigeFilter == ActiecodeStatus.ExacteDatum)">Op datum</option>
                 </select>
 
-                <div class="dropdown-menu col-md-4" id="datumContainer" style="display:none">
+                <div class="mb-3" id="datumContainer" style="display:none">
                     <label class="form-label">Datum</label>
-                    <input type="date" name="datum" class="form-control" />
+                    <input type="date" name="datum" class="form-control" value="@Model.HuidigeDatumString" />
                 </div>
 
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success">
+                        Zoeken
+                    </button>
+                </div>
+  
             </div>
 
         </div>
     </form>
 </div>
 
-
-
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Actiecode</th>
-            <th>Van</th>
-            <th>Tot</th>
+            <th>Actiecode
+                <a asp-action="Index"
+                   asp-route-filter="@Model.HuidigeFilter"
+                   asp-route-datum="@Model.HuidigeDatumString"
+                   asp-route-sorteerOpties="Naam" 
+                   asp-route-sorteerRichting="Asc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ActiecodeSorteerOpties.Naam && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
+                
+                <a asp-action="Index"
+                   asp-route-filter="@Model.HuidigeFilter"
+                   asp-route-datum="@Model.HuidigeDatumString"
+                   asp-route-sorteerOpties="Naam" 
+                   asp-route-sorteerRichting="Desc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ActiecodeSorteerOpties.Naam && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
+            </th>
+            <th>Van
+                <a asp-action="Index"
+                   asp-route-filter="@Model.HuidigeFilter"
+                   asp-route-datum="@Model.HuidigeDatumString"
+                    asp-route-sorteerOpties="GeldigVanDatum" 
+                    asp-route-sorteerRichting="Asc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ActiecodeSorteerOpties.GeldigVanDatum && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
+                
+                <a asp-action="Index"
+                   asp-route-filter="@Model.HuidigeFilter"
+                   asp-route-datum="@Model.HuidigeDatumString"
+                    asp-route-sorteerOpties="GeldigVanDatum" 
+                    asp-route-sorteerRichting="Desc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ActiecodeSorteerOpties.GeldigVanDatum && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
+            </th>
+            <th>Tot
+                <a asp-action="Index"
+                   asp-route-filter="@Model.HuidigeFilter"
+                   asp-route-datum="@Model.HuidigeDatumString"
+                    asp-route-sorteerOpties="GeldigTotDatum" 
+                    asp-route-sorteerRichting="Asc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ActiecodeSorteerOpties.GeldigTotDatum && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
+                
+                <a asp-action="Index"
+                   asp-route-filter="@Model.HuidigeFilter"
+                   asp-route-datum="@Model.HuidigeDatumString"
+                    asp-route-sorteerOpties="GeldigTotDatum" 
+                    asp-route-sorteerRichting="Desc" class="btn btn-sm px-1 sort-btn
+                @(Model.SorteerOpties == ActiecodeSorteerOpties.GeldigTotDatum && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-    @foreach (var actiecode in Model)
+    @foreach (var actiecode in Model.Actiecodes)
     {
         <tr>
             <td>@actiecode.Naam</td>
@@ -82,6 +121,10 @@
 
 <script>
     function toggleDate(value) {
-        document.getElementById("datumContainer").style.display = value === "ExacteDatum" ? "block" : "none";
+        document.getElementById("datumContainer").style.display =
+            value === "ExacteDatum" ? "block" : "none";
     }
+    document.addEventListener("DOMContentLoaded", function () {
+        toggleDate("@Model.HuidigeFilter");
+    });
 </script>

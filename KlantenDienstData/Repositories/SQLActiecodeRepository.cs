@@ -1,4 +1,5 @@
-﻿using KlantenDienstData.Models;
+﻿using KlantenDienstData.Enums;
+using KlantenDienstData.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,23 +23,13 @@ namespace KlantenDienstData.Repositories
             return await _context.Actiecodes.ToListAsync();
         }
 
+        public IQueryable<Actiecode> GetActiecodeQuery()
+        {
+            return _context.Actiecodes.AsNoTracking();
+        }
         public async Task<Actiecode?> GetByIdAsync(int id)
         {
             return await _context.Actiecodes.FindAsync(id);
-        }
-
-        public async Task<List<Actiecode>> GetActiefOpDatumAsync(DateOnly datum)
-        {
-            return await _context.Actiecodes
-                .Where(a => a.GeldigVanDatum <= datum && a.GeldigTotDatum >= datum)
-                .ToListAsync();
-        }
-
-        public async Task<List<Actiecode>> GetNietActiefOpDatumAsync(DateOnly datum)
-        {
-            return await _context.Actiecodes
-                .Where(a => a.GeldigTotDatum < datum || a.GeldigVanDatum > datum)
-                .ToListAsync();
         }
     }
 }

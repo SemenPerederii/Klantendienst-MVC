@@ -1,6 +1,7 @@
 ﻿using KlantenDienstServices;
 using Microsoft.AspNetCore.Mvc;
 using KlantenDienstData.Models;
+using KlantenDienstData.Enums;
 using KlantenDienstWeb.Models;
 
 namespace KlantenDienstWeb.Controllers
@@ -13,43 +14,32 @@ namespace KlantenDienstWeb.Controllers
         {
             _serviceActiecode = serviceActiecode;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ActiecodeStatus filter = ActiecodeStatus.Geen,
+                        string? datum = null,
+                        ActiecodeSorteerOpties sorteerOpties = ActiecodeSorteerOpties.Naam,
+                        SorteerRichting sorteerRichting = SorteerRichting.Asc)
         {
-            var actiecodes = await _serviceActiecode.GetAllActiecodesAsync();
-            return View(actiecodes);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Filter(string filter, DateOnly? datum)
-        {
-            var vandaag = DateOnly.FromDateTime(DateTime.Today);
-            IEnumerable<Actiecode> actiecodes;
-
-            switch (filter)
+            DateOnly? parsedDatum = null;
+            if (!string.IsNullOrWhiteSpace(datum) && DateOnly.TryParse(datum, out var d))
             {
-                case "ActiefNu":
-                    actiecodes = await _serviceActiecode.GetActiefOpDatumAsync(vandaag);
-                    break;
-
-                case "NietActiefNu":
-                    actiecodes = await _serviceActiecode.GetNietActieveVandaagAsync(vandaag);
-                    break;
-
-                case "ExacteDatum":
-                    if (datum == null)
-                        return RedirectToAction(nameof(Index));
-
-                    actiecodes = await _serviceActiecode.GetActiefOpDatumAsync(datum.Value);
-                    break;
-
-                default:
-                    return RedirectToAction(nameof(Index));
+                parsedDatum = d;
             }
+            var actiecodes = await _serviceActiecode.GetAllActiecodesAsync(
+                                filter,
+                                parsedDatum,
+                                sorteerOpties,
+                                sorteerRichting);
 
-            ViewBag.Filter = filter;
-            ViewBag.Datum = datum;
+            var vm = new ActiecodeVM
+            {
+                Actiecodes = actiecodes,
+                SorteerOpties = sorteerOpties,
+                SorteerRichting = sorteerRichting,
+                HuidigeFilter = filter,
+                HuidigeDatum = parsedDatum
+            };
 
-            return View("Index", actiecodes);
+            return View(vm);
         }
     }
 }
