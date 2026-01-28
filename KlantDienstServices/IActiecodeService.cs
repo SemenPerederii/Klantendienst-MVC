@@ -11,5 +11,7 @@ namespace KlantenDienstServices
     {
         Task<IEnumerable<Actiecode>> GetAllActiecodesAsync();
         Task<Actiecode?> GetActiecodeByIdAsync(int id);
+        Task WijzigActieCode(int id, Actiecode nieuweActiecode);
+        Task Toevoegen(Actiecode actiecode);
     }
 }

@@ -5,7 +5,7 @@
 
 <h1 class="d-flex justify-content-center">@ViewData["Title"]</h1>
 
-<a asp-action="ToevoegenActiecode" asp-controller="Actiecode" class="btn btn-sm btn-primary mb-2">Actiecode Toevoegen</a>
+<a asp-action="ToevoegFormulier" asp-controller="Actiecode" class="btn btn-sm btn-primary mb-2">Actiecode Toevoegen</a>
 
 <table class="table table-striped">
     <thead>
@@ -24,7 +24,7 @@
             <td>@actiecode.GeldigVanDatum.ToString("dd-MM-yyyy")</td>
             <td>@actiecode.GeldigTotDatum.ToString("dd-MM-yyyy")</td>
                 <td>
-                    <a asp-action="WijzigenActiecode" asp-controller="Actiecode" asp-route-id="@actiecode.ActiecodeId" class="btn btn-sm cs-btns">
+                    <a asp-action="WijzigFormulier" asp-controller="Actiecode" asp-route-id="@actiecode.ActiecodeId" class="btn btn-sm cs-btns">
                         Wijzigen <img src="/images/editBtn.png" alt="Wijzigen" class="cs-btnsImg" />
             </a></td>
         </tr>
