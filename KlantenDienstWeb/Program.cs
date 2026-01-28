@@ -1,11 +1,13 @@
 using KlantenDienstData.Models;
 using KlantenDienstData.Repositories;
 using KlantenDienstServices;
+using KlantenDienstWeb.Security;
+using KlantenDienstWeb;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
-using Microsoft.AspNetCore.Localization;
-using KlantenDienstWeb;
-using Microsoft.AspNetCore.Mvc.Razor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,12 +40,23 @@ builder.Services.AddScoped<ILeverancierRepository, SQLLeverancierRepository>();
 builder.Services.AddScoped<IActiecodeRepository, SQLActiecodeRepository>();
 builder.Services.AddScoped<IActiecodeService, ActiecodeService>();
 
+builder.Services.AddTransient<SecurityManager>();
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/LogOff";
+        options.ReturnUrlParameter = "ReturnUrl";
+    });
 
 // Localization
 var supportedCultures = new[]
@@ -81,7 +94,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
 app.UseRequestLocalization();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

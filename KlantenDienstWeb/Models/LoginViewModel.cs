@@ -15,4 +15,6 @@ public class LoginViewModel
 
     public string? ErrorMessage { get; set; } = string.Empty;
     public string? ReturnUrl { get; set; } = string.Empty;
+    [Display(Name = "Aangemeld blijven? ")]
+    public bool IsCookiePersistent { get; set; } = false;
 }
