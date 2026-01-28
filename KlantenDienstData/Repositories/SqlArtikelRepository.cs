@@ -106,5 +106,21 @@ namespace KlantenDienstData.Repositories
                 .Include(a => a.Categorieën); 
         }
 
+        public async Task DeactiveerArtikelAsync(int artikelId)
+        {
+            var artikel = await GetArtikelAsync(artikelId);
+
+            if (artikel == null)
+            {
+                return;
+            }
+
+            artikel.MinimumVoorraad = 0;
+            artikel.MaximumVoorraad = 0;
+            artikel.Bestelpeil = 0;
+            artikel.AantalBesteldLeverancier = 0;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

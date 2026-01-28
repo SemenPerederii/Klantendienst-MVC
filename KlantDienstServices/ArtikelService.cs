@@ -30,6 +30,11 @@ namespace KlantenDienstServices
                 
         }
 
+        public async Task DeactiveerArtikelAsync(int artikelId)
+        {
+
+            await _artikelRepository.DeactiveerArtikelAsync(artikelId);
+        }
         public async Task<List<Artikel>> GetAllArtikelenAsync(ArtikelSorteerOpties sorteerOpties, SorteerRichting sorteerRichting)
         {
             IQueryable<Artikel> query = _artikelRepository.GetArtikelQuery();
@@ -54,6 +59,7 @@ namespace KlantenDienstServices
             };
             return await query.ToListAsync();
         }
+        public async Task<List<Artikel>> GetAllArtikelenAsync() => await _artikelRepository.GetAllArtikelenAsync();
 
         public async Task<Artikel> GetArtikelByIdAsync(int id) =>
             await _artikelRepository.GetArtikelAsync(id);
