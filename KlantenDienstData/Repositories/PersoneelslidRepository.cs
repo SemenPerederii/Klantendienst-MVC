@@ -21,6 +21,8 @@ public class PersoneelslidRepository : IPersoneelslidRepository
 
     public async Task<Personeelslid?> FindPersoneelslidByIdAsync(int personeelslidId)
     {
-        return await _context.Personeelsleden.FindAsync(personeelslidId);
+        return await _context.Personeelsleden
+            .Include(p => p.PersoneelslidAccount)
+            .FirstOrDefaultAsync(p => p.PersoneelslidId == personeelslidId);
     }
 }
