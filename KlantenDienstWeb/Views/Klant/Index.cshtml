@@ -5,3 +5,26 @@
 
 <h1>Klantbeheer</h1>
 
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Naam</th>
+            <th>Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var klant in Model)
+        {
+            <tr>
+                <td>
+                    <a class="page-link"
+                       asp-controller="Klant"
+                        asp-action="Details"
+                       asp-route-id="@klant.KlantId">@klant.Naam
+                    </a>
+                </td>
+                <td>@klant.Type</td>
+            </tr>
+        }
+    </tbody>
+</table>
