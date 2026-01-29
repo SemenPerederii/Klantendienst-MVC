@@ -1,5 +1,7 @@
 ﻿using KlantenDienstData.Models;
 using KlantenDienstData.Repositories;
+using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace KlantenDienstServices
 {
@@ -40,6 +42,14 @@ namespace KlantenDienstServices
         public async Task<IEnumerable<Categorie>> GetAllCategorieAsync()
         {
             return await _repositoryCategorie.GetAll();
+        }
+
+        public async Task<IEnumerable<Categorie>> GetAllCategorieAsync(ArtikelFilterDto? filters)
+        {
+            IQueryable<Categorie> query = _repositoryCategorie.GetCategorieQuery();
+            if (filters.CategorieIds is { Count: > 0 })
+                query = query.Where(c => filters.CategorieIds.Contains(c.CategorieId));
+            return await query.ToListAsync();
         }
 
         public IEnumerable<Categorie> BuildTree(IEnumerable<Categorie> allCategories)

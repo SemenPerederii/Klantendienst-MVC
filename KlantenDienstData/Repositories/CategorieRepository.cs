@@ -145,5 +145,7 @@ namespace KlantenDienstData.Repositories
                 return false;
             return await _context.Categorieen.AnyAsync(c => c.Naam.ToLower() == naam.ToLower());
         }
+
+        public IQueryable<Categorie> GetCategorieQuery() => _context.Categorieen.AsNoTracking();
     }
 }

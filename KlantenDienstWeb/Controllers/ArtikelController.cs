@@ -19,11 +19,12 @@ namespace KlantenDienstWeb.Controllers
             _leverancierService = leverancierService;
         }
         [HttpGet]
-        public async Task<IActionResult> Index(ArtikelSorteerOpties sorteerOpties, SorteerRichting sorteerRichting)
+        public async Task<IActionResult> Index(ArtikelFilterDto? huidigeFilters, ArtikelSorteerOpties sorteerOpties, SorteerRichting sorteerRichting)
         {
-            var artikelVM = new ArtikelViewModel();
+           
             var alleCategorieën = await _categorieService.GetAllCategorieAsync();
-            var artikelen = await _artikelService.GetAllArtikelenAsync(sorteerOpties, sorteerRichting);
+         /*   var gefilterdeCategorien = await _categorieService.GetAllCategorieAsync(huidigeFilters);*/
+            var artikelen = await _artikelService.GetAllArtikelenAsync(huidigeFilters, sorteerOpties, sorteerRichting);
             var alleActieveArtikelen = new List<Artikel>();
             foreach (var artikel in artikelen)
             {
@@ -32,14 +33,24 @@ namespace KlantenDienstWeb.Controllers
                     alleActieveArtikelen.Add(artikel);
                 }
             }
-            artikelVM.Artikelen = artikelen;
-            artikelVM.Categorieën = alleCategorieën
+            var artikelVM = new ArtikelViewModel()
+            {
+                Artikelen = artikelen,
+                Categorieën = alleCategorieën
                 .Where(c => c.HoofdCategorieId == null)
-                .ToList();
-            artikelVM.GeselecteerdeCategorieIds = new List<int>();
-            artikelVM.ActieveArtikelen = alleActieveArtikelen;
-            artikelVM.SorteerOpties = sorteerOpties;
-            artikelVM.SorteerRichting = sorteerRichting;
+                .ToList(),
+
+             /*   GefilterdeCategorieën = gefilterdeCategorien,*/
+
+                GeselecteerdeCategorieIds =
+                huidigeFilters?.CategorieIds?.ToList() ?? new List<int>(),
+
+                ActieveArtikelen = alleActieveArtikelen,
+                SorteerOpties = sorteerOpties,
+                SorteerRichting = sorteerRichting,
+                HuidigeFilters = huidigeFilters
+            };
+
             return View(artikelVM);
         }
         [HttpGet]
@@ -159,40 +170,40 @@ namespace KlantenDienstWeb.Controllers
             await _artikelService.WijzigArtikelAsync(artikelToevoegViewModel.Artikel.ArtikelId,artikelToevoegViewModel.Artikel);
             return RedirectToAction(nameof(Index));
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ZoekenOpFilterAsync(ArtikelViewModel vm)
-        {
-            vm.GeselecteerdeCategorieIds ??= new List<int>();
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> ZoekenOpFilterAsync(ArtikelViewModel vm)
+        //{
+        //    vm.GeselecteerdeCategorieIds ??= new List<int>();
 
-            var filter = new ArtikelFilterDto
-            {
-                Id = vm.Id,
-                Ean = vm.EAN,
-                Naam = vm.Naam,
-                Beschrijving = vm.Beschrijving,
-                MinPrijs = vm.MinPrijs,
-                MaxPrijs = vm.MaxPrijs,
-                EnkelInVoorraad = vm.InVoorraad,
-                CategorieIds = vm.GeselecteerdeCategorieIds
-            };
+        //    var filter = new ArtikelFilterDto
+        //    {
+        //        Id = vm.Id,
+        //        Ean = vm.EAN,
+        //        Naam = vm.Naam,
+        //        Beschrijving = vm.Beschrijving,
+        //        MinPrijs = vm.MinPrijs,
+        //        MaxPrijs = vm.MaxPrijs,
+        //        EnkelInVoorraad = vm.InVoorraad,
+        //        CategorieIds = vm.GeselecteerdeCategorieIds
+        //    };
 
-            vm.Artikelen = await _artikelService.ZoekArtikelenOpFilterAsync(filter);
+        //    vm.Artikelen = await _artikelService.ZoekArtikelenOpFilterAsync(filter);
 
 
-            var alleCats = await _categorieService.GetAllCategorieAsync();
-            vm.Categorieën = alleCats.Where(c => c.HoofdCategorieId == null).ToList();
+        //    var alleCats = await _categorieService.GetAllCategorieAsync();
+        //    vm.Categorieën = alleCats.Where(c => c.HoofdCategorieId == null).ToList();
 
-            foreach (var artikel in vm.Artikelen)
-            {
-                if (_artikelService.CheckStatusActief(artikel))
-                {
-                    vm.ActieveArtikelen.Add(artikel);
-                }
-            }
+        //    foreach (var artikel in vm.Artikelen)
+        //    {
+        //        if (_artikelService.CheckStatusActief(artikel))
+        //        {
+        //            vm.ActieveArtikelen.Add(artikel);
+        //        }
+        //    }
 
-            return View("Index", vm);
-        }
+        //    return View("Index", vm);
+        //}
         [HttpGet]
         public async Task<IActionResult> ZetArtikelInactief(int id)
         {

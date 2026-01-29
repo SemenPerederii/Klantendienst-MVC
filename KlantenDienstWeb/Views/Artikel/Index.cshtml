@@ -5,7 +5,7 @@
 <h1 class="d-flex justify-content-center">@ViewData["Title"]</h1>
 
 <div class="d-flex gap-2 mb-4">
-    <form asp-action="ZoekenOpFilter" method="post">
+    <form asp-action="index" asp-route-huidigeFilters="@Model.HuidigeFilters" method="get">
 
         <div class="dropdown" 
              data-bs-auto-close="false">
@@ -25,43 +25,42 @@
                         <label class="form-label mb-0">Id</label>
                         <a asp-action="Index" title="Reset Filters"><img src="~/images/deleteBtn.png" class="cs-btnsImg" alt="Reset Filters"/></a>
                     </div>
-                    <input asp-for="Id" class="form-control" />
+                    <input asp-for="@Model.HuidigeFilters.Id" class="form-control" />
                 </div>
                 <!-- EAN -->
                 <div class="mb-3">
                     <label class="form-label">EAN</label>
-                    <input asp-for="EAN" class="form-control" />
+                    <input asp-for="@Model.HuidigeFilters.Ean" class="form-control" />
                 </div>
 
                 <!-- Naam -->
                 <div class="mb-3">
                     <label class="form-label">Naam</label>
-                    <input asp-for="Naam" class="form-control" />
+                    <input asp-for="@Model.HuidigeFilters.Naam" class="form-control" />
                 </div>
 
                 <!-- Beschrijving -->
                 <div class="mb-3">
                     <label class="form-label">Beschrijving</label>
-                    <input asp-for="Beschrijving" class="form-control" />
+                    <input asp-for="@Model.HuidigeFilters.Beschrijving" class="form-control" />
                 </div>
-
 
                 <!-- Prijs -->
                 <div class="row mb-3">
                     <div class="col">
                         <label class="form-label">Min prijs</label>
-                        <input asp-for="MinPrijs" class="form-control" type="text" inputmode="decimal" />
+                        <input asp-for="@Model.HuidigeFilters.MinPrijs" class="form-control" type="text" inputmode="decimal" />
                     </div>
                     <div class="col">
                         <label class="form-label">Max prijs</label>
-                        <input asp-for="MaxPrijs" class="form-control" type="text" inputmode="decimal"/>
+                        <input asp-for="@Model.HuidigeFilters.MaxPrijs" class="form-control" type="text" inputmode="decimal"/>
                     </div>
                 </div>
 
 
                 <!-- In voorraad -->
                 <div class="form-check mb-3">
-                    <input asp-for="InVoorraad" class="form-check-input" />
+                    <input asp-for="@Model.HuidigeFilters.EnkelInVoorraad" class="form-check-input" />
                     <label class="form-check-label">
                         Enkel artikelen in voorraad
                     </label>
@@ -82,7 +81,7 @@
                         <div class="border rounded p-2" style="max-height: 420px; overflow:auto;">
                             @await Html.PartialAsync("_CategorieFilterTree", Model.Categorieën,
                                 new ViewDataDictionary(ViewData) {
-                                    ["SelectedLeafIds"] = Model.GeselecteerdeCategorieIds
+                                    ["SelectedLeafIds"] = Model.HuidigeFilters?.CategorieIds 
                                 })
                         </div>
                     </div>
@@ -100,40 +99,99 @@
     </form>
     <a class="btn btn-primary" asp-action="ToevoegFormulier">Nieuw Artikel</a>
 </div>
+@{
+    var baseRoute = new Dictionary<string, string?>();
+
+    // Prefix moet matchen met de action parameternaam: huidigeFilters
+    baseRoute["huidigeFilters.Id"] = Model.HuidigeFilters?.Id?.ToString();
+    baseRoute["huidigeFilters.Ean"] = Model.HuidigeFilters?.Ean;
+    baseRoute["huidigeFilters.Naam"] = Model.HuidigeFilters?.Naam;
+    baseRoute["huidigeFilters.Beschrijving"] = Model.HuidigeFilters?.Beschrijving;
+    baseRoute["huidigeFilters.MinPrijs"] = Model.HuidigeFilters?.MinPrijs?.ToString();
+    baseRoute["huidigeFilters.MaxPrijs"] = Model.HuidigeFilters?.MaxPrijs?.ToString();
+    baseRoute["huidigeFilters.EnkelInVoorraad"] = Model.HuidigeFilters?.EnkelInVoorraad.ToString();
+
+    var catIds = Model.HuidigeFilters?.CategorieIds ?? new List<int>();
+    for (var i = 0; i < catIds.Count; i++)
+    {
+        baseRoute[$"huidigeFilters.CategorieIds[{i}]"] = catIds[i].ToString();
+    }
+}
+
 
 
 <table class="table table-striped">
     <thead>
         <tr>
             <th class="text-nowrap">EAN
-                <a asp-action="Index" asp-route-sorteerOpties="EAN" asp-route-sorteerRichting="Asc" class="btn btn-sm px-1 sort-btn
-                @(Model.SorteerOpties == ArtikelSorteerOpties.EAN && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
-                <a asp-action="Index" asp-route-sorteerOpties="EAN" asp-route-sorteerRichting="Desc" class="btn btn-sm px-1 sort-btn
-                @(Model.SorteerOpties == ArtikelSorteerOpties.EAN && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
+                 <a asp-action="Index"
+                   asp-all-route-data="baseRoute"
+                   asp-route-sorteerOpties="EAN"
+                   asp-route-sorteerRichting="Asc"
+                   class="btn btn-sm px-1 sort-btn @(Model.SorteerOpties == ArtikelSorteerOpties.EAN && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">^</a>
+
+                <a asp-action="Index"
+                   asp-all-route-data="baseRoute"
+                   asp-route-sorteerOpties="EAN"
+                   asp-route-sorteerRichting="Desc"
+                   class="btn btn-sm px-1 sort-btn @(Model.SorteerOpties == ArtikelSorteerOpties.EAN && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">v</a>
             </th>
             <th class="text-nowrap">Naam
-                <a asp-action="Index" asp-route-sorteerOpties="Naam" asp-route-sorteerRichting="Asc" class="btn btn-sm px-1 sort-btn
-                @(Model.SorteerOpties == ArtikelSorteerOpties.Naam && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
-                <a asp-action="Index" asp-route-sorteerOpties="Naam" asp-route-sorteerRichting="Desc" class="btn btn-sm px-1 sort-btn
-                @(Model.SorteerOpties == ArtikelSorteerOpties.Naam && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
-            <th class="text-nowrap">Beschrijving
-                <a asp-action="Index" asp-route-sorteerOpties="Beschrijving" asp-route-sorteerRichting="Asc" class="btn btn-sm px-1 sort-btn
-                @(Model.SorteerOpties == ArtikelSorteerOpties.Beschrijving && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
-                <a asp-action="Index" asp-route-sorteerOpties="Beschrijving" asp-route-sorteerRichting="Desc" class="btn btn-sm px-1 sort-btn
-                @(Model.SorteerOpties == ArtikelSorteerOpties.Beschrijving && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
-            </th>
-            <th class="text-nowrap">Prijs
-                <a asp-action="Index" asp-route-sorteerOpties="Prijs" asp-route-sorteerRichting="Asc" class="btn btn-sm px-1 sort-btn
-                @(Model.SorteerOpties == ArtikelSorteerOpties.Prijs && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
-                <a asp-action="Index" asp-route-sorteerOpties="Prijs" asp-route-sorteerRichting="Desc" class="btn btn-sm px-1 sort-btn
-                @(Model.SorteerOpties == ArtikelSorteerOpties.Prijs && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
-            </th>
-            <th class="text-nowrap">In voorraad
-                <a asp-action="Index" asp-route-sorteerOpties="Voorraad" asp-route-sorteerRichting="Asc" class="btn btn-sm px-1 sort-btn
-                @(Model.SorteerOpties == ArtikelSorteerOpties.Voorraad && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
-                <a asp-action="Index" asp-route-sorteerOpties="Voorraad" asp-route-sorteerRichting="Desc" class="btn btn-sm px-1 sort-btn
-                @(Model.SorteerOpties == ArtikelSorteerOpties.Voorraad && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
-            </th>
+                    <a asp-action="Index"
+                       asp-all-route-data="baseRoute"
+                       asp-route-sorteerOpties="Naam"
+                       asp-route-sorteerRichting="Asc"
+                       class="btn btn-sm px-1 sort-btn @(Model.SorteerOpties == ArtikelSorteerOpties.Naam && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
+
+                    <a asp-action="Index"
+                       asp-all-route-data="baseRoute"
+                       asp-route-sorteerOpties="Naam"
+                       asp-route-sorteerRichting="Desc"
+                       class="btn btn-sm px-1 sort-btn @(Model.SorteerOpties == ArtikelSorteerOpties.Naam && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
+               </th>
+
+                <th class="text-nowrap">Beschrijving
+                    <a asp-action="Index"
+                       asp-all-route-data="baseRoute"
+                       asp-route-sorteerOpties="Beschrijving"
+                       asp-route-sorteerRichting="Asc"
+                       class="btn btn-sm px-1 sort-btn @(Model.SorteerOpties == ArtikelSorteerOpties.Beschrijving && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
+
+                    <a asp-action="Index"
+                       asp-all-route-data="baseRoute"
+                       asp-route-sorteerOpties="Beschrijving"
+                       asp-route-sorteerRichting="Desc"
+                       class="btn btn-sm px-1 sort-btn @(Model.SorteerOpties == ArtikelSorteerOpties.Beschrijving && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
+                </th>
+
+                <th class="text-nowrap">Prijs
+                    <a asp-action="Index"
+                       asp-all-route-data="baseRoute"
+                       asp-route-sorteerOpties="Prijs"
+                       asp-route-sorteerRichting="Asc"
+                       class="btn btn-sm px-1 sort-btn @(Model.SorteerOpties == ArtikelSorteerOpties.Prijs && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
+
+                    <a asp-action="Index"
+                       asp-all-route-data="baseRoute"
+                       asp-route-sorteerOpties="Prijs"
+                       asp-route-sorteerRichting="Desc"
+                       class="btn btn-sm px-1 sort-btn @(Model.SorteerOpties == ArtikelSorteerOpties.Prijs && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
+                </th>
+
+                <th class="text-nowrap">In voorraad
+                    <a asp-action="Index"
+                       asp-all-route-data="baseRoute"
+                       asp-route-sorteerOpties="Voorraad"
+                       asp-route-sorteerRichting="Asc"
+                       class="btn btn-sm px-1 sort-btn @(Model.SorteerOpties == ArtikelSorteerOpties.Voorraad && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
+
+                    <a asp-action="Index"
+                       asp-all-route-data="baseRoute"
+                       asp-route-sorteerOpties="Voorraad"
+                       asp-route-sorteerRichting="Desc"
+                       class="btn btn-sm px-1 sort-btn @(Model.SorteerOpties == ArtikelSorteerOpties.Voorraad && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
+                </th>
+
             <th>Categorie(ën)</th>
         </tr>
     </thead>
@@ -152,7 +210,7 @@
                         {
                             <li><a asp-controller="Artikel" 
                                 asp-action="ArtikelVanCategorie" 
-                                asp-route-categorieId="@categorie.CategorieId"
+                                asp-route-categorieId="@(categorie.CategorieId)"
                             >@categorie.Naam</a></li>
                         }
                     </ul>

@@ -22,5 +22,6 @@ namespace KlantenDienstServices
         Task<IEnumerable<Categorie>> GetMogelijkeCategorieenAsync(int categorieId);
         Task AddAsSubcategorieAsync(int categorieId, string naam, int? newParentId);
         Task<Categorie> GetByIdAsync(int id);
+        Task<IEnumerable<Categorie>> GetAllCategorieAsync(ArtikelFilterDto? filters);
     }
 }
