@@ -10,32 +10,6 @@
     <div class="row mb-4">
         <div class="col-md-6">
             <section class="mb-4">
-                <h3>Klantgegevens</h3>
-                <dl class="row">
-                    <dt class="col-sm-4">Naam</dt>
-                    <dd class="col-sm-8">@ViewBag.KlantNaam</dd>
-
-                    <dt class="col-sm-4">Type</dt>
-                    <dd class="col-sm-8">@klantSoort</dd>
-
-                    @if (klantSoort == "Bedrijf" && Model.Klant.Rechtspersonen?.Contactpersonen.Any() == true)
-                    {
-                        <dt class="col-sm-4">Contactpersonen</dt>
-                        <dd class="col-sm-8">
-                            <ul class="list-unstyled mb-0">
-                                @foreach (var cp in Model.Klant.Rechtspersonen.Contactpersonen)
-                                {
-                                    <li>@cp.Voornaam @cp.Familienaam (@cp.Functie)</li>
-                                }
-                            </ul>
-                        </dd>
-                    }
-                </dl>
-            </section>
-        </div>
-
-        <div class="col-md-6">
-            <section class="mb-4">
                 <h3>Bestelgegevens</h3>
                 <dl class="row">
                     <dt class="col-sm-4">Status</dt>
@@ -104,24 +78,50 @@
                 </dl>
             </section>
         </div>
+
+        <div class="col-md-6">
+            <section class="mb-4">
+                <h3>Klantgegevens</h3>
+                <dl class="row">
+                    <dt class="col-sm-4">Naam</dt>
+                    <dd class="col-sm-8">@ViewBag.KlantNaam</dd>
+
+                    <dt class="col-sm-4">Type</dt>
+                    <dd class="col-sm-8">@klantSoort</dd>
+
+                    @if (klantSoort == "Bedrijf" && Model.Klant.Rechtspersonen?.Contactpersonen.Any() == true)
+                    {
+                        <dt class="col-sm-4">Contactpersonen</dt>
+                        <dd class="col-sm-8">
+                            <ul class="list-unstyled mb-0">
+                                @foreach (var cp in Model.Klant.Rechtspersonen.Contactpersonen)
+                                {
+                                    <li>@cp.Voornaam @cp.Familienaam (@cp.Functie)</li>
+                                }
+                            </ul>
+                        </dd>
+                    }
+                </dl>
+            </section>
+        </div>
     </div>
 
     <div class="row mb-4">
-        <div class="col-md-6">
-            <section>
-                <h3>Facturatieadres</h3>
-                <address>
-                    @Model.FacturatieAdres.Straat @Model.FacturatieAdres.HuisNummer<br />
-                    @Model.FacturatieAdres.Plaats.Postcode @Model.FacturatieAdres.Plaats.PlaatsNaam
-                </address>
-            </section>
-        </div>
         <div class="col-md-6">
             <section>
                 <h3>Leveringsadres</h3>
                 <address>
                     @Model.LeveringsAdres.Straat @Model.LeveringsAdres.HuisNummer<br />
                     @Model.LeveringsAdres.Plaats.Postcode @Model.LeveringsAdres.Plaats.PlaatsNaam
+                </address>
+            </section>
+        </div>
+        <div class="col-md-6">
+            <section>
+                <h3>Facturatieadres</h3>
+                <address>
+                    @Model.FacturatieAdres.Straat @Model.FacturatieAdres.HuisNummer<br />
+                    @Model.FacturatieAdres.Plaats.Postcode @Model.FacturatieAdres.Plaats.PlaatsNaam
                 </address>
             </section>
         </div>
@@ -173,20 +173,20 @@
                             <td colspan="4" class="text-end"><strong>Totaal:</strong></td>
                             <td class="text-end"><strong>@totaalBedrag.ToString("C2", System.Globalization.CultureInfo.CreateSpecificCulture("nl-BE"))</strong></td>
                         </tr>
-                        <tr>
-                            <td colspan="5" class="text-muted text-end">
-                                <span>Aantal artikelen: @Model.Bestellijnen.Sum(b => b.AantalBesteld - b.AantalGeannuleerd)</span>
-                            </td>
-                        </tr>
                     </tfoot>
                 </table>
             </div>
+            <div>
+                Aantal artikelen: @Model.Bestellijnen.Sum(b => b.AantalBesteld - b.AantalGeannuleerd)
+            </div>
+            
         }
         else
         {
             <p class="text-muted">Lege bestelling</p>
         }
     </section>
+    <div class="d-flex justify-content-between">
 
     <a asp-action="Index" asp-controller="Bestelling" class="btn btn-secondary">
         Terug naar Bestellingen
@@ -194,4 +194,5 @@
     <a asp-action="Details" asp-controller="Klant" asp-route-id="@Model.KlantId" class="btn btn-secondary">
         Terug naar Klant
     </a>
+    </div>
 </div>
