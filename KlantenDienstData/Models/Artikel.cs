@@ -27,15 +27,15 @@ public partial class Artikel
     [Range(0, 1000000, ErrorMessage = "buiten range")]
     [Display(Name = "Minimum vorraad")]
     public int MinimumVoorraad { get; set; }
-    [Range(1, 1000000, ErrorMessage = "buiten range")]
+    [Range(0, 1000000, ErrorMessage = "buiten range")]
     [Display(Name = "Maximum vorraad")]
     public int MaximumVoorraad { get; set; }
-    [Range(1, 1000000, ErrorMessage = "buiten range")]
+    [Range(0, 1000000, ErrorMessage = "buiten range")]
     public int Levertijd { get; set; }
 
     [Display(Name ="Aantal Besteld Leverancier")]
     public int AantalBesteldLeverancier { get; set; }
-    [Range(1, 1000000, ErrorMessage = "*")]
+    [Range(0, 1000000, ErrorMessage = "*")]
     [Display(Name = "Max in magazijnplaats")]
     public int MaxAantalInMagazijnPLaats { get; set; }
 

@@ -61,8 +61,18 @@
                     <input asp-for="Artikel.LeveranciersId" class="form-control" />
                 </div>
             </div>
-            <input asp-for="Artikel.MinimumVoorraad" hidden />
-            <input asp-for="Artikel.MaximumVoorraad" hidden />
+            <div class="row">
+                <div class="form-group col-sm">
+                    <label asp-for="Artikel.MinimumVoorraad"></label>
+                    <span asp-validation-for="Artikel.MinimumVoorraad" class="text-danger"></span>
+                    <input asp-for="Artikel.MinimumVoorraad" class="form-control" />
+                </div>
+                <div class="form-group col-sm">
+                    <label asp-for="Artikel.MaximumVoorraad"></label>
+                    <span asp-validation-for="Artikel.MaximumVoorraad" class="text-danger"></span>
+                    <input asp-for="Artikel.MaximumVoorraad" class="form-control" />
+                </div>
+            </div>
             <input asp-for="Artikel.Voorraad" hidden />
            
         </div>
