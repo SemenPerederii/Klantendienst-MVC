@@ -13,6 +13,7 @@
             <th>Klant</th>
             <th>Contactpersoon</th>
             <th>Betalingscode</th>
+            <th>Betaalwijze</th>
             <th>Status</th>
             <th>Actiecode</th>
             <th>Facturatieadres</th>
@@ -49,6 +50,23 @@
                 </td>
 
                 <td>@b.Betalingscode</td>
+                <td>
+                    @switch (b.BetaalwijzeId)
+                    {
+                        case 1:
+                            <span>Niet betaald</span>
+                            break;
+                        case 2:
+                            <span>Kredietkaart</span>
+                            break;
+                        case 3:
+                            <span>Overschrijving</span>
+                            break;
+                        default:
+                            <span>-</span>
+                            break;
+                    }
+                </td>
                 <td>@b.BestellingsStatus.Naam</td>
                 <td>@(b.ActiecodeGebruikt ? "Ja" : "Nee")</td>
 
