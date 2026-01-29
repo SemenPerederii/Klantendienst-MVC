@@ -30,40 +30,14 @@ namespace KlantenDienstServices
 
             await _artikelRepository.DeactiveerArtikelAsync(artikelId);
         }
-        public async Task<List<Artikel>> GetAllArtikelenAsync(ArtikelSorteerOpties sorteerOpties, SorteerRichting sorteerRichting)
+        public async Task<List<Artikel>> GetAllArtikelenAsync(ArtikelFilterDto? filters, ArtikelSorteerOpties sorteerOpties, SorteerRichting sorteerRichting)
         {
             var sortOptie = sorteerOpties;
             var richting = sorteerRichting;
+
             IQueryable<Artikel> query = _artikelRepository.GetArtikelQuery();
-            query = (sortOptie, richting) switch
-            {
-                (ArtikelSorteerOpties.EAN, SorteerRichting.Asc) => query.OrderBy(a => a.EAN),
-                (ArtikelSorteerOpties.EAN, SorteerRichting.Desc) => query.OrderByDescending(a => a.EAN),
 
-                (ArtikelSorteerOpties.Naam, SorteerRichting.Asc) => query.OrderBy(a => a.Naam),
-                (ArtikelSorteerOpties.Naam, SorteerRichting.Desc) => query.OrderByDescending(a => a.Naam),
-
-                (ArtikelSorteerOpties.Beschrijving, SorteerRichting.Asc) => query.OrderBy(a => a.Beschrijving),
-                (ArtikelSorteerOpties.Beschrijving, SorteerRichting.Desc) => query.OrderByDescending(a => a.Beschrijving),
-
-                (ArtikelSorteerOpties.Prijs, SorteerRichting.Asc) => query.OrderBy(a => a.Prijs),
-                (ArtikelSorteerOpties.Prijs, SorteerRichting.Desc) => query.OrderByDescending(a => a.Prijs),
-
-                (ArtikelSorteerOpties.Voorraad, SorteerRichting.Asc) => query.OrderBy(a => a.Voorraad),
-                (ArtikelSorteerOpties.Voorraad, SorteerRichting.Desc) => query.OrderByDescending(a => a.Voorraad),
-
-                _ => query.OrderBy(a => a.Naam),
-            };
-            return await query.ToListAsync();
-        }
-        public async Task<List<Artikel>> GetAllArtikelenAsync() => await _artikelRepository.GetAllArtikelenAsync();
-
-        public async Task<Artikel> GetArtikelByIdAsync(int id) =>
-            await _artikelRepository.GetArtikelAsync(id);
-
-        public async Task<List<Artikel>> ZoekArtikelenOpFilterAsync(ArtikelFilterDto filters)
-        {
-            IQueryable<Artikel> query = _artikelRepository.GetArtikelQuery();
+            //Filters
 
             if (filters.Id.HasValue)
                 query = query.Where(a => a.ArtikelId == filters.Id.Value);
@@ -85,11 +59,68 @@ namespace KlantenDienstServices
             if (filters.EnkelInVoorraad)
                 query = query.Where(a => a.Voorraad > 0);
 
-            if (filters.CategorieIds is { Count: > 0 })
-                query = query.Where(a => a.Categorieën.Any(c => filters.CategorieIds.Contains(c.CategorieId)));
+
+            //Sorteren 
+
+            query = (sortOptie, richting) switch
+            {
+                (ArtikelSorteerOpties.EAN, SorteerRichting.Asc) => query.OrderBy(a => a.EAN),
+                (ArtikelSorteerOpties.EAN, SorteerRichting.Desc) => query.OrderByDescending(a => a.EAN),
+
+                (ArtikelSorteerOpties.Naam, SorteerRichting.Asc) => query.OrderBy(a => a.Naam),
+                (ArtikelSorteerOpties.Naam, SorteerRichting.Desc) => query.OrderByDescending(a => a.Naam),
+
+                (ArtikelSorteerOpties.Beschrijving, SorteerRichting.Asc) => query.OrderBy(a => a.Beschrijving),
+                (ArtikelSorteerOpties.Beschrijving, SorteerRichting.Desc) => query.OrderByDescending(a => a.Beschrijving),
+
+                (ArtikelSorteerOpties.Prijs, SorteerRichting.Asc) => query.OrderBy(a => a.Prijs),
+                (ArtikelSorteerOpties.Prijs, SorteerRichting.Desc) => query.OrderByDescending(a => a.Prijs),
+
+                (ArtikelSorteerOpties.Voorraad, SorteerRichting.Asc) => query.OrderBy(a => a.Voorraad),
+                (ArtikelSorteerOpties.Voorraad, SorteerRichting.Desc) => query.OrderByDescending(a => a.Voorraad),
+
+                _ => query.OrderBy(a => a.Naam),
+            };
+
+            
+
 
             return await query.ToListAsync();
         }
+        public async Task<List<Artikel>> GetAllArtikelenAsync() => await _artikelRepository.GetAllArtikelenAsync();
+
+        public async Task<Artikel> GetArtikelByIdAsync(int id) =>
+            await _artikelRepository.GetArtikelAsync(id);
+
+        //public async Task<List<Artikel>> ZoekArtikelenOpFilterAsync(ArtikelFilterDto filters)
+        //{
+        //    IQueryable<Artikel> query = _artikelRepository.GetArtikelQuery();
+
+        //    if (filters.Id.HasValue)
+        //        query = query.Where(a => a.ArtikelId == filters.Id.Value);
+
+        //    if (!string.IsNullOrWhiteSpace(filters.Ean))
+        //        query = query.Where(a => a.EAN.Contains(filters.Ean));
+
+        //    if (!string.IsNullOrWhiteSpace(filters.Naam))
+        //        query = query.Where(a => a.Naam.Contains(filters.Naam));
+        //    if (!string.IsNullOrEmpty(filters.Beschrijving))
+        //        query = query.Where(a => a.Beschrijving.Contains(filters.Beschrijving));
+
+        //    if (filters.MinPrijs.HasValue)
+        //        query = query.Where(a => a.Prijs >= filters.MinPrijs.Value);
+
+        //    if (filters.MaxPrijs.HasValue)
+        //        query = query.Where(a => a.Prijs <= filters.MaxPrijs.Value);
+
+        //    if (filters.EnkelInVoorraad)
+        //        query = query.Where(a => a.Voorraad > 0);
+
+        //    if (filters.CategorieIds is { Count: > 0 })
+        //        query = query.Where(a => a.Categorieën.Any(c => filters.CategorieIds.Contains(c.CategorieId)));
+
+        //    return await query.ToListAsync();
+        //}
 
         public async Task<bool> VoegArtikelToeAsync(Artikel artikel) => await _artikelRepository.VoegArtikelToeAsync(artikel);
         public async Task<bool> WijzigArtikelAsync(int artikelId, Artikel nieuwArtikel) => await _artikelRepository.WijzigArtikelAsync(artikelId, nieuwArtikel);

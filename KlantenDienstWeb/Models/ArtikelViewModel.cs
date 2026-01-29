@@ -1,4 +1,5 @@
 ﻿using KlantenDienstData.Models;
+using KlantenDienstServices;
 
 namespace KlantenDienstWeb.Models
 {
@@ -18,5 +19,6 @@ namespace KlantenDienstWeb.Models
         public List<Artikel> ActieveArtikelen { get; set; } = new List<Artikel>();
         public ArtikelSorteerOpties SorteerOpties { get; set; } = ArtikelSorteerOpties.Naam;
         public SorteerRichting SorteerRichting { get; set; } = SorteerRichting.Asc;
+        public ArtikelFilterDto? HuidigeFilters { get; set; } = new();
     }
 }
