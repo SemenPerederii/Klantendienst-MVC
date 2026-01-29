@@ -22,7 +22,8 @@ namespace KlantenDienstWeb.Controllers
         public async Task<IActionResult> Index(ArtikelFilterDto? huidigeFilters, ArtikelSorteerOpties sorteerOpties, SorteerRichting sorteerRichting)
         {
            
-            var alleCategorieën = await _categorieService.GetAllCategorieAsync(huidigeFilters);
+            var alleCategorieën = await _categorieService.GetAllCategorieAsync();
+            var gefilterdeCategorien = await _categorieService.GetAllCategorieAsync(huidigeFilters);
             var artikelen = await _artikelService.GetAllArtikelenAsync(huidigeFilters, sorteerOpties, sorteerRichting);
             var alleActieveArtikelen = new List<Artikel>();
             foreach (var artikel in artikelen)
@@ -38,6 +39,8 @@ namespace KlantenDienstWeb.Controllers
                 Categorieën = alleCategorieën
                 .Where(c => c.HoofdCategorieId == null)
                 .ToList(),
+
+                GefilterdeCategorieën = gefilterdeCategorien,
 
                 GeselecteerdeCategorieIds =
                 huidigeFilters?.CategorieIds?.ToList() ?? new List<int>(),
