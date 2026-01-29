@@ -1,12 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using KlantenDienstServices;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KlantenDienstWeb.Controllers
 {
     public class BestellingController : Controller
     {
-        public IActionResult Index()
+        private readonly IBestellingService _serviceBestelling;
+        public BestellingController(IBestellingService serviceBestelling)
         {
-            return View();
+            _serviceBestelling = serviceBestelling;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var bestellingen = await _serviceBestelling.GetAllBestellingenAsync();
+
+            return View(bestellingen);
         }
         [HttpGet]
         public IActionResult Details(int id)
