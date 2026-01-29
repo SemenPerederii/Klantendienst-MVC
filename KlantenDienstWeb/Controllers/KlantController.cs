@@ -30,9 +30,32 @@ namespace KlantenDienstWeb.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeactiveerAccount(int klantId, int accountId)
+        public async Task<IActionResult> DeactiveerAccountDoorvoeren(int klantId, int accountId)
         {
             await _serviceKlant.DisableAccountAsync(accountId);
+            return RedirectToAction("Details", new { id = klantId });
+        }
+        [HttpGet]
+        public async Task<IActionResult> HeractiveerAccount(int klantId,int accountId,string email)
+        {
+            ViewBag.klantEmail = email;
+            ViewBag.klantId = klantId;
+            ViewBag.accountId = accountId;
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeactiveerAccount(int klantId, int accountId, string email)
+        {
+            ViewBag.klantEmail = email;
+            ViewBag.klantId = klantId;
+            ViewBag.accountId = accountId;
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> HeractiveerAccountDoorvoeren(int klantId, int accountId)
+        {
+            await _serviceKlant.EnableAccountAsync(accountId);
             return RedirectToAction("Details", new { id = klantId });
         }
     }

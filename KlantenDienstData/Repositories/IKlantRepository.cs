@@ -12,5 +12,6 @@ namespace KlantenDienstData.Repositories
         Task<IEnumerable<Klant>> GetAllKlantenAsync();
         Task<Klant?> GetKlantAsync(int id);
         Task DisableAccountAsync(int id);
+        Task EnableAccountAsync(int id);
     }
 }

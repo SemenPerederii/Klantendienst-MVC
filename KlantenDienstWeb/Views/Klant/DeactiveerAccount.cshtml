@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Deactiveer Account";
+}
+
+<h2>@ViewBag.klantEmail Deactiveren?</h2>
+
+<form asp-action="DeactiveerAccountDoorvoeren" method="post">
+    <input type="hidden" name="klantId" value="@ViewBag.klantId" />
+    <input type="hidden" name="accountId" value="@ViewBag.accountId" />
+    <div>
+        <button type="submit" class="btn btn-danger">Ja</button>
+        <a asp-action="Details" asp-route-id="@ViewBag.klantId" class="btn btn-secondary">Annuleer</a>
+    </div>
+</form>
+
+

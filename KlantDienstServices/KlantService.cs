@@ -18,7 +18,7 @@ namespace KlantenDienstServices
         }
 
         public async Task DisableAccountAsync(int id) => await _repositoryKlant.DisableAccountAsync(id);
-
+        public async Task EnableAccountAsync(int id) => await _repositoryKlant.EnableAccountAsync(id);
         public async Task<IEnumerable<KlantOverzichtViewModel>> GetAllKlantenAsync()
         {
             var klanten = await _repositoryKlant.GetAllKlantenAsync();
