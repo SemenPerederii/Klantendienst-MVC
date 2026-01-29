@@ -1,30 +1,110 @@
-﻿
+﻿@model KlantIndexViewModel
 @{
     ViewData["Title"] = "Klantbeheer";
 }
 
-<h1>Klantbeheer</h1>
+<h1 class="d-flex justify-content-center">@ViewData["Title"]</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Naam</th>
-            <th>Type</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var klant in Model)
-        {
-            <tr>
-                <td>
-                    <a class="page-link"
-                       asp-controller="Klant"
-                        asp-action="Details"
-                       asp-route-id="@klant.KlantId">@klant.Naam
+<div class="d-flex gap-2 mb-4">
+    <form asp-action="Index" method="get">
+        <div class="dropdown"
+             data-bs-auto-close="false">
+            <button class="btn btn-primary dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                Zoekfilters
+            </button>
+
+            <div class="dropdown-menu col-md-4">
+                <div class="d-grid">
+                    <a asp-action="Index" title="Wissen Filters" class="btn btn-secondary">
+                        Wis Filters
+                        <img src="~/images/deleteBtn.png" class="cs-btnsImg" alt="Wissen Filters" />
                     </a>
-                </td>
-                <td>@klant.Type</td>
+                </div>
+                <label class="form-label">Naam:</label>
+                <input type="text"
+                       class="form-control mb-3"
+                       name="naamFilter"
+                       value="@Model.NaamFilter"
+                       placeholder="Zoek op naam..." />
+
+                <label class="form-label">Type:</label>
+                <select name="typeFilter" class="form-select mb-3">
+                    <option value="">Alle</option>
+                    <option value="Persoon" selected="@(Model.TypeFilter == "Persoon")">Persoon</option>
+                    <option value="Bedrijf" selected="@(Model.TypeFilter == "Bedrijf")">Bedrijf</option>
+                </select>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success">
+                        Zoeken
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Naam
+                    <a asp-action="Index"
+                       asp-route-naamFilter="@Model.NaamFilter"
+                       asp-route-typeFilter="@Model.TypeFilter"
+                       asp-route-sortOrder="naam_asc"
+                       class="btn btn-sm px-1 sort-btn @(Model.SortOrder == "naam_asc" ? "btn-primary" : "btn-light")">▲</a>
+
+                    <a asp-action="Index"
+                       asp-route-naamFilter="@Model.NaamFilter"
+                       asp-route-typeFilter="@Model.TypeFilter"
+                       asp-route-sortOrder="naam_desc"
+                       class="btn btn-sm px-1 sort-btn @(Model.SortOrder == "naam_desc" ? "btn-primary" : "btn-light")">▼</a>
+                </th>
+                <th>
+                    Type
+                    <a asp-action="Index"
+                       asp-route-naamFilter="@Model.NaamFilter"
+                       asp-route-typeFilter="@Model.TypeFilter"
+                       asp-route-sortOrder="type_asc"
+                       class="btn btn-sm px-1 sort-btn @(Model.SortOrder == "type_asc" ? "btn-primary" : "btn-light")">▲</a>
+
+                    <a asp-action="Index"
+                       asp-route-naamFilter="@Model.NaamFilter"
+                       asp-route-typeFilter="@Model.TypeFilter"
+                       asp-route-sortOrder="type_desc"
+                       class="btn btn-sm px-1 sort-btn @(Model.SortOrder == "type_desc" ? "btn-primary" : "btn-light")">▼</a>
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @if (Model.Klanten.Any())
+            {
+                @foreach (var klant in Model.Klanten)
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="Klant"
+                               asp-action="Details"
+                               asp-route-id="@klant.KlantId">
+                                @klant.Naam
+                            </a>
+                        </td>
+                        <td>@klant.Type</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2" class="text-center text-muted">
+                        Geen klanten gevonden met de huidige filters.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
