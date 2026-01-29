@@ -15,6 +15,17 @@ namespace KlantenDienstData.Repositories
         {
             _context = context;
         }
+
+        public async Task DisableAccountAsync(int id)
+        {
+            GebruikersAccount? account = await _context.GebruikersAccounts.FindAsync(id);
+            if(account!=null)
+            {
+                account.Disabled = true;
+                await _context.SaveChangesAsync();
+            }
+        }
+
         public async Task<IEnumerable<Klant>> GetAllKlantenAsync()
         {
             return await _context.Klanten

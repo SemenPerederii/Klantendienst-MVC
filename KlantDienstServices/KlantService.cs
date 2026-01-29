@@ -16,6 +16,9 @@ namespace KlantenDienstServices
         {
             _repositoryKlant = repository;
         }
+
+        public async Task DisableAccountAsync(int id) => await _repositoryKlant.DisableAccountAsync(id);
+
         public async Task<IEnumerable<KlantOverzichtViewModel>> GetAllKlantenAsync()
         {
             var klanten = await _repositoryKlant.GetAllKlantenAsync();
