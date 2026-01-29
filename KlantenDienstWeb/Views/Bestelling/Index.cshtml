@@ -1,7 +1,85 @@
-﻿
+﻿@model IEnumerable<Bestelling>
 @{
     ViewData["Title"] = "Bestellingen";
 }
 
-<h1>Bestelling</h1>
+<h1>Overzicht bestellingen</h1>
 
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Bestelnummer</th>
+            <th>Besteldatum</th>
+            <th>Klant</th>
+            <th>Contactpersoon</th>
+            <th>Betalingscode</th>
+            <th>Betaalwijze</th>
+            <th>Status</th>
+            <th>Actiecode</th>
+            <th>Facturatieadres</th>
+            <th>Leveringsadres</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var b in Model)
+        {
+            <tr>
+                <td>@b.BestelId</td>
+                <td>@b.Besteldatum.ToString("dd-MM-yyyy")</td>
+
+                <td>
+                    @if (b.Klant.Rechtspersonen != null)
+                    {
+                        @b.Klant.Rechtspersonen.Naam
+                    }
+                    else
+                    {
+                        @b.Voornaam @b.Familienaam
+                    }
+                </td>
+
+                <td>
+                    @if (b.Klant.Rechtspersonen?.Contactpersonen.Any() == true)
+                    {
+                        var cp = b.Klant.Rechtspersonen.Contactpersonen.First();
+                        @($"{cp.Voornaam} {cp.Familienaam}")
+                    } else
+                    {
+                        @:-
+                    }
+                </td>
+
+                <td>@b.Betalingscode</td>
+                <td>
+                    @switch (b.BetaalwijzeId)
+                    {
+                        case 1:
+                            <span>Niet betaald</span>
+                            break;
+                        case 2:
+                            <span>Kredietkaart</span>
+                            break;
+                        case 3:
+                            <span>Overschrijving</span>
+                            break;
+                        default:
+                            <span>-</span>
+                            break;
+                    }
+                </td>
+                <td>@b.BestellingsStatus.Naam</td>
+                <td>@(b.ActiecodeGebruikt ? "Ja" : "Nee")</td>
+
+                <td>
+                    @b.FacturatieAdres.Straat @b.FacturatieAdres.HuisNummer<br />
+                    @b.FacturatieAdres.Plaats.Postcode
+                </td>
+
+                <td>
+                    @b.LeveringsAdres.Straat @b.LeveringsAdres.HuisNummer<br />
+                    @b.LeveringsAdres.Plaats.Postcode
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
