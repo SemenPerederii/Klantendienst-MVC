@@ -8,5 +8,11 @@ namespace KlantenDienstWeb.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            // Logica om de bestelling met de opgegeven id op te halen
+            return View();
+        }
     }
 }
