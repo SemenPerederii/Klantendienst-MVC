@@ -14,5 +14,7 @@ namespace KlantenDienstServices
         {
             return await _repositoryBestelling.GetAllBestellingenAsync();
         }
+
+        public async Task<Bestelling?> GetBestellingAsync(int id) => await _repositoryBestelling.GetBestellingAsync(id);
     }
 }

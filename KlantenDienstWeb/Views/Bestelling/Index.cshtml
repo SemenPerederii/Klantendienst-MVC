@@ -24,7 +24,7 @@
         @foreach (var b in Model)
         {
             <tr>
-                <td>@b.BestelId</td>
+                <td><a asp-action="Details" asp-route-id="@b.BestelId">@b.BestelId</a></td>
                 <td>@b.Besteldatum.ToString("dd-MM-yyyy")</td>
 
                 <td>

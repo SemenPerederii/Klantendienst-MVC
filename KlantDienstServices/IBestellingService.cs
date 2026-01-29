@@ -10,5 +10,6 @@ namespace KlantenDienstServices
     public interface IBestellingService
     {
         Task<IEnumerable<Bestelling>> GetAllBestellingenAsync();
+        Task<Bestelling?> GetBestellingAsync(int id);
     }
 }

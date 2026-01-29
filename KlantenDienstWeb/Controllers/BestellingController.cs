@@ -1,5 +1,7 @@
-﻿using KlantenDienstServices;
+﻿using KlantenDienstData.Models;
+using KlantenDienstServices;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 
 namespace KlantenDienstWeb.Controllers
 {
@@ -17,10 +19,16 @@ namespace KlantenDienstWeb.Controllers
             return View(bestellingen);
         }
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task< IActionResult> Details(int id)
         {
             // Logica om de bestelling met de opgegeven id op te halen
-            return View();
+            Bestelling? bestelling = await _serviceBestelling.GetBestellingAsync(id);
+            if (bestelling == null)
+                return NotFound();
+            ViewBag.KlantNaam = bestelling.Klant.Natuurlijkepersonen != null
+                ? $"{bestelling.Klant.Natuurlijkepersonen.Voornaam} {bestelling.Klant.Natuurlijkepersonen.Familienaam}"
+                : bestelling.Klant.Rechtspersonen!.Naam;
+            return View(bestelling);
         }
     }
 }
