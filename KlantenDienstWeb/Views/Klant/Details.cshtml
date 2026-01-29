@@ -1,0 +1,244 @@
+﻿@model Klant
+@{
+    ViewData["Title"] = "Klant Detailpagina";
+    var soort = Model.Natuurlijkepersonen != null ? "Persoon" : "Bedrijf";
+}
+
+<div class="container mt-4">
+    <h1>@ViewBag.KlantNaam</h1>
+    <h2 class="text-muted">@soort</h2>
+
+    @if (soort == "Persoon")
+    {
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <section class="mb-4">
+                    <h3>Gebruikersaccount</h3>
+                    @if (Model.Natuurlijkepersonen?.GebruikersAccount != null)
+                    {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Email</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                @Model.Natuurlijkepersonen.GebruikersAccount.Emailadres
+                                            </td>
+                                            <td>
+                                                @if (!Model.Natuurlijkepersonen.GebruikersAccount.Disabled)
+                                                {
+                                                <form asp-action="DeactiveerAccount" asp-controller="Klant" method="post" style="display: inline;">
+                                                    <input type="hidden" name="klantId" value="@Model.KlantId" />
+                                                    <input type="hidden" name="accountId" value="@Model.Natuurlijkepersonen.GebruikersAccount.GebruikersAccountId" />
+                                                    <button type="submit" class="btn btn-sm btn-danger">Deactiveer</button>
+                                                </form>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">Inactief</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Geen gebruikersaccount gekoppeld</p>
+                    }
+                </section>
+            </div>
+        </div>
+    }
+
+    @if (soort == "Bedrijf")
+    {
+        <section class="mb-4">
+            <h3>Contactpersonen & Gebruikersaccounts</h3>
+            @if (Model.Rechtspersonen.Contactpersonen.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Functie</th>
+                                <th>Naam</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var cp in Model.Rechtspersonen.Contactpersonen.OrderBy(cp => cp.Functie))
+                            {
+                                <tr>
+                                    <td><strong>@cp.Functie</strong></td>
+                                    <td>@cp.Voornaam @cp.Familienaam</td>
+                                    <td>
+                                        @if (cp.GebruikersAccount != null)
+                                        {
+                                            @cp.GebruikersAccount.Emailadres
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Geen account</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (cp.GebruikersAccount != null)
+                                        {
+                                            @if (!cp.GebruikersAccount.Disabled)
+                                            {
+                                                <form asp-action="DeactiveerAccount" asp-controller="Klant" method="post" style="display: inline;">
+                                                    <input type="hidden" name="klantId" value="@Model.KlantId" />
+                                                    <input type="hidden" name="accountId" value="@cp.GebruikersAccount.GebruikersAccountId" />
+                                                    <button type="submit" class="btn btn-sm btn-danger">Deactiveer</button>
+                                                </form>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">Inactief</span>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">Geen contactpersonen</p>
+            }
+        </section>
+    }
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <section>
+                <h3>Leveringsadres</h3>
+                <address>
+                    @Model.LeveringsAdres.Straat @Model.LeveringsAdres.HuisNummer<br />
+                    @Model.LeveringsAdres.Plaats.Postcode @Model.LeveringsAdres.Plaats.PlaatsNaam
+                </address>
+            </section>
+        </div>
+        <div class="col-md-6">
+            <section>
+                <h3>Facturatieadres</h3>
+                <address>
+                    @Model.FacturatieAdres.Straat @Model.FacturatieAdres.HuisNummer<br />
+                    @Model.FacturatieAdres.Plaats.Postcode @Model.FacturatieAdres.Plaats.PlaatsNaam
+                </address>
+            </section>
+        </div>
+    </div>
+
+    <section class="mb-4">
+        <h2>Bestellingen</h2>
+        @if (Model.Bestellingen.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Besteldatum</th>
+                            <th>Aantal</th>
+                            <th>Betaalcode</th>
+                            <th>Betaalwijze</th>
+                            <th>Betaald</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var bestelling in Model.Bestellingen)
+                        {
+                            <tr>
+                                <td>
+                                    <a asp-action="Details" asp-controller="Bestel" asp-route-id="@bestelling.BestelId">
+                                        @bestelling.BestelId
+                                    </a>
+                                </td>
+                                <td>@bestelling.Besteldatum.ToShortDateString()</td>
+                                <td>@bestelling.Bestellijnen.Count</td>
+                                <td>@bestelling.Betalingscode</td>
+                                <td>
+                                    @switch (bestelling.BetaalwijzeId)
+                                    {
+                                        case 1:
+                                            <p>Niet Betaald</p>
+                                            break;
+                                        case 2:
+                                            <p>Kredietkaart</p>
+                                            break;
+                                        case 3:
+                                            <p>Overschrijving</p>
+                                            break;
+                                        default:
+                                            <p>-</p>
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    <input type="checkbox" checked="@bestelling.Betaald" disabled />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p class="text-muted">Nog geen bestellingen</p>
+        }
+    </section>
+
+    <section class="mb-4">
+        <h2>Uitgaande Leveringen</h2>
+        @if (Model.Uitgaandeleveringen.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>LeveringID</th>
+                            <th>BestelID</th>
+                            <th>Trackingcode</th>
+                            <th>Vertrekdatum</th>
+                            <th>Aankomstdatum</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var levering in Model.Uitgaandeleveringen)
+                        {
+                            <tr>
+                                <td>@levering.UitgaandeLeveringsId</td>
+                                <td>@levering.BestelId</td>
+                                <td>@levering.Trackingcode</td>
+                                <td>@levering.VertrekDatum</td>
+                                <td>@levering.AankomstDatum</td>
+                                <td>@levering.UitgaandeLeveringsStatus.Naam</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p class="text-muted">Nog geen leveringen</p>
+        }
+    </section>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Terug
+    </a>
+</div>

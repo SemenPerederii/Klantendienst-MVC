@@ -15,6 +15,17 @@ namespace KlantenDienstData.Repositories
         {
             _context = context;
         }
+
+        public async Task DisableAccountAsync(int id)
+        {
+            GebruikersAccount? account = await _context.GebruikersAccounts.FindAsync(id);
+            if(account!=null)
+            {
+                account.Disabled = true;
+                await _context.SaveChangesAsync();
+            }
+        }
+
         public async Task<IEnumerable<Klant>> GetAllKlantenAsync()
         {
             return await _context.Klanten
@@ -22,6 +33,19 @@ namespace KlantenDienstData.Repositories
                 .Include(k => k.Rechtspersonen)
                 .AsNoTracking()
                 .ToListAsync();
+        }
+
+        public async Task<Klant?> GetKlantAsync(int id)
+        {
+            return await _context.Klanten
+                .Include(klant => klant.Rechtspersonen).ThenInclude(rp => rp.Contactpersonen).ThenInclude(rp=>rp.GebruikersAccount)
+                .Include(klant => klant.Natuurlijkepersonen).ThenInclude(np=>np.GebruikersAccount)
+                .Include(klant => klant.FacturatieAdres).ThenInclude(a=>a.Plaats)
+                .Include(klant => klant.LeveringsAdres).ThenInclude(a => a.Plaats)
+                .Include(klant => klant.Bestellingen).ThenInclude(best=>best.Bestellijnen)
+                .Include(klant=>klant.Uitgaandeleveringen).ThenInclude(ul=>ul.UitgaandeLeveringsStatus)
+                .FirstOrDefaultAsync(klant => klant.KlantId == id);
+                
         }
     }
 }

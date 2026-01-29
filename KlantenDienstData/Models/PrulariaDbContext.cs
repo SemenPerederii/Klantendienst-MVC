@@ -586,7 +586,7 @@ public partial class PrulariaDbContext : DbContext
 
             entity.ToTable("plaatsen");
 
-            entity.Property(e => e.PlaatsNaam).HasMaxLength(150);
+            entity.Property(e => e.PlaatsNaam).HasColumnName("plaats").HasMaxLength(150);
             entity.Property(e => e.Postcode).HasMaxLength(4);
         });
 

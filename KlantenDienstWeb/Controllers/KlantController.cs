@@ -1,4 +1,5 @@
-﻿using KlantenDienstServices;
+﻿using KlantenDienstData.Models;
+using KlantenDienstServices;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -15,6 +16,24 @@ namespace KlantenDienstWeb.Controllers
         {
             var klanten = await _serviceKlant.GetAllKlantenAsync();
             return View(klanten);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var klant = await _serviceKlant.GetKlantAsync(id);
+            if (klant == null)
+                return NotFound();
+            ViewBag.KlantNaam = klant.Natuurlijkepersonen != null
+                ? $"{klant.Natuurlijkepersonen.Voornaam} {klant.Natuurlijkepersonen.Familienaam}"
+                : klant.Rechtspersonen!.Naam;
+            return View(klant);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeactiveerAccount(int klantId, int accountId)
+        {
+            await _serviceKlant.DisableAccountAsync(accountId);
+            return RedirectToAction("Details", new { id = klantId });
         }
     }
 }

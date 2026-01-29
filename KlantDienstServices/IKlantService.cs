@@ -11,5 +11,7 @@ namespace KlantenDienstServices
     public interface IKlantService
     {
         Task<IEnumerable<KlantOverzichtViewModel>> GetAllKlantenAsync();
+        Task<Klant?> GetKlantAsync(int id);
+        Task DisableAccountAsync(int id);
     }
 }
