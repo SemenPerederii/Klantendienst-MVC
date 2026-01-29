@@ -18,7 +18,7 @@ namespace KlantenDienstServices
 
         public bool EnkelInVoorraad { get; set; }
 
-        public List<int> CategorieIds { get; set; } = new();
+        public List<int> CategorieIds { get; set; } = new List<int>();
     }
 
 }

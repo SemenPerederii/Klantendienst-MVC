@@ -23,7 +23,7 @@ namespace KlantenDienstWeb.Controllers
         {
            
             var alleCategorieën = await _categorieService.GetAllCategorieAsync();
-            var gefilterdeCategorien = await _categorieService.GetAllCategorieAsync(huidigeFilters);
+         /*   var gefilterdeCategorien = await _categorieService.GetAllCategorieAsync(huidigeFilters);*/
             var artikelen = await _artikelService.GetAllArtikelenAsync(huidigeFilters, sorteerOpties, sorteerRichting);
             var alleActieveArtikelen = new List<Artikel>();
             foreach (var artikel in artikelen)
@@ -40,7 +40,7 @@ namespace KlantenDienstWeb.Controllers
                 .Where(c => c.HoofdCategorieId == null)
                 .ToList(),
 
-                GefilterdeCategorieën = gefilterdeCategorien,
+             /*   GefilterdeCategorieën = gefilterdeCategorien,*/
 
                 GeselecteerdeCategorieIds =
                 huidigeFilters?.CategorieIds?.ToList() ?? new List<int>(),

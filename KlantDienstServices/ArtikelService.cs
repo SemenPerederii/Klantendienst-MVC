@@ -59,10 +59,12 @@ namespace KlantenDienstServices
             if (filters.EnkelInVoorraad)
                 query = query.Where(a => a.Voorraad > 0);
 
+            if (filters.CategorieIds is { Count: > 0 })
+              query = query.Where(a => a.Categorieën.Any(c => filters.CategorieIds.Contains(c.CategorieId)));
 
-            //Sorteren 
+                //Sorteren 
 
-            query = (sortOptie, richting) switch
+                query = (sortOptie, richting) switch
             {
                 (ArtikelSorteerOpties.EAN, SorteerRichting.Asc) => query.OrderBy(a => a.EAN),
                 (ArtikelSorteerOpties.EAN, SorteerRichting.Desc) => query.OrderByDescending(a => a.EAN),
