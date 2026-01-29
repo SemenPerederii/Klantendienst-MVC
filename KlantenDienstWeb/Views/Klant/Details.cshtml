@@ -12,34 +12,48 @@
     {
         <div class="row mb-4">
             <div class="col-md-6">
-        <section class="mb-4">
-            <h3>Gebruikersaccount</h3>
-            @if (Model.Natuurlijkepersonen?.GebruikersAccount != null)
-            {
-                <dl class="row">
-                    
-                    <dd class="col-sm-3">@Model.Natuurlijkepersonen.GebruikersAccount.Emailadres
-                        @if (!Model.Natuurlijkepersonen.GebruikersAccount.Disabled)
-                        {
-                                    <form asp-action="DeactiveerAccount" asp-controller="Klant" method="post" style="display: inline;">
-                                        <input type="hidden" name="klantId" value="@Model.KlantId" />
-                                        <input type="hidden" name="accountId" value="@Model.Natuurlijkepersonen.GebruikersAccount.GebruikersAccountId" />
-                                        <button type="submit" class="btn btn-sm btn-danger">Deactiveer</button>
-                                    </form>
-                        }
-                        else
-                        {
-                            <span class="badge bg-secondary">Inactief</span>
-                        }
-                    </dd>
-                </dl>
-            }
-            else
-            {
-                <p class="text-muted">Geen gebruikersaccount gekoppeld</p>
-            }
-        </section>
-        </div>
+                <section class="mb-4">
+                    <h3>Gebruikersaccount</h3>
+                    @if (Model.Natuurlijkepersonen?.GebruikersAccount != null)
+                    {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Email</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                @Model.Natuurlijkepersonen.GebruikersAccount.Emailadres
+                                            </td>
+                                            <td>
+                                                @if (!Model.Natuurlijkepersonen.GebruikersAccount.Disabled)
+                                                {
+                                                <form asp-action="DeactiveerAccount" asp-controller="Klant" method="post" style="display: inline;">
+                                                    <input type="hidden" name="klantId" value="@Model.KlantId" />
+                                                    <input type="hidden" name="accountId" value="@Model.Natuurlijkepersonen.GebruikersAccount.GebruikersAccountId" />
+                                                    <button type="submit" class="btn btn-sm btn-danger">Deactiveer</button>
+                                                </form>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">Inactief</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Geen gebruikersaccount gekoppeld</p>
+                    }
+                </section>
+            </div>
         </div>
     }
 
