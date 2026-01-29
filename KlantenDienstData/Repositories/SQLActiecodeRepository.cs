@@ -1,4 +1,5 @@
-﻿using KlantenDienstData.Models;
+﻿using KlantenDienstData.Enums;
+using KlantenDienstData.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,10 @@ namespace KlantenDienstData.Repositories
             return await _context.Actiecodes.ToListAsync();
         }
 
+        public IQueryable<Actiecode> GetActiecodeQuery()
+        {
+            return _context.Actiecodes.AsNoTracking();
+        }
         public async Task<Actiecode?> GetByIdAsync(int id)
         {
             return await _context.Actiecodes.FindAsync(id);

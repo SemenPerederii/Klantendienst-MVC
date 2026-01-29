@@ -1,6 +1,7 @@
 ﻿using KlantenDienstServices;
 using Microsoft.AspNetCore.Mvc;
 using KlantenDienstData.Models;
+using KlantenDienstData.Enums;
 using KlantenDienstWeb.Models;
 
 namespace KlantenDienstWeb.Controllers
@@ -13,10 +14,32 @@ namespace KlantenDienstWeb.Controllers
         {
             _serviceActiecode = serviceActiecode;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ActiecodeStatus filter = ActiecodeStatus.Geen,
+                        string? datum = null,
+                        ActiecodeSorteerOpties sorteerOpties = ActiecodeSorteerOpties.Naam,
+                        SorteerRichting sorteerRichting = SorteerRichting.Asc)
         {
-            var actiecodes = await _serviceActiecode.GetAllActiecodesAsync();
-            return View(actiecodes);
+            DateOnly? parsedDatum = null;
+            if (!string.IsNullOrWhiteSpace(datum) && DateOnly.TryParse(datum, out var d))
+            {
+                parsedDatum = d;
+            }
+            var actiecodes = await _serviceActiecode.GetAllActiecodesAsync(
+                                filter,
+                                parsedDatum,
+                                sorteerOpties,
+                                sorteerRichting);
+
+            var vm = new ActiecodeVM
+            {
+                Actiecodes = actiecodes,
+                SorteerOpties = sorteerOpties,
+                SorteerRichting = sorteerRichting,
+                HuidigeFilter = filter,
+                HuidigeDatum = parsedDatum
+            };
+
+            return View(vm);
         }
         [HttpGet]
         public async Task<IActionResult> ToevoegFormulier()

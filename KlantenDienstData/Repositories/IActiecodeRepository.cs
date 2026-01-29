@@ -1,4 +1,5 @@
-﻿using KlantenDienstData.Models;
+﻿using KlantenDienstData.Enums;
+using KlantenDienstData.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace KlantenDienstData.Repositories
         Task<Actiecode?> GetByIdAsync(int id);
         Task WijzigActieCode(int id, Actiecode nieuweActiecode);
         Task Toevoegen(Actiecode actiecode);
+        IQueryable<Actiecode> GetActiecodeQuery();
     }
 }
