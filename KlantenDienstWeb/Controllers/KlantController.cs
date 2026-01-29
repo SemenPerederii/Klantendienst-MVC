@@ -1,6 +1,9 @@
 ﻿using KlantenDienstData.Models;
 using KlantenDienstServices;
+using KlantenDienstWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace KlantenDienstWeb.Controllers
@@ -12,10 +15,39 @@ namespace KlantenDienstWeb.Controllers
         {
             _serviceKlant = serviceKlant;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? naamFilter, string? typeFilter, string sortOrder = "naam_asc")
         {
+            //get alle klanten
             var klanten = await _serviceKlant.GetAllKlantenAsync();
-            return View(klanten);
+            //filters toepassen
+            if (!string.IsNullOrWhiteSpace(naamFilter))
+            {
+                klanten = klanten.Where(k => k.Naam.Contains(naamFilter, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (!string.IsNullOrWhiteSpace(typeFilter))
+            {
+                klanten = klanten.Where(k => k.Type.Equals(typeFilter, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // sorteren
+            klanten = sortOrder switch
+            {
+                "naam_desc" => klanten.OrderByDescending(k => k.Naam),
+                "type_asc" => klanten.OrderBy(k => k.Type).ThenBy(k => k.Naam),
+                "type_desc" => klanten.OrderByDescending(k => k.Type).ThenBy(k => k.Naam),
+                _ => klanten.OrderBy(k => k.Naam)
+            };
+
+            var viewModel = new KlantIndexViewModel
+            {
+                Klanten = klanten.ToList(),
+                NaamFilter = naamFilter,
+                TypeFilter = typeFilter,
+                SortOrder = sortOrder
+            };
+
+            return View(viewModel);
         }
         [HttpGet]
         public async Task<IActionResult> Details(int id)
