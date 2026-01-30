@@ -1,23 +1,17 @@
 ﻿@using KlantenDienstData.Enums
 @model ActiecodeVM
 @{
-    ViewData["Title"] = "Actiecodes";
+    ViewData["Title"] = "Overzicht actiecodes";
 }
 
 <h1 class="d-flex justify-content-center mb-2">@ViewData["Title"]</h1>
 
-<a asp-action="ToevoegFormulier" asp-controller="Actiecode" class="btn btn-sm btn-primary mb-2">Actiecode Toevoegen</a>
+<div class="d-flex align-items-center gap-2 mb-4">
+    <a asp-action="ToevoegFormulier" asp-controller="Actiecode" class="btn btn-sm btn-primary">Actiecode Toevoegen</a>
 
-<div class="d-flex gap-2 mb-4">
     <form asp-action="Index" method="get">
-        <div class="dropdown"
-             data-bs-auto-close="false">
-            <button class="btn btn-primary dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                Zoekfilters
-            </button>
+        <div class="dropdown" data-bs-auto-close="false">
+            <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">Zoekfilters</button>
 
             <div class="dropdown-menu col-md-4">
                 <div class="d-flex justify-content-end">
