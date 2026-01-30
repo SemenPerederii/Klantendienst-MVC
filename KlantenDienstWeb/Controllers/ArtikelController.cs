@@ -130,10 +130,8 @@ namespace KlantenDienstWeb.Controllers
                 {
                     Id = categorie.CategorieId,
                     Naam = categorie.Naam,
-                    Gekozen=false
+                    Gekozen=artikel.Categorieën.Where(cat=>cat.CategorieId == categorie.CategorieId).Any()
                 };
-                if (viewModel.Artikel.Categorieën.Contains(categorie))
-                    simpeleCategorie.Gekozen = true;
                 viewModel.Categorieën.Add(simpeleCategorie);
             }
             return View(viewModel);
