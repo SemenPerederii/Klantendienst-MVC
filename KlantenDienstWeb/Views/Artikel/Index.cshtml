@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Overzicht Artikelen";
 }
-<h1 class="d-flex justify-content-center">@ViewData["Title"]</h1>
+<h1 class="d-flex justify-content-center mb-2">@ViewData["Title"]</h1>
 
 <div class="d-flex gap-2 mb-4">
     <form asp-action="index" asp-route-huidigeFilters="@Model.HuidigeFilters" method="get">

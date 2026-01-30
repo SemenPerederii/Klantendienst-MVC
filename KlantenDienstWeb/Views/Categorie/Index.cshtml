@@ -1,11 +1,10 @@
 ﻿@using KlantenDienstData.Models
-
 @model IEnumerable<Categorie>
-@{
-    ViewData["Title"] = "Index";
-}
 
-<h1>Categorieën</h1>
+@{
+    ViewData["Title"] = "Overzicht Categorieen";
+}
+<h1 class="d-flex justify-content-center mb-2">@ViewData["Title"]</h1>
 
 @if (Model != null)
 {
