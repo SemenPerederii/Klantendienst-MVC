@@ -2,14 +2,14 @@
 @{
     ViewData["Title"] = "Actiecode Wijzigen";
 }
-<div class="d-flex align-items-center">
+<div class="d-flex align-items-center justify-content-center">
     <h1>
         Wijzig Actiecode
     </h1>
 </div>
 <form asp-action="Wijzigen" class="form-control container" method="post" novalidate>
     <input asp-for="ActiecodeId" hidden/>
-    <div class="row">
+    <div class="row mb-4">
         <div class="form-group col-sm-6">
             <label asp-for="Naam"></label>
             <span asp-validation-for="Naam" class="text-danger"></span>
@@ -22,7 +22,7 @@
             </label>
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-4">
         <div class="form-group col-sm-6">
             <label asp-for="GeldigVanDatum"></label>
             <span asp-validation-for="GeldigVanDatum" class="text-danger"></span>
@@ -34,7 +34,7 @@
             <input asp-for="GeldigTotDatum" class="form-control" type="date" />
         </div>
     </div>
-    <div class="row mt-2">
+    <div class="row">
         <div class="form-group col-sm">
             <button type="submit" value="Wijzig" class="btn btn-primary">Wijzig</button>
             <a asp-action="Index" class="btn btn-secondary">Annuleren</a>
