@@ -22,7 +22,6 @@ public class BestellingRepository : IBestellingRepository
             .ThenInclude(a => a.Plaats)
         .ToListAsync();
     }
-
     public async Task<Bestelling?> GetBestellingAsync(int id)
     {
         return await _context.Bestellingen
