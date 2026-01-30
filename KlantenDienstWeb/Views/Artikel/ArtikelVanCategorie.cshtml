@@ -11,7 +11,9 @@
         <a class="btn btn-secondary" asp-controller="Categorie" asp-action="Index">Categorieën bekijken</a>
         <a asp-action="Index" asp-controller="Artikel" class="btn btn-secondary">Alle artikelen</a>
     </div>
-    <table class="table table-striped">
+    <div class="table-responsive">
+
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>EAN-Code</th>
@@ -61,6 +63,7 @@
             }
         </tbody>
     </table>
+    </div>
 }
 else
 {
