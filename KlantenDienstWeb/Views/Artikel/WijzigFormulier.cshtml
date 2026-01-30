@@ -15,7 +15,7 @@
     <input asp-for="Artikel.ArtikelId" hidden/>
     <div class="d-grid" style="grid-template-columns: 2fr 1fr; grid-template-rows: auto auto;">
         <div style="grid-row: span 2;">
-            <div class="row">
+            <div class="row mb-4">
                 <div class="form-group col-sm">
                     <label asp-for="Artikel.Naam"></label>
                     <span asp-validation-for="Artikel.Naam" class="text-danger">*</span>
@@ -27,7 +27,7 @@
                     <input required asp-for="Artikel.Beschrijving" class="form-control" />
                 </div>
             </div>
-            <div class="row">
+            <div class="row mb-4">
                 <div class="form-group col-sm">
                     <label asp-for="Artikel.Prijs"></label>
                     <span asp-validation-for="Artikel.Prijs" class="text-danger"></span>
@@ -44,7 +44,7 @@
                     <input asp-for="Artikel.Levertijd" class="form-control" />
                 </div>
             </div>
-            <div class="row">
+            <div class="row mb-4">
                 <div class="form-group col-sm">
                     <label asp-for="Artikel.Bestelpeil"></label>
                     <span asp-validation-for="Artikel.Bestelpeil" class="text-danger"></span>
@@ -61,7 +61,7 @@
                     <input asp-for="Artikel.LeveranciersId" class="form-control" />
                 </div>
             </div>
-            <div class="row">
+            <div class="row mb-4">
                 <div class="form-group col-sm">
                     <label asp-for="Artikel.MinimumVoorraad"></label>
                     <span asp-validation-for="Artikel.MinimumVoorraad" class="text-danger"></span>
