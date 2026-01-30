@@ -128,13 +128,13 @@
                    asp-all-route-data="baseRoute"
                    asp-route-sorteerOpties="EAN"
                    asp-route-sorteerRichting="Asc"
-                   class="btn btn-sm px-1 sort-btn @(Model.SorteerOpties == ArtikelSorteerOpties.EAN && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">^</a>
+                   class="btn btn-sm px-1 sort-btn @(Model.SorteerOpties == ArtikelSorteerOpties.EAN && Model.SorteerRichting == SorteerRichting.Asc ? "btn-primary" : "btn-light")">▲</a>
 
                 <a asp-action="Index"
                    asp-all-route-data="baseRoute"
                    asp-route-sorteerOpties="EAN"
                    asp-route-sorteerRichting="Desc"
-                   class="btn btn-sm px-1 sort-btn @(Model.SorteerOpties == ArtikelSorteerOpties.EAN && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">v</a>
+                   class="btn btn-sm px-1 sort-btn @(Model.SorteerOpties == ArtikelSorteerOpties.EAN && Model.SorteerRichting == SorteerRichting.Desc ? "btn-primary" : "btn-light")">▼</a>
             </th>
             <th class="text-nowrap">Naam
                     <a asp-action="Index"
