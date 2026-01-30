@@ -4,23 +4,58 @@
             <div class="navbar-collapse collapse justify-content-center">
                 <ul class="navbar-nav justify-content-center gap-2">
                     <li class="nav-item">
-                        <a class="cs-navlink" asp-area="" asp-controller="Artikel" asp-action="Index">Artikelen</a>
+                    @if (ViewBag.controller == "Artikel")
+                    {
+                        <a class="cs-navlink text-primary" asp-area="" asp-controller="Artikel" asp-action="Index">Artikelen</a>
+                    }
+                    else
+                    {
+                    <a class="cs-navlink" asp-area="" asp-controller="Artikel" asp-action="Index">Artikelen</a>    
+                    }
                     </li>
                     <li class="nav-item cs-navlink">|</li>
                     <li class="nav-item">
+                    @if(ViewBag.controller == "Categorie")
+                    {
+                        <a class="cs-navlink text-primary" asp-area="" asp-controller="Categorie" asp-action="Index">Categorieën</a>    
+                    }
+                    else
+                    {
                         <a class="cs-navlink" asp-area="" asp-controller="Categorie" asp-action="Index">Categorieën</a>
-                    </li>
+                    }
+                </li>
                     <li class="nav-item cs-navlink">|</li>
                     <li class="nav nav-item">
+                    @if (ViewBag.controller == "Bestelling")
+                    {
+                    <a class="cs-navlink text-primary" asp-area="" asp-controller="Bestelling" asp-action="Index">Bestellingen</a>
+                    }
+                    else
+                    {
                         <a class="cs-navlink" asp-area="" asp-controller="Bestelling" asp-action="Index">Bestellingen</a>
-                    </li>
+                    }
+                </li>
                     <li class="nav-item cs-navlink">|</li>
                     <li class="nav-item">
-                        <a class="cs-navlink" asp-area="" asp-controller="Klant" asp-action="Index">Klantbeheer</a>
-                    </li>
+                    @if(ViewBag.controller == "Klant")
+                    {
+                    <a class="cs-navlink text-primary" asp-area="" asp-controller="Klant" asp-action="Index">Klantbeheer</a>   
+                    }
+                    else
+                    {    
+                    <a class="cs-navlink" asp-area="" asp-controller="Klant" asp-action="Index">Klantbeheer</a>   
+                    }
+                </li>
                     <li class="nav-item cs-navlink">|</li>
                     <li class="nav-item">
+                    @if(ViewBag.controller == "Actiecode")
+                    {
+                        <a class="cs-navlink text-primary" asp-area="" asp-controller="Actiecode" asp-action="Index">Actiecodes</a>  
+                    }
+                    else
+                    {
                         <a class="cs-navlink" asp-area="" asp-controller="Actiecode" asp-action="Index">Actiecodes</a>
+                    }
                     </li>
                 </ul>
             </div>

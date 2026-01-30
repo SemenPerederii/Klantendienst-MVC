@@ -11,6 +11,8 @@ namespace KlantenDienstWeb.ViewComponents
             var fn = HttpContext.Session.GetString("Familienaam");
             if (string.IsNullOrEmpty(vn) || string.IsNullOrEmpty(fn) || id == null || id == 0)
                 return View("InlogNav");
+            // Get the current controller name
+            ViewBag.controller = ViewContext.RouteData.Values["controller"]?.ToString();
             return View();
         }
     }
