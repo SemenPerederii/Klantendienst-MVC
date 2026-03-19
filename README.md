@@ -39,7 +39,7 @@ Dubbelklik op Klantendienst.sln of open via Visual Studio → Open Project/Solut
 
 3. **Database updaten**
 
-dotnet ef database update
+run creerDataBase.sql
 
 4. **Project starten**
 In Visual Studio: druk op F5 of klik op Start Debugging
@@ -48,4 +48,5 @@ Of via terminal:
 dotnet run --project Klantendienst
 
 5. **Open de applicatie in je browser**
-http://localhost:5000
+https://localhost:7092
+(surf naar **https://localhost:7092/Categorie**, **https://localhost:7092/Klant**)
